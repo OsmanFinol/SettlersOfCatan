@@ -32,7 +32,7 @@ public class GameState {
 			}
 			
 			//background hexagons
-			blueHex = ImageIO.read(GameState.class.getResource("/TileImages/blue_hex.png"));
+			blueHex = ImageIO.read(GameState.class.getResource("/Images/blue_hex.png"));
 			diceHex = ImageIO.read(GameState.class.getResource("/Images/dice_hex.png"));
 			backDiceHex = ImageIO.read(GameState.class.getResource("/Images/back_dice_hex.png"));
 		
