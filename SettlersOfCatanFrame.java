@@ -2,8 +2,8 @@ import javax.swing.JFrame;
 
 public class SettlersOfCatanFrame extends JFrame{
 
-	private static final int WIDTH = 1400;
-	private static final int HEIGHT = 900;
+	private static final int WIDTH = 1500;
+	private static final int HEIGHT = 950;
 	
 	
 	public SettlersOfCatanFrame(String s) {
