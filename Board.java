@@ -20,80 +20,82 @@ public class Board {
 				gameBoard[i][j] = t;
 				t = gameBoard[i][j];
 				if (i == 0 && j == 1) {
-					t.setXCord(600);
-					t.setYCord(200);
+					t.setXCord(585);
+					t.setYCord(125);
 				}
 				else if (i == 0 && j == 2) {
-					t.setXCord(700);
-					t.setYCord(200);
+					t.setXCord(695);
+					t.setYCord(125);
 				}
 				else if (i == 0 && j == 3) {
-					t.setXCord(800);
-					t.setYCord(200);
+					t.setXCord(805);
+					t.setYCord(125);
 				}
 				else if (i == 1 && j == 1) {
-					t.setXCord(550);
-					t.setYCord(275);
+					t.setXCord(530);
+					t.setYCord(208);
 				}
 				else if (i == 1 && j == 2) {
-					t.setXCord(650);
-					t.setYCord(275);
+					t.setXCord(640);
+					t.setYCord(208);
 				}
 				else if (i == 1 && j == 3) {
 					t.setXCord(750);
-					t.setYCord(275);
+					t.setYCord(208);
 				}
 				else if (i == 1 && j == 4) {
-					t.setXCord(850);
-					t.setYCord(275);
+					t.setXCord(860);
+					t.setYCord(208);
 				}
+				
 				else if (i == 2 && j == 0) {
-					t.setXCord(500);
-					t.setYCord(350);
+					t.setXCord(475);
+					t.setYCord(291);
 				}
 				else if (i == 2 && j == 1) {
-					t.setXCord(600);
-					t.setYCord(350);
+					t.setXCord(585);
+					t.setYCord(291);
 				}
 				else if (i == 2 && j == 2) {
-					t.setXCord(700);
-					t.setYCord(350);
+					t.setXCord(695);
+					t.setYCord(291);
 				}
 				else if (i == 2 && j == 3) {
-					t.setXCord(800);
-					t.setYCord(350);
+					t.setXCord(805);
+					t.setYCord(291);
 				}
 				else if (i == 2 && j == 4) {
-					t.setXCord(900);
-					t.setYCord(350);
+					t.setXCord(915);
+					t.setYCord(291);
 				}
+				
 				else if (i == 3 && j == 1) {
-					t.setXCord(550);
-					t.setYCord(425);
+					t.setXCord(530);
+					t.setYCord(374);
 				}
 				else if (i == 3 && j == 2) {
-					t.setXCord(650);
-					t.setYCord(425);
+					t.setXCord(640);
+					t.setYCord(374);
 				}
 				else if (i == 3 && j == 3) {
 					t.setXCord(750);
-					t.setYCord(425);
+					t.setYCord(374);
 				}
 				else if (i == 3 && j == 4) {
-					t.setXCord(850);
-					t.setYCord(425);
+					t.setXCord(860);
+					t.setYCord(374);
 				}
 				else if (i == 4 && j == 1) {
-					t.setXCord(600);
-					t.setYCord(500);
+					t.setXCord(585);
+					t.setYCord(457);
 				}
 				else if (i == 4 && j == 2) {
-					t.setXCord(700);
-					t.setYCord(500);
+					t.setXCord(695);
+					t.setYCord(457);
 				}
 				else if (i == 4 && j == 3) {
-					t.setXCord(800);
-					t.setYCord(500);
+					t.setXCord(805);
+					t.setYCord(457);
 				}
 			}
 		}
@@ -104,7 +106,7 @@ public class Board {
 			for (int j = 0; j < 5; j++) {
 				Tile temp = gameBoard[i][j];
 				if (temp != null) {
-					g.drawImage(temp.getImage(), temp.getXCord(), temp.getYCord(), 100, 100, null);
+					g.drawImage(temp.getImage(), temp.getXCord(), temp.getYCord(), 110, 110, null);
 				}
 			}
 		}
