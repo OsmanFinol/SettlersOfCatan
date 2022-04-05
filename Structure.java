@@ -23,6 +23,9 @@ public class Structure {
 		return nearHarbor;
 	}
 	
-	
+	public void isNearHarbor(boolean harbor)
+	{
+		nearHarbor = harbor;
+	}
 	
 }

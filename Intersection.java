@@ -26,5 +26,6 @@ public class Intersection
     {
         hasStructure=true;
         struct=s;
+      s.isNearHarbor(hasHarbor);
     }
 }
