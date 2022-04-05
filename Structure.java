@@ -18,6 +18,10 @@ public class Structure {
 		if (type == 1) 
 			type = 2;
 	}
+	public boolean getNearHarbor()
+	{
+		return nearHarbor;
+	}
 	
 	
 	
