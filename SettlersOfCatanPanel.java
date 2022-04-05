@@ -10,9 +10,12 @@ import javax.swing.JPanel;
 
 public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
+	Dice d;
 
 	public SettlersOfCatanPanel() {
 		gs = new GameState();
+		addMouseListener(this);
+		d = new Dice();
 
 	}
 	
@@ -24,19 +27,18 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	}
 
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+	
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		int x = e.getX();
+		int y = e.getY();
+		
+		//rolling dice
+		if (x >= 710 && x <= 710+95 && y >= 853 && y <= 853+47) {
+			gs.rollDice();
+		}
 		
 	}
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
@@ -58,4 +60,9 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		
 	}
 	
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
