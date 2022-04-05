@@ -22,9 +22,11 @@ public class GameState {
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
 	private BufferedImage blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain, perimWood, 
-	perimBrick, perimDevBack, perimLongRoad, perimArmyCard;
+	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice;
+	private Dice dice;
 	public GameState() {
 		hexTiles = new ArrayList<>();
+		dice = new Dice();
 		try {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			while (app.hasNextLine()) {
@@ -51,6 +53,10 @@ public class GameState {
 			perimLongRoad = ImageIO.read(GameState.class.getResource("/DevCards/road_card.png"));
 			perimArmyCard = ImageIO.read(GameState.class.getResource("/DevCards/army_card.png"));
 			
+			//dice control buttons
+			rollDice = ImageIO.read(GameState.class.getResource("/Buttons/roll_button_blue.png"));
+			passDice = ImageIO.read(GameState.class.getResource("/Buttons/pass_dice_button.png"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -64,7 +70,11 @@ public class GameState {
 		//background hexagons
 		g.drawImage(blueHex, 410, 75, 670, 520, null);
 		g.drawImage(backDiceHex, 645, 650, 220, 200, null);
-		g.drawImage(diceHex, 655, 660, 200, 180, null);		
+		g.drawImage(diceHex, 655, 660, 200, 180, null);	
+		
+		//dice buttons
+		g.drawImage(rollDice, 710, 853, 95, 47, null);
+		g.drawImage(passDice, 710, 600, 95, 47, null);
 		
 		//buildingcost cards
 		g.drawImage(buildingCost, 1155, 175, 316, 390, null);
@@ -82,9 +92,15 @@ public class GameState {
 		g.drawImage(perimLongRoad, 365, 175, 72, 104, null);
 		g.drawImage(perimArmyCard, 365, 381, 72, 104, null);
 		
-		
-		
 		gBoard.paintTiles(g);
+	}
+	
+	
+	
+	public void rollDice() {
+		//this method'll be the one to distribute resources probably.............
+		//executed by the panel class
+		//im gonna implement this later :)
 	}
 	
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
