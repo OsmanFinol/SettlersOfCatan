@@ -55,5 +55,6 @@ public class Player {
 	public void addResources(ArrayList<ResourceCard> arrList) {
 		inventory.addAll(arrList);
 	}
-	
+
+    public ArrayList<Structure> getBuilds(){return builds;}
 }
