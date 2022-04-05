@@ -24,5 +24,13 @@ public class ResourceCard {
 	public BufferedImage getImage() {
 		return image;
 	}
+	//had to grab these so that the contains method works aha aha aha
+	public String toString() {
+		return type;
+	}
+	public boolean equals(Object o) {
+		return type.equals(o.toString());
+	}
+	
 	
 }
