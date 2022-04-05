@@ -10,8 +10,12 @@ public class Dice {
 		rand = new Random();
 	}
 	
-	public int roll() {
-		return (1+rand.nextInt(sides)) + (1+rand.nextInt(sides));
+	public int[] roll() {
+		int[] nums = new int[3];
+		nums[0] = (1+rand.nextInt(sides));
+		nums[1] = (1+rand.nextInt(sides));
+		nums[2] = nums[0]+nums[1];
+		return nums;
 	}
 	
 	
