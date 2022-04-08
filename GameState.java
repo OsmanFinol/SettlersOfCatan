@@ -1,37 +1,34 @@
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
-
-
 import javax.imageio.ImageIO;
-import javax.swing.JPanel;
 
 public class GameState {
 
-	
+	private String state, subState;
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
-	private BufferedImage blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain, perimWood, 
-	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice;
+	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain, perimWood, 
+	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice;
 	private Dice dice;
 	public GameState() {
 		hexTiles = new ArrayList<>();
 		dice = new Dice();
+		state = "TITLE";	//initializes both for start of the game
+		subState = "TITLE"; //initializes both for start of the game
 		try {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			while (app.hasNextLine()) {
 				hexTiles.add(new Tile(app.nextLine()));
 			}
+			//title screen
+			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
 			
 			//background hexagons
 			blueHex = ImageIO.read(GameState.class.getResource("/Images/blue_hex.png"));
@@ -56,6 +53,8 @@ public class GameState {
 			//dice control buttons
 			rollDice = ImageIO.read(GameState.class.getResource("/Buttons/roll_button_blue.png"));
 			passDice = ImageIO.read(GameState.class.getResource("/Buttons/pass_dice_button.png"));
+			redDice = ImageIO.read(GameState.class.getResource("/diceFaces/red_1.png"));
+			yellowDice = ImageIO.read(GameState.class.getResource("/diceFaces/yellow_1.png"));
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +65,20 @@ public class GameState {
 		
 	}
 	
-	public void paintState(Graphics g) {
+	public void paintDefaults(Graphics g) {
+		//TITLE SCREEN
+		if (state.equals("TITLE")) {
+			g.drawImage(titleScreen, 0, 0, 1486, 950, null);
+			g.drawRect(660, 720, 290, 50);
+			
+		}
+		//RULES SCREEN
+		else if (state.equals("RULES") ) {
+			//once keerthana finishes the rules panel, put it here <3
+		}
+		
+		//GAME PORTION
+		else if (state.equals("GAME")) {
 		//background hexagons
 		g.drawImage(blueHex, 410, 75, 670, 520, null);
 		g.drawImage(backDiceHex, 645, 650, 220, 200, null);
@@ -91,17 +103,41 @@ public class GameState {
 		g.drawImage(perimDevBack, 350, 290, 55, 80, null);
 		g.drawImage(perimLongRoad, 365, 175, 72, 104, null);
 		g.drawImage(perimArmyCard, 365, 381, 72, 104, null);
+	
+		g.drawImage(redDice, 690, 680, 71, 72, null);
+		g.drawImage(yellowDice, 745, 750, 71, 72, null);
 		
-		gBoard.paintTiles(g);
+		gBoard.paintTiles(g); 
+		}
 	}
-	
-	
 	
 	public void rollDice() {
 		//this method'll be the one to distribute resources probably.............
 		//executed by the panel class
 		//im gonna implement this later :)
+		int[] rolls = dice.roll();
+		try {
+			redDice =ImageIO.read(GameState.class.getResource("/diceFaces/red_"+ rolls[0]+ ".png"));
+			yellowDice =ImageIO.read(GameState.class.getResource("/diceFaces/yellow_"+ rolls[1]+ ".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
+	public String getState() {
+		return state;
+	}
+	public String getSubState() {
+		return subState;
+	}
+	public void setState(String s) {
+		state = s;
+	}
+	public void setSubState(String ss) {
+		subState = ss;
+	}
+	
 	
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 	    double radian = Math.toRadians(angle);
