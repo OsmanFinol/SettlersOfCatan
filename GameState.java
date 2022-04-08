@@ -19,22 +19,33 @@ import javax.swing.JPanel;
 public class GameState {
 
 	
-	private String state, subState;
+	private String state, subState; //state is always capital, substate is always lowercase
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain, perimWood, 
 	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice;
 	private Dice dice;
+	private PlayerManager pManage;
 	public GameState() {
 		hexTiles = new ArrayList<>();
 		dice = new Dice();
 		state = "TITLE";	//initializes both for start of the game
-		subState = "TITLE"; //initializes both for start of the game
+		subState = "title"; //initializes both for start of the game
+		pManage = new PlayerManager(4);
 		try {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			Scanner sc = new Scanner(new File("Nums.txt"));
-			while (app.hasNextLine() && sc.hasNextLine()) {
-				hexTiles.add(new Tile(app.nextLine(), sc.nextLine()));
+			ArrayList<String> tempList = new ArrayList<String>();
+			while (sc.hasNext()) {
+				tempList.add(sc.nextLine());
+			}
+			Collections.shuffle(tempList);
+			int nPol = 0;
+			tempList.set(tempList.indexOf("NumDesert"), tempList.get(0));
+			tempList.set(0, "NumDesert");
+			while (app.hasNextLine()) {
+				hexTiles.add(new Tile(app.nextLine(), tempList.get(nPol)));
+				nPol++;
 			}
 			
 			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
@@ -77,7 +88,7 @@ public class GameState {
 		//TITLE SCREEN
 		if (state.equals("TITLE")) {
 			g.drawImage(titleScreen, 0, 0, 1486, 950, null);
-			g.drawRect(660, 720, 290, 50);
+		//	g.drawRect(660, 720, 290, 50);
 			
 		}
 		//RULES SCREEN
@@ -116,6 +127,8 @@ public class GameState {
 		g.drawImage(yellowDice, 745, 750, 71, 72, null);
 		
 		gBoard.paintTiles(g); 
+		
+		
 		}
 	}
 	
