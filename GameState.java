@@ -1,16 +1,24 @@
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.awt.image.ImageObserver;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
+
+
 import javax.imageio.ImageIO;
+import javax.swing.JPanel;
 
 public class GameState {
 
+	
 	private String state, subState;
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
@@ -24,12 +32,12 @@ public class GameState {
 		subState = "TITLE"; //initializes both for start of the game
 		try {
 			Scanner app = new Scanner(new File("Tiles.txt"));
-			while (app.hasNextLine()) {
-				hexTiles.add(new Tile(app.nextLine()));
+			Scanner sc = new Scanner(new File("Nums.txt"));
+			while (app.hasNextLine() && sc.hasNextLine()) {
+				hexTiles.add(new Tile(app.nextLine(), sc.nextLine()));
 			}
-			//title screen
-			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
 			
+			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
 			//background hexagons
 			blueHex = ImageIO.read(GameState.class.getResource("/Images/blue_hex.png"));
 			diceHex = ImageIO.read(GameState.class.getResource("/Images/dice_hex.png"));
@@ -124,7 +132,6 @@ public class GameState {
 		}
 	}
 	
-	
 	public String getState() {
 		return state;
 	}
@@ -137,7 +144,6 @@ public class GameState {
 	public void setSubState(String ss) {
 		subState = ss;
 	}
-	
 	
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 	    double radian = Math.toRadians(angle);
