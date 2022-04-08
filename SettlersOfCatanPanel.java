@@ -23,7 +23,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	public void paint(Graphics g) {
 		g.setColor(new Color(210, 180, 140, 250));
 		g.fillRect(0, 0, 2000, 2000);
-		gs.paintState(g);
+		gs.paintDefaults(g);
 	}
 
 
@@ -33,11 +33,25 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		int x = e.getX();
 		int y = e.getY();
 		
-		//rolling dice
-		if (x >= 710 && x <= 710+95 && y >= 853 && y <= 853+47) {
-			gs.rollDice();
+		if (gs.getState().equals("TITLE")) {
+			if (x >= 610 && y >= 583 && x <= 610+180 && y <= 583+50) {
+				gs.setState("GAME");
+				repaint();
+			}
+			else if (x >=660 && y >= 720 && x <= 660+ 290 && y<= 720+ 5) {
+				System.exit(0);
+			}
 		}
-		
+		else if (gs.getState().equals("GAME")) {
+			
+			
+			
+			//rolling dice
+			if (x >= 710 && x <= 710+95 && y >= 853 && y <= 853+47) {
+				gs.rollDice();
+				repaint();
+			}
+		}
 	}
 
 	@Override
