@@ -29,6 +29,12 @@ public class PlayerManager {
 			cPlayer = 0;
 		}
 	}
+
+	public Player getNextPlayer()
+	{
+		nextPlayer();
+		return players.get(cPlayer);
+	}
 	
 	//returns player
 	public Player getCPlayer() {
