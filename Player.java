@@ -74,7 +74,6 @@ public class Player {
 	public String toString() {
 		return color;
 	}
-	public void addVicCard(DevelopmentCard d){vicCards.add(d);}
-	public ArrayList<Structure> getBuilds(){return builds;}
+	
 	
 }
