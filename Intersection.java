@@ -1,31 +1,26 @@
-import java.util.*;
-import static java.lang.System.*;
-import java.io.*;
-import java.awt.*;
-public class Intersection
-{
-    private int xCord;//Self explanatory
-    private int yCord;//Same as above
-    private boolean hasStructure;
-    private boolean hasHarbor;
-    private Structure struct;
-    private ArrayList<Tile> borders;
+import java.util.ArrayList;
 
-    public Intersection(ArrayList<Tile> list, boolean hasHarb,
-                        int x, int y)
-    {
-        borders = list;
-        hasHarbor = hasHarb;
-        xCord=x;
-        yCord=y;
-        hasStructure = false;
-        struct = null;
-    }
-
-    public void putStructure(Structure s)
-    {
-        hasStructure=true;
-        struct=s;
-      s.isNearHarbor(hasHarbor);
-    }
+public class Intersection {
+	private int xCord, yCord;
+	private boolean hasStructure, hasHarbor;
+	private ArrayList<Tile> borders;
+	private Structure struct;
+	
+	public Intersection(int x, int y, boolean hasHarb, ArrayList<Tile> b) {
+		xCord = x;
+		yCord = y;
+		hasStructure = false;
+		hasHarbor = hasHarb;
+		borders = b;
+		struct = null;
+	}
+	
+	public void putStructure(Structure s) {
+		struct = s;
+	}
+	
+	
+	
+	
+	
 }
