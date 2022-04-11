@@ -127,6 +127,18 @@ public class GameState {
 	
 		g.drawImage(redDice, 690, 680, 71, 72, null);
 		g.drawImage(yellowDice, 745, 750, 71, 72, null);
+			
+		g.setColor(Color.RED);
+		g.fillRect(1015, 12, 350, 120);
+		
+		g.setColor(Color.ORANGE);
+		g.fillRect(1015, 625, 350, 120);
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(200, 625, 350, 120);
+		
+		g.setColor(Color.BLUE);
+		g.fillRect(200, 12, 350, 120);
 		
 		gBoard.paintTiles(g); 
 		
