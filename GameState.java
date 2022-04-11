@@ -35,16 +35,17 @@ public class GameState {
 		pManage = new PlayerManager(4);
 		diceHaveBeenRolled = false;
 		try {
+			int randNum = (int)(Math.random() * 2) + 1;
 			Scanner app = new Scanner(new File("Tiles.txt"));
-			Scanner sc = new Scanner(new File("Nums.txt"));
+			Scanner sc = new Scanner(new File("Nums" + String.valueOf(randNum) + ".txt"));
 			ArrayList<String> tempList = new ArrayList<String>();
 			while (sc.hasNext()) {
 				tempList.add(sc.nextLine());
 			}
-			Collections.shuffle(tempList);
-			tempList.set(tempList.indexOf("NumDesert"), tempList.get(0));
-			tempList.set(0, "NumDesert");
+			//Collections.shuffle(tempList);
 			int nPol = 0;
+			tempList.set(tempList.indexOf("NumDesert"), tempList.get(9));
+			tempList.set(9, "NumDesert");
 			while (app.hasNextLine()) {
 				hexTiles.add(new Tile(app.nextLine(), tempList.get(nPol)));
 				nPol++;
@@ -84,7 +85,7 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Collections.shuffle(hexTiles);
+		//Collections.shuffle(hexTiles);
 		gBoard = new Board(hexTiles);
 		
 	}
