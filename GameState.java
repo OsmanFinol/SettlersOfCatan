@@ -23,7 +23,7 @@ public class GameState {
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain, perimWood, 
-	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice;
+	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice, actionLog;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -77,6 +77,9 @@ public class GameState {
 			redDice = ImageIO.read(GameState.class.getResource("/diceFaces/red_1.png"));
 			yellowDice = ImageIO.read(GameState.class.getResource("/diceFaces/yellow_1.png"));
 			
+			//action log image
+			actionLog = ImageIO.read(GameState.class.getResource("/Images/action_log.png"));
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,17 +131,17 @@ public class GameState {
 		g.drawImage(redDice, 690, 680, 71, 72, null);
 		g.drawImage(yellowDice, 745, 750, 71, 72, null);
 			
-		g.setColor(Color.RED);
+		g.setColor(new Color(230,22,16,255));	//red
 		g.fillRect(1015, 12, 350, 120);
 		
-		g.setColor(Color.ORANGE);
-		g.fillRect(1015, 625, 350, 120);
+		g.setColor(new Color(255,168,52,255)); //orange
+		g.fillRect(870, 625, 350, 120);
 		
-		g.setColor(Color.WHITE);
-		g.fillRect(200, 625, 350, 120);
+		g.setColor(new Color(255,255,255,255)); //white
+		g.fillRect(290, 625, 350, 120);
 		
-		g.setColor(Color.BLUE);
-		g.fillRect(200, 12, 350, 120);
+		g.setColor(new Color(61,138,247,255));	//blue
+		g.fillRect(135, 12, 350, 120);
 		
 		gBoard.paintTiles(g); 
 		
@@ -149,14 +152,11 @@ public class GameState {
 	public void paintLog(Graphics g, ArrayList<String> lines) {
 		//gonna update this more later to make it look good, this is just temp
 		if (state.equals("GAME")) {
-			g.setColor(new Color(130, 133, 131, 250));
-			g.fillRect(25, 600, 250, 270);
+			g.drawImage(actionLog, 25, 600, 250, 270, null);
 			int i = lines.size() - 1;
 			int x = 40;
 			int y = 840;
 			g.setColor(Color.BLACK);
-			g.fillRect(25, 600, 250, 30);
-			g.fillRect(25, 850, 250, 20);
 			while (i >= 0 && y >= 630) {
 				g.drawString(lines.get(i), x, y);
 				i--;
