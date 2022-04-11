@@ -26,7 +26,7 @@ public class Tile {
 		numsString = tnums.split(" "); 
 		numsInt = new int[numsString.length];
 		numsInt = convert(numsString);
-		System.out.println(Arrays.toString(numsInt));
+		//System.out.println(Arrays.toString(numsInt));
 		
 		type = str;
 		np = n;
