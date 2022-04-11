@@ -26,12 +26,14 @@ public class GameState {
 	perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice;
 	private Dice dice;
 	private PlayerManager pManage;
+	private boolean diceHaveBeenRolled;
 	public GameState() {
 		hexTiles = new ArrayList<>();
 		dice = new Dice();
 		state = "TITLE";	//initializes both for start of the game
 		subState = "title"; //initializes both for start of the game
 		pManage = new PlayerManager(4);
+		diceHaveBeenRolled = false;
 		try {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			Scanner sc = new Scanner(new File("Nums.txt"));
@@ -40,9 +42,9 @@ public class GameState {
 				tempList.add(sc.nextLine());
 			}
 			Collections.shuffle(tempList);
-			int nPol = 0;
 			tempList.set(tempList.indexOf("NumDesert"), tempList.get(0));
 			tempList.set(0, "NumDesert");
+			int nPol = 0;
 			while (app.hasNextLine()) {
 				hexTiles.add(new Tile(app.nextLine(), tempList.get(nPol)));
 				nPol++;
@@ -132,18 +134,40 @@ public class GameState {
 		}
 	}
 	
-	public void rollDice() {
+	public void paintLog(Graphics g, ArrayList<String> lines) {
+		//gonna update this more later to make it look good, this is just temp
+		if (state.equals("GAME")) {
+			g.setColor(new Color(130, 133, 131, 250));
+			g.fillRect(25, 600, 250, 270);
+			int i = lines.size() - 1;
+			int x = 40;
+			int y = 840;
+			g.setColor(Color.BLACK);
+			g.fillRect(25, 600, 250, 30);
+			g.fillRect(25, 850, 250, 20);
+			while (i >= 0 && y >= 630) {
+				g.drawString(lines.get(i), x, y);
+				i--;
+				y -= 10;
+			}
+		}
+	}
+	
+	public int[] rollDice() {
 		//this method'll be the one to distribute resources probably.............
 		//executed by the panel class
 		//im gonna implement this later :)
 		int[] rolls = dice.roll();
+		diceHaveBeenRolled = true;
 		try {
 			redDice =ImageIO.read(GameState.class.getResource("/diceFaces/red_"+ rolls[0]+ ".png"));
 			yellowDice =ImageIO.read(GameState.class.getResource("/diceFaces/yellow_"+ rolls[1]+ ".png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return rolls;
 	}
+	
 	
 	public String getState() {
 		return state;
@@ -157,6 +181,20 @@ public class GameState {
 	public void setSubState(String ss) {
 		subState = ss;
 	}
+	public Player getCPlayer() {
+		return pManage.getCPlayer();
+	}
+	public Player getNextPlayer() {
+		return pManage.getNextPlayer();
+	}
+	public void nextPlayer() {
+		pManage.nextPlayer();
+		diceHaveBeenRolled = false;
+	}
+	public boolean diceRolled() {
+		return diceHaveBeenRolled;
+	}
+	
 	
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 	    double radian = Math.toRadians(angle);
