@@ -25,4 +25,4 @@ public class SettlersOfCatanFrame extends JFrame{
 	
 	
 	
-}
+
