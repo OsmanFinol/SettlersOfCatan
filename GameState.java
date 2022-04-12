@@ -35,7 +35,7 @@ public class GameState {
 		pManage = new PlayerManager(4);
 		diceHaveBeenRolled = false;
 		try {
-			int randNum = (int)(Math.random() * 2) + 1;
+			int randNum = (int)(Math.random() * 6) + 1;
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			Scanner sc = new Scanner(new File("Nums" + String.valueOf(randNum) + ".txt"));
 			ArrayList<String> tempList = new ArrayList<String>();
