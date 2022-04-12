@@ -69,7 +69,7 @@ public class RulesPanel extends JPanel implements MouseListener
             g.drawString("Each tile is also assigned a random number 1-12, excluding 7.",getWidth()/30,9*(getHeight()/29));
             g.drawString("When the die are rolled, the tile numbers corresponding to the die roll yield resources.", getWidth()/30,10*(getHeight()/29));
             g.drawString("If a player has a settlement or city adjacent to the aforementioned tiles, they will add the tiles' resources to their inventory.",getWidth()/30,11*(getHeight()/29));
-           // g.drawImage(brick,getWidth()/2, 7*(getHeight()/29), 7*(getWidth()/60),4*(getHeight()/29), null );
+            // g.drawImage(brick,getWidth()/2, 7*(getHeight()/29), 7*(getWidth()/60),4*(getHeight()/29), null );
 
             g.drawString("Victory points can be earned by building cities and settlements.", 21*(getWidth()/60) ,14*(getHeight()/29));
             g.drawString("They can also be won by buying development cards.", 21*(getWidth()/60), 15*(getHeight()/29));

@@ -22,13 +22,13 @@ public class Harbor
     public boolean canUse(Player P)
     {
         ArrayList<Structure> b = P.getBuilds();//add get builds method
-              for(Structure struct:b)
+        for(Structure struct:b)
         {
             if(struct.getNearHarbor() == true)//Add getter method to structure
             {
                 return true;
             }
         }
-              return false;
+        return false;
     }
 }

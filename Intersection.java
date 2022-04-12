@@ -5,7 +5,7 @@ public class Intersection {
 	private boolean hasStructure, hasHarbor;
 	private ArrayList<Tile> borders;
 	private Structure struct;
-	
+
 	public Intersection(int x, int y, boolean hasHarb, ArrayList<Tile> b) {
 		xCord = x;
 		yCord = y;
@@ -14,13 +14,13 @@ public class Intersection {
 		borders = b;
 		struct = null;
 	}
-	
+
 	public void putStructure(Structure s) {
 		struct = s;
 	}
-	
-	
-	
-	
-	
+
+
+
+
+
 }

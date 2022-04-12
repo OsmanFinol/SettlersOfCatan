@@ -19,17 +19,16 @@ public class DevCardDeck
             deck.push(temp);
         }
     }
-        public DevelopmentCard draw (Player player)
-        {
-            DevelopmentCard dc = deck.pop();
-            player.addVicCard(dc);
-            return dc;
+    public DevelopmentCard draw (Player player)
+    {
+        DevelopmentCard dc = deck.pop();
+        player.addVicCard(dc);
+        return dc;
 
-        }
-
-        public void shuffle()
-        {
-        Collections.shuffle(deck);
-        }
     }
 
+    public void shuffle()
+    {
+        Collections.shuffle(deck);
+    }
+}

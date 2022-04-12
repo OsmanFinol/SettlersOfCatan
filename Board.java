@@ -6,7 +6,7 @@ import java.util.Iterator;
 
 public class Board {
 
-	
+
 	private Tile[][] gameBoard;
 	/*private String tnums;
 	//private 
@@ -21,7 +21,7 @@ public class Board {
 		numsInt = new int[numsString.length];
 		numsInt = convert(numsString);
 		System.out.println(Arrays.toString(numsInt));*/
-		
+
 		gameBoard = new Tile[5][5];
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -61,7 +61,7 @@ public class Board {
 					t.setXCord(860);
 					t.setYCord(208);
 				}
-				
+
 				else if (i == 2 && j == 0) {
 					t.setXCord(475);
 					t.setYCord(291);
@@ -82,7 +82,7 @@ public class Board {
 					t.setXCord(915);
 					t.setYCord(291);
 				}
-				
+
 				else if (i == 3 && j == 1) {
 					t.setXCord(530);
 					t.setYCord(374);
@@ -113,12 +113,12 @@ public class Board {
 				}
 			}
 		}
-		
+
 	}
-	
-	
+
+
 	public void nums() {
-	//String nums = "5 2 6 3 8 10 9 12 11 4 8 10 9 4 5 6 3 11";
+		//String nums = "5 2 6 3 8 10 9 12 11 4 8 10 9 4 5 6 3 11";
 	/*	for (int r = 0; r < gameBoard.length; r++) {
 			for (int c = 0; c < gameBoard[r].length; c++) {
 				Tile temp = gameBoard[r][c];
@@ -126,8 +126,8 @@ public class Board {
 			}
 		}*/
 	}
-	
-	
+
+
 	public void paintTiles(Graphics g) {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
@@ -136,13 +136,13 @@ public class Board {
 					g.drawImage(temp.getImage(), temp.getXCord(), temp.getYCord(), 110, 110, null);
 					g.drawImage(temp.getNumImage(), temp.getXCord()+40, temp.getYCord()+35, 30, 30, null);
 
-					
-					
+
+
 				}
 			}
 		}
 	}
-	
-	
-	
+
+
+
 }

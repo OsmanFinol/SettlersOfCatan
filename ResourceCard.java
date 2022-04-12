@@ -4,11 +4,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ResourceCard {
-	
+
 	String type;		//brick, grain, sheep, stone, wood
 	BufferedImage image;
-	
-	
+
+
 	public ResourceCard(String t) {
 		type = t;
 		try {
@@ -17,7 +17,7 @@ public class ResourceCard {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public String getName() {
 		return type;
 	}
@@ -31,6 +31,6 @@ public class ResourceCard {
 	public boolean equals(Object o) {
 		return type.equals(o.toString());
 	}
-	
-	
+
+
 }
