@@ -85,7 +85,7 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		Collections.shuffle(hexTiles);
+		//Collections.shuffle(hexTiles);
 		gBoard = new Board(hexTiles);
 		
 	}
