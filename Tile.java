@@ -17,33 +17,12 @@ public class Tile {
 	private int yCord;		//y cord on panel
 	
 	private String tnums;
-	//private 
-	private String[] numsString;
-	private int[] numsInt;
+	//private
 	
-	public Tile(String str, String n) {
-		tnums = "5 2 6 3 8 10 9 12 11 4 8 10 9 4 5 6 3 11";
-		numsString = tnums.split(" "); 
-		numsInt = new int[numsString.length];
-		numsInt = convert(numsString);
-		//System.out.println(Arrays.toString(numsInt));
-		
-		type = str;
-		np = n;
+	public Tile() {
+		type = "";
+		np = "";
 		hasRobber = false;
-		if (str.equals("Desert")) {
-			hasRobber = true;
-		}
-		try {
-			if (!(type.equals("na")))
-					pic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/TileImages/" + str +".png"));
-					numPic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/NumImages/" + n +".png"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		for (int i = 0; i < numsInt.length; i++) {
-			setNum(numsInt[i]);
-		}
 	}
 	
 	public BufferedImage getImage() {
@@ -73,24 +52,26 @@ public class Tile {
 	public boolean isRobber() {
 		return hasRobber;
 	}
-	
-public int[] convert(String[] splitArray) {
-		
-        int[] array = new int[splitArray.length];
- 
-        // parsing the String argument as a signed decimal
-        // integer object and storing that integer into the
-        // array
-        for (int i = 0; i < splitArray.length; i++) {
-            array[i] = Integer.parseInt(splitArray[i]);
-        }
-        return array;
-	}
-	
-	
-	public void setNum(int dR) {
-		diceRoll = dR;
+	public void setNum(String str) {
 		//set numPic to this later
+		try {
+			numPic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/NumImages/" + str +".png"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	public void setImage(String str) {
+		type = str;
+		if (str.equals("Desert")) {
+			hasRobber = true;
+		}
+		try {
+			if (!(type.equals("na")))
+					pic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/TileImages/" + str +".png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	public String getNum() {
 		return Integer.toString(diceRoll);
