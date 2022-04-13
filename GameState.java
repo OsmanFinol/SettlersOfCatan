@@ -10,8 +10,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Scanner;
-
+import java.util.TreeSet;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -39,18 +41,20 @@ public class GameState {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			Scanner sc = new Scanner(new File("Nums" + String.valueOf(randNum) + ".txt"));
 			ArrayList<String> tempList = new ArrayList<String>();
+			ArrayList<String> tempStrList = new ArrayList<>();
 			while (sc.hasNext()) {
 				tempList.add(sc.nextLine());
 			}
-			//Collections.shuffle(tempList);
-			int nPol = 0;
-			tempList.set(tempList.indexOf("NumDesert"), tempList.get(9));
-			tempList.set(9, "NumDesert");
-			while (app.hasNextLine()) {
-				hexTiles.add(new Tile(app.nextLine(), tempList.get(nPol)));
-				nPol++;
+			while (app.hasNext()) {
+				tempStrList.add(app.nextLine());
 			}
-			
+			Collections.shuffle(tempStrList);
+			tempList.add(tempStrList.indexOf("Desert"), "NumDesert");
+			for (int i = 0; i < 19; i++) {
+				hexTiles.add(new Tile());
+				hexTiles.get(i).setNum(tempList.get(i));
+				hexTiles.get(i).setImage(tempStrList.get(i));
+			}
 			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
 			//background hexagons
 			blueHex = ImageIO.read(GameState.class.getResource("/Images/blue_hex.png"));
@@ -85,7 +89,6 @@ public class GameState {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		//Collections.shuffle(hexTiles);
 		gBoard = new Board(hexTiles);
 		
 	}
@@ -146,7 +149,7 @@ public class GameState {
 		
 		gBoard.paintTiles(g); 
 		//g.fillOval(575, 145, 20, 20); ignore this
-		//gBoard.paintInters(g);
+		gBoard.paintInters(g);
 		}
 	}
 	
