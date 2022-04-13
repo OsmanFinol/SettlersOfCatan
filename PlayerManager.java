@@ -9,7 +9,7 @@ public class PlayerManager {
 	ArrayList<Player> players;
 	int cPlayer;
 	TreeSet<Player> playerStanding;
-
+	
 	public PlayerManager(int num) { //num of players playing
 		players = new ArrayList<>();
 		cPlayer = 0;
@@ -21,7 +21,7 @@ public class PlayerManager {
 		}
 		scan.close();
 	}
-
+	
 	//switches to next player
 	public void nextPlayer() {
 		cPlayer++;
@@ -29,19 +29,20 @@ public class PlayerManager {
 			cPlayer = 0;
 		}
 	}
-
-	public Player getNextPlayer()
-	{
-		nextPlayer();
-		return players.get(cPlayer);
-	}
-
+	
 	//returns player
 	public Player getCPlayer() {
 		return players.get(cPlayer);
 	}
-
-	public void trade(Player p, ArrayList<ResourceCard> getting, ArrayList<ResourceCard> giving) {
+	public Player getNextPlayer() {
+		int c = cPlayer+1;
+		if (c == 4) {
+			c = 0;
+		}
+		return players.get(c);
+	}
+	
+	public void trade(Player p, ArrayList<ResourceCard> getting, ArrayList<ResourceCard> giving) { 
 		//getting and giving from the cPlayer's perspective, not p's
 		Player cPlay = players.get(cPlayer);
 		cPlay.addResources(getting);
@@ -49,7 +50,7 @@ public class PlayerManager {
 		p.addResources(giving);
 		p.removeResources(getting);
 	}
-
+	
 	public void steal(Player p, ResourceCard chosen) {
 		Player cPlay = getCPlayer();
 		ArrayList<ResourceCard> list = new ArrayList<>();
@@ -57,7 +58,7 @@ public class PlayerManager {
 		cPlay.addResources(list);
 		p.removeResources(list);
 	}
-
+	
 	//changing this method a bit
 	//it'll find all the players that need to discard and return them
 	//then in panel or gamestate or smthn we'll force the player to remove their cards if needbe
@@ -72,14 +73,14 @@ public class PlayerManager {
 		}
 		return temp;
 	}
-
-
-
+	
+	
+	
 	public void updateStanding() {
 		playerStanding.clear();
 		playerStanding.addAll(players);
 	}
-
+	
 	public Player hasWon() {
 		updateStanding();
 		Iterator<Player> iter = playerStanding.iterator();
@@ -91,13 +92,13 @@ public class PlayerManager {
 		}
 		return null;
 	}
-
+	
 	//ignore this, it's just so that the treeset works :)
 	public class playerComparer implements Comparator<Player>
 	{
-		public int compare(Player p1, Player p2)
-		{
-			return p1.victoryPoints - p2.victoryPoints;
-		}
+	    public int compare(Player p1, Player p2)
+	    {
+	        return p1.victoryPoints - p2.victoryPoints;
+	    }
 	}
 }
