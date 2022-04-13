@@ -30,7 +30,7 @@ public class GameState {
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
 	public GameState() {
-		hexTiles = new ArrayList<>();
+		hexTiles = new ArrayList<Tile>();
 		dice = new Dice();
 		state = "TITLE";	//initializes both for start of the game
 		subState = "title"; //initializes both for start of the game
@@ -41,7 +41,7 @@ public class GameState {
 			Scanner app = new Scanner(new File("Tiles.txt"));
 			Scanner sc = new Scanner(new File("Nums" + String.valueOf(randNum) + ".txt"));
 			ArrayList<String> tempList = new ArrayList<String>();
-			ArrayList<String> tempStrList = new ArrayList<>();
+			ArrayList<String> tempStrList = new ArrayList<String>();
 			while (sc.hasNext()) {
 				tempList.add(sc.nextLine());
 			}
