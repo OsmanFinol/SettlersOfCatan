@@ -49,7 +49,6 @@ public class GameState {
 				tempStrList.add(app.nextLine());
 			}
 			Collections.shuffle(tempStrList);
-			tempList.add(tempStrList.indexOf("Desert"), "NumDesert");
 			for (int i = 0; i < 19; i++) {
 				hexTiles.add(new Tile());
 				hexTiles.get(i).setNum(tempList.get(i));
@@ -149,7 +148,7 @@ public class GameState {
 		
 		gBoard.paintTiles(g); 
 		//g.fillOval(575, 145, 20, 20); ignore this
-		gBoard.paintInters(g);
+		//gBoard.paintInters(g);
 		}
 	}
 	
