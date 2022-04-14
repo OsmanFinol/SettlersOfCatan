@@ -26,7 +26,7 @@ public class GameState {
 	private Board gBoard;
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, perimSheep, perimStone, perimGrain,
 			perimWood, perimBrick, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
-			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, buildButton;
+			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, buildButton, trade, build, seeHand;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -88,12 +88,17 @@ public class GameState {
 			yellowDice = ImageIO.read(GameState.class.getResource("/diceFaces/yellow_1.png"));
 			diceRollingImage = ImageIO.read(GameState.class.getResource("/Images/dice roll.png"));
 
+			
+			build = ImageIO.read(GameState.class.getResource("/Buttons/build_button_blue.png"));
+			seeHand = ImageIO.read(GameState.class.getResource("/Buttons/seehand_button_blue.png"));
+			trade = ImageIO.read(GameState.class.getResource("/Buttons/trade_button_blue.png"));
+			
 			// action log image
 			actionLog = ImageIO.read(GameState.class.getResource("/Images/action_log.png"));
 
 			// build button + example
 			buildEx = ImageIO.read(GameState.class.getResource("/Images/building_example.png"));
-			buildButton = ImageIO.read(GameState.class.getResource("/Images/build_button_blue.png"));
+			//buildButton = ImageIO.read(GameState.class.getResource("/Images/build_button_blue.png"));
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
