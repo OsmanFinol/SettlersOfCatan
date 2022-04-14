@@ -13,6 +13,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; 		//this arraylist has all the log stuff, to add something to the log,
 											//add it here
+	private boolean actualGame = true;
 	
 	public SettlersOfCatanPanel() {
 		gs = new GameState();
@@ -23,10 +24,11 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	
 	
 	public void paint(Graphics g) {
-		g.setColor(new Color(210, 180, 140, 250));
+		g.setColor(new Color(210, 180, 140, 255));
 		g.fillRect(0, 0, 2000, 2000);
 		gs.paintDefaults(g);
-		gs.paintLog(g, lines);
+		if (gs.getSubState().equals("default"))
+			gs.paintLog(g, lines);
 	}
 
 
@@ -39,9 +41,21 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		//buttons on title screen
 		if (gs.getState().equals("TITLE")) {
 			//selecting game
+			if (gs.getSubState().equals("title")) {
 			if (x >= 610 && y >= 583 && x <= 610+180 && y <= 583+50) {
-				gs.setState("GAME");
-				gs.setSubState("findorder");
+				if (actualGame)
+					gs.setSubState("findnumplayers");
+				else {
+					gs.setState("GAME");
+					gs.setSubState("default"); 
+				}
+				repaint();
+			}
+			}
+			//going to menu
+			else if (x >= 690 && y>= 640 && x <= 690+220 && y <= 640+50) {
+				gs.setState("RULES");
+				gs.setSubState("page1");
 				repaint();
 			}
 			else if (x >=660 && y >= 720 && x <= 660+ 290 && y<= 720+50) {
@@ -49,6 +63,43 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				System.exit(0);
 			}
 		}
+		//rules screen
+		else if (gs.getState().equals("RULES")) {
+			if (gs.getSubState().equals("page1")) {
+				if (x >= (5*(1500/6)-(1500/60)) && y >= 28*(950/29)-(950/24) - 20 && 
+						x <= (5*(1500/6)-(1500/60))+ 1500/15 && y <= 28*(950/29)-(950/24) - 20+ 2*(950/29)) {
+							gs.setSubState("page2");
+							repaint();
+				}
+			}
+			else if (gs.getSubState().equals("page2")) {
+				if (x >= (5*(1500/6)-(1500/60)) && y >= 28*(950/29)-(950/24) - 20 && 
+						x <= (5*(1500/6)-(1500/60))+ 1500/15 && y <= 28*(950/29)-(950/24) - 20+ 2*(950/29)) {
+							gs.setSubState("page3");
+							repaint();
+				}
+				else if (x >= 1500/30 && y >= 28*(950/29)-(950/24) - 20 && 
+						x <= 1500/15 + 1500/30 && y <= 28*(950/29)-(950/24) + 2*(950/29)) {
+							gs.setSubState("page1");
+							repaint();
+				}
+			}
+			else if (gs.getSubState().equals("page3")) {
+				if (x >= (5*(1500/6)-(1500/60)) && y >= 28*(950/29)-(950/24) - 20 && 
+						x <= (5*(1500/6)-(1500/60))+ 1500/15 && y <= 28*(950/29)-(950/24) - 20+ 2*(950/29)) {
+							gs.setState("TITLE");
+							gs.setSubState("title");
+							repaint();
+				}
+				else if (x >= 1500/30 && y >= 28*(950/29)-(950/24) - 20 && 
+						x <= 1500/15 + 1500/30 && y <= 28*(950/29)-(950/24) + 2*(950/29)) {
+							gs.setSubState("page2");
+							repaint();
+				}
+			}
+		}
+		
+		
 		
 		//buttons on game screen
 		else if (gs.getState().equals("GAME")) {
