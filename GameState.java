@@ -313,18 +313,38 @@ public class GameState {
 				g.drawImage(redDice, 690, 680, 71, 72, null);
 				g.drawImage(yellowDice, 745, 750, 71, 72, null);
 
-				g.setColor(new Color(230, 22, 16, 255)); // red
+				g.setColor(new Color(230,22,16,255));	//red
+		
+				
 				g.fillRect(1015, 12, 350, 120);
+				g.drawImage(build, 1260, 15, 76, 25, null);
+				g.drawImage(seeHand, 1160, 15, 83, 25, null);
+				g.drawImage(trade, 1025, 15, 122, 25, null);
 
-				g.setColor(new Color(255, 168, 52, 255)); // orange
+	//	g.setColor(Color.BLACK);
+	//	g.setFont(new Font("Broadway",Font.ITALIC | Font.BOLD, 17));
+	//	g.drawString("Player 1", 1250, 30);
+		
+				g.setColor(new Color(255,168,52,255)); //orange
 				g.fillRect(870, 625, 350, 120);
-
-				g.setColor(new Color(255, 255, 255, 255)); // white
+				g.drawImage(build, 1115, 720, 76, 25, null);
+				g.drawImage(seeHand, 1015, 720, 83, 25, null);
+				g.drawImage(trade, 880, 720, 122, 25, null);
+		
+		
+				g.setColor(new Color(255,255,255,255)); //white
 				g.fillRect(290, 625, 350, 120);
-
-				g.setColor(new Color(61, 138, 247, 255)); // blue
+				g.drawImage(build, 535, 720, 76, 25, null);
+				g.drawImage(seeHand, 435, 720, 83, 25, null);
+				g.drawImage(trade, 300, 720, 122, 25, null);
+		
+		
+				g.setColor(new Color(61,138,247,255));	//blue
 				g.fillRect(135, 12, 350, 120);
-
+				g.drawImage(build, 380, 15, 76, 25, null);
+				g.drawImage(seeHand, 280, 15, 83, 25, null);
+				g.drawImage(trade, 145, 15, 122, 25, null);
+				
 				gBoard.paintTiles(g);
 				// g.fillOval(575, 145, 20, 20); ignore this
 				// gBoard.paintInters(g);
