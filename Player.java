@@ -17,7 +17,9 @@ public class Player {
 		builds = new ArrayList<>();
 	}
 	
-	
+	public void setColor(String s) {
+		color = s;
+	}
 	
 	public void buildStructure(int t, Intersection i) {
 		boolean canPay = false;
