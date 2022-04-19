@@ -28,7 +28,7 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect,
-			build, seeHand, trade;
+			build, seeHand, trade, backResourceCard;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -77,6 +77,7 @@ public class GameState {
 			grainCard = ImageIO.read(GameState.class.getResource("/CardImages/Grain.jpg"));
 			woodCard = ImageIO.read(GameState.class.getResource("/CardImages/Wood.jpg"));
 			brickCard = ImageIO.read(GameState.class.getResource("/CardImages/Brick.jpg"));
+			backResourceCard = ImageIO.read(GameState.class.getResource("/CardImages/back of card.png"));
 
 			// perimeter dev. cards
 			perimDevBack = ImageIO.read(GameState.class.getResource("/DevCards/dev_back.png"));
@@ -202,12 +203,31 @@ public class GameState {
 				g.drawImage(build, 1260, 15, 76, 25, null);
 				g.drawImage(seeHand, 1160, 15, 83, 25, null);
 				g.drawImage(trade, 1025, 15, 122, 25, null);
+				//Untested
+					int handSize = pManage.getPlayers().get(0).getResources().size();
+					int startPoint = 1015;
+					int cardW = (350/(handSize+1));//Width of card
+					for(int i=0;i<handSize;i++)
+					{
+						g.drawImage(backResourceCard, startPoint, 30, cardW, 100, null);
+						startPoint += cardW+5;
+					}
+
 
 				g.setColor(new Color(255,168,52,255)); //orange
 				g.fillRect(870, 625, 350, 120);
 				g.drawImage(build, 1115, 720, 76, 25, null);
 				g.drawImage(seeHand, 1015, 720, 83, 25, null);
 				g.drawImage(trade, 880, 720, 122, 25, null);
+				//Untested
+				handSize = pManage.getPlayers().get(1).getResources().size();
+				startPoint = 870;
+				cardW = (350/(handSize+1));//Width of card
+				for(int i=0;i<handSize;i++)
+				{
+					g.drawImage(backResourceCard, startPoint, 650, cardW, 100, null);
+					startPoint += cardW+5;
+				}
 
 
 				g.setColor(new Color(255,255,255,255)); //white
@@ -215,6 +235,15 @@ public class GameState {
 				g.drawImage(build, 535, 720, 76, 25, null);
 				g.drawImage(seeHand, 435, 720, 83, 25, null);
 				g.drawImage(trade, 300, 720, 122, 25, null);
+				//Untested
+				handSize = pManage.getPlayers().get(2).getResources().size();
+				startPoint = 290;
+				cardW = (350/(handSize+1));//Width of card
+				for(int i=0;i<handSize;i++)
+				{
+					g.drawImage(backResourceCard, startPoint, 650, cardW, 100, null);
+					startPoint += cardW+5;
+				}
 
 
 				g.setColor(new Color(61,138,247,255));	//blue
@@ -222,6 +251,15 @@ public class GameState {
 				g.drawImage(build, 380, 15, 76, 25, null);
 				g.drawImage(seeHand, 280, 15, 83, 25, null);
 				g.drawImage(trade, 145, 15, 122, 25, null);
+				//Untested
+				handSize = pManage.getPlayers().get(2).getResources().size();
+				startPoint = 135;
+				cardW = (350/(handSize+1));//Width of card
+				for(int i=0;i<handSize;i++)
+				{
+					g.drawImage(backResourceCard, startPoint, 30, cardW, 100, null);
+					startPoint += cardW+5;
+				}
 
 
 				gBoard.paintTiles(g);
