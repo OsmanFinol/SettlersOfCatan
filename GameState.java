@@ -32,7 +32,7 @@ public class GameState {
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
-	
+
 	public GameState() {
 		hexTiles = new ArrayList<>();
 		dice = new Dice();
@@ -95,7 +95,7 @@ public class GameState {
 
 			// build button + example
 			buildEx = ImageIO.read(GameState.class.getResource("/Images/building_example.png"));
-			
+
 			build = ImageIO.read(GameState.class.getResource("/Buttons/build_button_blue.png"));
 			seeHand = ImageIO.read(GameState.class.getResource("/Buttons/seehand_button_blue.png"));
 			trade = ImageIO.read(GameState.class.getResource("/Buttons/trade_button_blue.png"));
@@ -108,12 +108,12 @@ public class GameState {
 	}
 
 	public void paintDefaults(Graphics g) {
-		
+
 		// TITLE SCREEN
 		if (state.equals("TITLE")) {
 			if (subState.equals("title"))
 				g.drawImage(titleScreen, 0, 0, 1486, 950, null);
-			//getting players
+				//getting players
 			else if (subState.equals("findnumplayers4")) {
 				//g.setColor(new Color(0,200,248, 250));
 				try {
@@ -202,30 +202,30 @@ public class GameState {
 				g.drawImage(build, 1260, 15, 76, 25, null);
 				g.drawImage(seeHand, 1160, 15, 83, 25, null);
 				g.drawImage(trade, 1025, 15, 122, 25, null);
-				
+
 				g.setColor(new Color(255,168,52,255)); //orange
 				g.fillRect(870, 625, 350, 120);
 				g.drawImage(build, 1115, 720, 76, 25, null);
 				g.drawImage(seeHand, 1015, 720, 83, 25, null);
 				g.drawImage(trade, 880, 720, 122, 25, null);
-		
-		
+
+
 				g.setColor(new Color(255,255,255,255)); //white
 				g.fillRect(290, 625, 350, 120);
 				g.drawImage(build, 535, 720, 76, 25, null);
 				g.drawImage(seeHand, 435, 720, 83, 25, null);
 				g.drawImage(trade, 300, 720, 122, 25, null);
-		
-		
+
+
 				g.setColor(new Color(61,138,247,255));	//blue
 				g.fillRect(135, 12, 350, 120);
 				g.drawImage(build, 380, 15, 76, 25, null);
 				g.drawImage(seeHand, 280, 15, 83, 25, null);
 				g.drawImage(trade, 145, 15, 122, 25, null);
-				
+
 
 				gBoard.paintTiles(g);
-				
+
 				// g.fillOval(575, 145, 20, 20); ignore this
 				// gBoard.paintInters(g);
 			}
@@ -460,8 +460,8 @@ public class GameState {
 			g.drawString("GOOD LUCK!", 3 * 1500 / 13, 25 * 950 / 29);
 		}
 	}
-	
-	
+
+
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 		double radian = Math.toRadians(angle);
 		double sin = Math.abs(Math.sin(radian));
