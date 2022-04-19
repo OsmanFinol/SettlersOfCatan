@@ -178,6 +178,11 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					repaint();
 				}
 			}
+			/*if(x>=1160 && x<=1243 && y>=15 && y<=40)
+			{
+
+			}
+			*/
 		}
 	}
 
