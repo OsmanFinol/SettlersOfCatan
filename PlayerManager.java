@@ -23,7 +23,8 @@ public class PlayerManager {
 		}
 		scan.close();
 	}
-	
+
+	public ArrayList<Player> getPlayers(){return players;}
 	//switches to next player
 	public void nextPlayer() {
 		cPlayer++;
