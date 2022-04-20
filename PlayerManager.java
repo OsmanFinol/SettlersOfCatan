@@ -23,8 +23,7 @@ public class PlayerManager {
 		}
 		scan.close();
 	}
-
-	public ArrayList<Player> getPlayers(){return players;}
+	
 	//switches to next player
 	public void nextPlayer() {
 		cPlayer++;
@@ -47,7 +46,9 @@ public class PlayerManager {
 	public int getNumPlayers() {
 		return numP;
 	}
-	
+	public ArrayList<Player> getPlayerList() {
+		return players;
+	}
 	public void trade(Player p, ArrayList<ResourceCard> getting, ArrayList<ResourceCard> giving) { 
 		//getting and giving from the cPlayer's perspective, not p's
 		Player cPlay = players.get(cPlayer);
@@ -80,9 +81,10 @@ public class PlayerManager {
 		return temp;
 	}
 	
-	public void setColors(String[] colors) {
-		for (int i = 0; i < numP; i++) {
-			players.get(i).setColor(colors[i]);
+	public void setColors(ArrayList<String> colors) {
+		Iterator<String> iter = colors.iterator();
+		for (int i = 0; i < players.size(); i++) {
+			players.get(i).setColor(iter.next());
 		}
 	}
 	
