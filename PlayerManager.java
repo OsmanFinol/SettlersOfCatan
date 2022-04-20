@@ -104,7 +104,8 @@ public class PlayerManager {
 		}
 		return null;
 	}
-	
+	private ArrayList<ResourceCard> getPlayersHand(int index){return players.get(index).getInventory();}
+
 	//ignore this, it's just so that the treeset works :)
 	public class playerComparer implements Comparator<Player>
 	{
