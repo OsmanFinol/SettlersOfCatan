@@ -30,7 +30,7 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
-			seeHand, trade;
+			seeHand, trade, backCard;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -79,6 +79,7 @@ public class GameState {
 			grainCard = ImageIO.read(GameState.class.getResource("/CardImages/Grain.jpg"));
 			woodCard = ImageIO.read(GameState.class.getResource("/CardImages/Wood.jpg"));
 			brickCard = ImageIO.read(GameState.class.getResource("/CardImages/Brick.jpg"));
+			backCard = ImageIO.read(GameState.class.getResource("/CardImages/back of card.png"));
 
 			// perimeter dev. cards
 			perimDevBack = ImageIO.read(GameState.class.getResource("/DevCards/dev_back.png"));
