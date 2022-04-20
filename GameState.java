@@ -30,7 +30,7 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
-			seeHand, trade, backCard;
+			seeHand, trade;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -79,7 +79,6 @@ public class GameState {
 			grainCard = ImageIO.read(GameState.class.getResource("/CardImages/Grain.jpg"));
 			woodCard = ImageIO.read(GameState.class.getResource("/CardImages/Wood.jpg"));
 			brickCard = ImageIO.read(GameState.class.getResource("/CardImages/Brick.jpg"));
-			backCard = ImageIO.read(GameState.class.getResource("/CardImages/back of card.png"));
 
 			// perimeter dev. cards
 			perimDevBack = ImageIO.read(GameState.class.getResource("/DevCards/dev_back.png"));
@@ -221,7 +220,7 @@ public class GameState {
 				map.put("White", new Color(255, 255, 255, 255));
 				map.put("Blue", new Color(61, 138, 247, 255));
 				ArrayList<Player> pListTemp = pManage.getPlayerList();
-
+		
 				for (int i = 0; i < pManage.getNumPlayers(); i++) {
 					if (i == 0) {
 						g.setColor(map.get(pListTemp.get(i).getColor()));
@@ -290,6 +289,7 @@ public class GameState {
 			}
 		}
 	}
+
 
 	public void paintLog(Graphics g, ArrayList<String> lines) {
 		if (state.equals("GAME")) {
