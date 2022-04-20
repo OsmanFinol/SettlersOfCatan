@@ -1,8 +1,16 @@
 import java.awt.Graphics;
 import java.awt.LayoutManager;
+import java.awt.datatransfer.SystemFlavorMap;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
+import java.util.Set;
+import java.util.TreeSet;
+
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -10,40 +18,68 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
 										// add it here
-	private boolean actualGame = false;
+	private boolean actualGame = true;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
-	JComboBox<String> colorPicker1, colorPicker2, colorPicker3, colorPicker4;
+	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
+	ArrayList<String> colorsToSet;
 
 	public SettlersOfCatanPanel(LayoutManager lm) {
 		super(lm);
 		gs = new GameState();
+		colorsToSet = new ArrayList<String>();
 		addMouseListener(this);
 		lines = new ArrayList<String>();
 		lines.add("Game has started! Good luck!");
-
+		c1 = "White";
+		c2 = "White";
+		c3 = "White";
+		c4 = "White"; // so they arent null
 	}
 
 	public void paintComponent(Graphics g) {
 		gs.paintDefaults(g);
+		// COLOR SELECTION DROPDOWNS
+		JComboBox<String> colorPicker1 = new JComboBox<String>(colors);
+		colorPicker1.setBounds(635, 270, 200, 90);
+		colorPicker1.setVisible(false);
+		colorPicker1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c1 = colorPicker1.getSelectedItem().toString();
+			}
+		});
+		add(colorPicker1);
+		JComboBox<String> colorPicker2 = new JComboBox<String>(colors);
+		colorPicker2.setBounds(635, 370, 200, 90);
+		colorPicker2.setVisible(false);
+		colorPicker2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c2 = colorPicker2.getSelectedItem().toString();
+			}
+		});
+
+		add(colorPicker2);
+		JComboBox<String> colorPicker3 = new JComboBox<String>(colors);
+		colorPicker3.setBounds(635, 470, 200, 90);
+		colorPicker3.setVisible(false);
+		colorPicker3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c3 = colorPicker3.getSelectedItem().toString();
+			}
+		});
+		add(colorPicker3);
+		JComboBox<String> colorPicker4 = new JComboBox<String>(colors);
+		colorPicker4.setBounds(635, 570, 200, 90);
+		colorPicker4.setVisible(false);
+		colorPicker4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				c4 = colorPicker4.getSelectedItem().toString();
+			}
+		});
+		add(colorPicker4);
+
 		if (gs.getSubState().equals("default"))
 			gs.paintLog(g, lines);
 		else if (gs.getSubState().equals("setcolors")) {
-			colorPicker1 = new JComboBox<String>(colors);
-			colorPicker1.setBounds(600, 250, 200, 35);
-			colorPicker1.setVisible(false);
-			add(colorPicker1);
-			colorPicker2 = new JComboBox<String>(colors);
-			colorPicker2.setBounds(600, 350, 200, 35);
-			colorPicker2.setVisible(false);
-			add(colorPicker2);
-			colorPicker3 = new JComboBox<String>(colors);
-			colorPicker3.setBounds(600, 450, 200, 35);
-			colorPicker3.setVisible(false);
-			add(colorPicker3);
-			colorPicker4 = new JComboBox<String>(colors);
-			colorPicker4.setBounds(600, 550, 200, 35);
-			colorPicker4.setVisible(false);
-			add(colorPicker4);
 			colorPicker1.setVisible(true);
 			colorPicker2.setVisible(true);
 			if (gs.getNumPlayers() >= 3)
@@ -171,18 +207,34 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
 				gs.nextPlayer();
 				repaint();
-			} else if (gs.getSubState().equals("setcolors")) {
-				if (x >= 850 && y >= 425 && x <= 850 + 250 && y <= 425 + 120) {
-					gs.setSubState("default");
-					this.remove(colorPicker1);
+			} else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
+				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
+					// add selected items to arraylist, then do some fun java stuff to remove the duplicates :)
+					// if there are duplicates, then list wont be right size
+					// so thats how we know they selected a color more than once
+					//i tried to do this with a treeset and i forgot that it also sorted the elements so :|
+					ArrayList<String> temp = new ArrayList<String>();
+					temp.add(c1);
+					temp.add(c2);
+					if (gs.getNumPlayers() > 2)
+						temp.add(c3);
+					if (gs.getNumPlayers() > 3)
+						temp.add(c4);
+					Set<String> s = new LinkedHashSet<>();
+					s.addAll(temp);
+					temp.clear();
+					temp.addAll(s);
+					if (temp.size() != gs.getNumPlayers())
+						gs.setSubState("redocolor");
+					else {
+						gs.setSubState("default");
+						gs.setPlayerColors(temp);
+						removeAll(); // this'll get rid of the jcomboboxes finally
+					}
 					repaint();
+
 				}
 			}
-			/*if(x>=1160 && x<=1243 && y>=15 && y<=40)
-			{
-
-			}
-			*/
 		}
 	}
 
