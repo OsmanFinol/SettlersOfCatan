@@ -11,6 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -21,14 +22,15 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class GameState {
-
+	//ctrl+shift+f is ur best friend
+	
 	private String state, subState; // state is always capital, substate is always lowercase
 	private ArrayList<Tile> hexTiles;
 	private Board gBoard;
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
-			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect,
-			build, seeHand, trade, backResourceCard;
+			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
+			seeHand, trade;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -58,7 +60,7 @@ public class GameState {
 				hexTiles.get(i).setNum(tempList.get(i));
 				hexTiles.get(i).setImage(tempStrList.get(i));
 			}
-			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
+			titleScreen = ImageIO.read(GameState.class.getResource("Images/title_screen.PNG"));
 			harTrade = ImageIO.read(GameState.class.getResource("/Images/harbor trade system.png"));
 			bankTrade = ImageIO.read(GameState.class.getResource("/Images/bank trade system.png"));
 			tradeMenu = ImageIO.read(GameState.class.getResource("/Images/trade menu.png"));
@@ -77,7 +79,6 @@ public class GameState {
 			grainCard = ImageIO.read(GameState.class.getResource("/CardImages/Grain.jpg"));
 			woodCard = ImageIO.read(GameState.class.getResource("/CardImages/Wood.jpg"));
 			brickCard = ImageIO.read(GameState.class.getResource("/CardImages/Brick.jpg"));
-			backResourceCard = ImageIO.read(GameState.class.getResource("/CardImages/back of card.png"));
 
 			// perimeter dev. cards
 			perimDevBack = ImageIO.read(GameState.class.getResource("/DevCards/dev_back.png"));
@@ -114,9 +115,9 @@ public class GameState {
 		if (state.equals("TITLE")) {
 			if (subState.equals("title"))
 				g.drawImage(titleScreen, 0, 0, 1486, 950, null);
-				//getting players
+			// getting players
 			else if (subState.equals("findnumplayers4")) {
-				//g.setColor(new Color(0,200,248, 250));
+				// g.setColor(new Color(0,200,248, 250));
 				try {
 					playerSelect = ImageIO.read(GameState.class.getResource("/Images/player4_select.PNG"));
 				} catch (IOException e) {
@@ -124,8 +125,7 @@ public class GameState {
 				}
 				g.drawImage(playerSelect, 300, 150, 900, 600, null);
 				pManage = new PlayerManager(4);
-			}
-			else if (subState.equals("findnumplayers3")) {
+			} else if (subState.equals("findnumplayers3")) {
 				try {
 					playerSelect = ImageIO.read(GameState.class.getResource("/Images/player3_select.PNG"));
 				} catch (IOException e) {
@@ -133,8 +133,7 @@ public class GameState {
 				}
 				g.drawImage(playerSelect, 300, 150, 900, 600, null);
 				pManage = new PlayerManager(3);
-			}
-			else if (subState.equals("findnumplayers2")) {
+			} else if (subState.equals("findnumplayers2")) {
 				try {
 					playerSelect = ImageIO.read(GameState.class.getResource("/Images/player2_select.PNG"));
 				} catch (IOException e) {
@@ -144,7 +143,7 @@ public class GameState {
 				pManage = new PlayerManager(2);
 			}
 
-			//g.drawRect(560, 520, 340, 150);
+			// g.drawRect(560, 520, 340, 150);
 		}
 		// RULES SCREEN
 		else if (state.equals("RULES")) {
@@ -155,20 +154,35 @@ public class GameState {
 			g.setColor(new Color(210, 180, 140, 255));
 			g.fillRect(0, 0, 2000, 2000);
 			if (subState.equals("setcolors")) {
-				g.setColor(new Color(0,200,248, 250));
-				g.fillRect(300, 150, 900, 600);
+				g.setColor(new Color(0, 200, 248, 255));
+				try {
+					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
+							587, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.fillRect(880, 260, 200, 300);
+				if (pManage.getNumPlayers() == 2)
+					g.fillRect(320, 450, 860, 200);
+				else if (pManage.getNumPlayers() == 3)
+					g.fillRect(320, 560, 560, 150);
+
+			} else if (subState.equals("redocolor")) {
+				g.setColor(new Color(0, 200, 248, 255));
+				try {
+					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
+							587, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.fillRect(880, 260, 200, 300);
+				if (pManage.getNumPlayers() == 2)
+					g.fillRect(320, 450, 860, 200);
+				else if (pManage.getNumPlayers() == 3)
+					g.fillRect(320, 560, 560, 150);
 				g.setColor(Color.black);
-				g.setFont(new Font("Arial", Font.BOLD, 40));
-				g.drawString("Pick your color!", 600, 200);
-				g.setFont(new Font("Arial", Font.BOLD, 20));
-				g.drawString("Player1", 500, 280);
-				g.drawString("Player2", 500, 380);
-				if (pManage.getNumPlayers() >= 3)
-					g.drawString("Player3", 500, 480);
-				if (pManage.getNumPlayers() >= 4)
-					g.drawString("Player4", 500, 580);
-				g.setColor(Color.green);
-				g.fillRect(850, 425, 250, 120);
+				g.setFont(new Font("Arial", Font.BOLD, 30));
+				g.drawString("Two players can't have the same color!", 400, 700);
 			} else if (subState.equals("default")) {
 				// background hexagons
 				g.drawImage(blueHex, 410, 75, 670, 520, null);
@@ -198,74 +212,42 @@ public class GameState {
 				g.drawImage(redDice, 690, 680, 71, 72, null);
 				g.drawImage(yellowDice, 745, 750, 71, 72, null);
 
-				g.setColor(new Color(230,22,16,255));	//red
-				g.fillRect(1015, 12, 350, 120);
-				g.drawImage(build, 1260, 15, 76, 25, null);
-				g.drawImage(seeHand, 1160, 15, 83, 25, null);
-				g.drawImage(trade, 1025, 15, 122, 25, null);
-				//Untested
-					int handSize = pManage.getPlayers().get(0).getResources().size();
-					int startPoint = 1015;
-					int cardW = (350/(handSize+1));//Width of card
-					for(int i=0;i<handSize;i++)
-					{
-						g.drawImage(backResourceCard, startPoint, 30, cardW, 100, null);
-						startPoint += cardW+5;
+				// using a hashmap to store the color values with the color name
+				// that way, player 1 is in upper left corner, player 2 in upper right, etc etc
+				HashMap<String, Color> map = new HashMap<>();
+				map.put("Red", new Color(230, 22, 16, 255));
+				map.put("Orange", new Color(255, 168, 52, 255));
+				map.put("White", new Color(255, 255, 255, 255));
+				map.put("Blue", new Color(61, 138, 247, 255));
+				ArrayList<Player> pListTemp = pManage.getPlayerList();
+				for (int i = 0; i < pManage.getNumPlayers(); i++) {
+					if (i == 0) {
+						g.setColor(map.get(pListTemp.get(i).getColor()));
+						g.fillRect(135, 12, 350, 120);
+						g.drawImage(build, 380, 15, 76, 25, null);
+						g.drawImage(seeHand, 280, 15, 83, 25, null);
+						g.drawImage(trade, 145, 15, 122, 25, null);
+					} else if (i == 1) {
+						g.setColor(map.get(pListTemp.get(i).getColor()));
+						g.fillRect(1015, 12, 350, 120);
+						g.drawImage(build, 1260, 15, 76, 25, null);
+						g.drawImage(seeHand, 1160, 15, 83, 25, null);
+						g.drawImage(trade, 1025, 15, 122, 25, null);
+					} else if (i == 2) {
+						g.setColor(map.get(pListTemp.get(i).getColor()));
+						g.fillRect(290, 625, 350, 120);
+						g.drawImage(build, 535, 720, 76, 25, null);
+						g.drawImage(seeHand, 435, 720, 83, 25, null);
+						g.drawImage(trade, 300, 720, 122, 25, null);
+					} else if (i == 3) {
+						g.setColor(map.get(pListTemp.get(i).getColor()));
+						g.fillRect(870, 625, 350, 120);
+						g.drawImage(build, 1115, 720, 76, 25, null);
+						g.drawImage(seeHand, 1015, 720, 83, 25, null);
+						g.drawImage(trade, 880, 720, 122, 25, null);
 					}
-
-
-				g.setColor(new Color(255,168,52,255)); //orange
-				g.fillRect(870, 625, 350, 120);
-				g.drawImage(build, 1115, 720, 76, 25, null);
-				g.drawImage(seeHand, 1015, 720, 83, 25, null);
-				g.drawImage(trade, 880, 720, 122, 25, null);
-				//Untested
-				handSize = pManage.getPlayers().get(1).getResources().size();
-				startPoint = 870;
-				cardW = (350/(handSize+1));//Width of card
-				for(int i=0;i<handSize;i++)
-				{
-					g.drawImage(backResourceCard, startPoint, 650, cardW, 100, null);
-					startPoint += cardW+5;
 				}
-
-
-				g.setColor(new Color(255,255,255,255)); //white
-				g.fillRect(290, 625, 350, 120);
-				g.drawImage(build, 535, 720, 76, 25, null);
-				g.drawImage(seeHand, 435, 720, 83, 25, null);
-				g.drawImage(trade, 300, 720, 122, 25, null);
-				//Untested
-				handSize = pManage.getPlayers().get(2).getResources().size();
-				startPoint = 290;
-				cardW = (350/(handSize+1));//Width of card
-				for(int i=0;i<handSize;i++)
-				{
-					g.drawImage(backResourceCard, startPoint, 650, cardW, 100, null);
-					startPoint += cardW+5;
-				}
-
-
-				g.setColor(new Color(61,138,247,255));	//blue
-				g.fillRect(135, 12, 350, 120);
-				g.drawImage(build, 380, 15, 76, 25, null);
-				g.drawImage(seeHand, 280, 15, 83, 25, null);
-				g.drawImage(trade, 145, 15, 122, 25, null);
-				//Untested
-				handSize = pManage.getPlayers().get(2).getResources().size();
-				startPoint = 135;
-				cardW = (350/(handSize+1));//Width of card
-				for(int i=0;i<handSize;i++)
-				{
-					g.drawImage(backResourceCard, startPoint, 30, cardW, 100, null);
-					startPoint += cardW+5;
-				}
-
-
 				gBoard.paintTiles(g);
-
-				// g.fillOval(575, 145, 20, 20); ignore this
-				// gBoard.paintInters(g);
 			}
 		}
 	}
@@ -323,8 +305,13 @@ public class GameState {
 	public Player getNextPlayer() {
 		return pManage.getNextPlayer();
 	}
+
 	public int getNumPlayers() {
 		return pManage.getNumPlayers();
+	}
+
+	public void setPlayerColors(ArrayList<String> colors) {
+		pManage.setColors(colors);
 	}
 
 	public void nextPlayer() {
@@ -355,8 +342,7 @@ public class GameState {
 			g.drawString("There are five types of resources: brick, grain, sheep, stone, and wood", 1500 / 30,
 					7 * (950 / 29));
 			g.drawString("Each tile is consigned to a resource.", 1500 / 30, 8 * (950 / 29));
-			g.drawString("Each tile is also assigned a random number 1-12, excluding 7.", 1500 / 30,
-					9 * (950 / 29));
+			g.drawString("Each tile is also assigned a random number 1-12, excluding 7.", 1500 / 30, 9 * (950 / 29));
 			g.drawString("When the die are rolled, the tile numbers corresponding to the die roll yield resources.",
 					1500 / 30, 10 * (950 / 29));
 			g.drawString(
@@ -364,10 +350,8 @@ public class GameState {
 					1500 / 30, 11 * (950 / 29));
 			g.drawImage(brickCard, 8 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27), null);
 			g.drawImage(grainCard, 9 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27), null);
-			g.drawImage(stoneCard, 10 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27),
-					null);
-			g.drawImage(sheepCard, 11 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27),
-					null);
+			g.drawImage(stoneCard, 10 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27), null);
+			g.drawImage(sheepCard, 11 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27), null);
 			g.drawImage(woodCard, 12 * 1500 / 15 + 10, 5 * (950 / 29) - 10, 3 * (1500 / 60), 4 * (950 / 27), null);
 
 			g.drawString("Victory points can be earned by building cities and settlements.", 21 * (1500 / 60),
@@ -428,12 +412,10 @@ public class GameState {
 			g.drawImage(buildingCost, 1155, 175, 280, 390, null);
 			//
 
-			g.drawString("A Knight development card allows the player to move the robber.", 1500 / 15,
-					20 * (950 / 29));
+			g.drawString("A Knight development card allows the player to move the robber.", 1500 / 15, 20 * (950 / 29));
 			g.drawString("The first player to play 3 Knight cards gets the \"Largest Army\" card worth 2 points.",
 					1500 / 15, 21 * (950 / 29));
-			g.drawString("Progress cards have instructions to be followed by the player.", 1500 / 15,
-					22 * (950 / 29));
+			g.drawString("Progress cards have instructions to be followed by the player.", 1500 / 15, 22 * (950 / 29));
 			g.drawString(
 					"Victory Point cards must be hidden until the player is sure they have received the 10 points needed to win the game.",
 					1500 / 15, 23 * (950 / 29));
@@ -459,8 +441,8 @@ public class GameState {
 			g.drawString("The player can trade with anyone during their turn.", 12 * (1500 / 30), 950 / 29);
 			g.drawString("They may send a trade request.  The receiver can choose to accept or deny the trade.",
 					12 * (1500 / 30), 2 * (950 / 29));
-			g.drawString("Due to the nature of this simulation, each player's hand will be visible.",
-					12 * (1500 / 30), 3 * (950 / 29));
+			g.drawString("Due to the nature of this simulation, each player's hand will be visible.", 12 * (1500 / 30),
+					3 * (950 / 29));
 			g.drawString("Trade will be ended by the \"Build\" or \"Pass Dice\" button.", 12 * (1500 / 30),
 					4 * (950 / 29));
 			g.drawImage(tradeMenu, (1500 / 40), 950 / 70, 10 * 1500 / 60, 6 * 950 / 29, null);
@@ -469,10 +451,9 @@ public class GameState {
 			g.drawString("If a player has a structure adjacent to a harbor, they can use it to trade.", 1500 / 40,
 					9 * (950 / 29));
 			g.drawString("Each harbor demands a particular resource for another.", 1500 / 40, 10 * (950 / 29));
-			g.drawString("For the harbors denoted ?, the player may exchange that number of any resource.",
-					1500 / 40, 11 * (950 / 29));
-			g.drawString(
-					"Additionally, a player can exchange 4 of one resource card for one of another at the bank.",
+			g.drawString("For the harbors denoted ?, the player may exchange that number of any resource.", 1500 / 40,
+					11 * (950 / 29));
+			g.drawString("Additionally, a player can exchange 4 of one resource card for one of another at the bank.",
 					1500 / 40, 12 * (950 / 29));
 			g.drawImage(harTrade, 900, 7 * (950 / 29) - 10, 10 * (1500 / 60), 6 * (950 / 27), null);
 			g.drawImage(bankTrade, 1150, 7 * (950 / 29) - 10, 10 * (1500 / 60), 6 * (950 / 27), null);
@@ -498,7 +479,6 @@ public class GameState {
 			g.drawString("GOOD LUCK!", 3 * 1500 / 13, 25 * 950 / 29);
 		}
 	}
-
 
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 		double radian = Math.toRadians(angle);
