@@ -8,7 +8,6 @@ public class Player {
 	ArrayList<ResourceCard> inventory;	//inventory of resource cards
 	ArrayList<DevelopmentCard> vicCards;	//inventory of development cards
 	ArrayList<Structure> builds;	//their builds and structures
-
 	
 	public Player(String s) {
 		color = s;
@@ -20,6 +19,10 @@ public class Player {
 	
 	public void setColor(String s) {
 		color = s;
+	}
+	
+	public String getColor() {
+		return color;
 	}
 	
 	public void buildStructure(int t, Intersection i) {
@@ -62,7 +65,7 @@ public class Player {
 		return inventory.size();
 	}
 	
-	public ArrayList<ResourceCard> getResources(){return inventory;}
+	
 	public void addVictoryPoints(int i) { //adds victory points, self-explanatory
 		victoryPoints += i;
 	}
