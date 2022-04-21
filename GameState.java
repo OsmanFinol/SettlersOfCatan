@@ -24,7 +24,7 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
-			seeHand, trade, backCard;
+			seeHand, trade, buildMenu, backCard;
 	private Dice dice;
 	private PlayerManager pManage;
 	ArrayList<Player> pListTemp;
@@ -94,6 +94,7 @@ public class GameState {
 
 			// build button + example
 			buildEx = ImageIO.read(GameState.class.getResource("/Images/building_example.png"));
+			buildMenu = ImageIO.read(GameState.class.getResource("/BuildImages/select_building.png"));
 
 			build = ImageIO.read(GameState.class.getResource("/Buttons/build_button_blue.png"));
 			seeHand = ImageIO.read(GameState.class.getResource("/Buttons/seehand_button_blue.png"));
@@ -160,11 +161,15 @@ public class GameState {
 				}
 				g.fillRect(880, 260, 200, 300);
 				if (pManage.getNumPlayers() == 2)
-					g.fillRect(320, 450, 860, 200);
+					g.fillRect(320, 450, 560, 200);
 				else if (pManage.getNumPlayers() == 3)
 					g.fillRect(320, 560, 560, 150);
 
-			} else if (subState.equals("redocolor")) {
+			} 
+			else if (subState.equals("buildmenu")) {
+				g.drawImage(buildMenu, 1150, 750, 205, 66, null);
+				}
+			else if (subState.equals("redocolor")) {
 				g.setColor(new Color(0, 200, 248, 255));
 				try {
 					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
@@ -174,7 +179,7 @@ public class GameState {
 				}
 				g.fillRect(880, 260, 200, 300);
 				if (pManage.getNumPlayers() == 2)
-					g.fillRect(320, 450, 860, 200);
+					g.fillRect(320, 450, 560, 200);
 				else if (pManage.getNumPlayers() == 3)
 					g.fillRect(320, 560, 560, 150);
 				g.setColor(Color.black);
