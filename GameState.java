@@ -154,7 +154,7 @@ public class GameState {
 		else if (state.equals("GAME")) {
 			g.setColor(new Color(210, 180, 140, 255));
 			g.fillRect(0, 0, 2000, 2000);
-			if (subState.equals("setcolors")) {
+			else if (subState.equals("setcolors")) {
 				g.setColor(new Color(0, 200, 248, 255));
 				try {
 					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
@@ -164,7 +164,7 @@ public class GameState {
 				}
 				g.fillRect(880, 260, 200, 300);
 				if (pManage.getNumPlayers() == 2)
-					g.fillRect(320, 450, 860, 200);
+					g.fillRect(320, 450, 560, 200);
 				else if (pManage.getNumPlayers() == 3)
 					g.fillRect(320, 560, 560, 150);
 
@@ -178,7 +178,7 @@ public class GameState {
 				}
 				g.fillRect(880, 260, 200, 300);
 				if (pManage.getNumPlayers() == 2)
-					g.fillRect(320, 450, 860, 200);
+					g.fillRect(320, 450, 560, 200);
 				else if (pManage.getNumPlayers() == 3)
 					g.fillRect(320, 560, 560, 150);
 				g.setColor(Color.black);
