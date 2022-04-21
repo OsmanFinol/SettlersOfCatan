@@ -207,7 +207,14 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
 				gs.nextPlayer();
 				repaint();
-			} else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
+			} 
+			if (gs.cPlayerIndex() == 1) {
+				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
+					gs.setSubState("buildmenu");
+					repaint();
+				}
+			}
+			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
 				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
 					// add selected items to arraylist, then do some fun java stuff to remove the duplicates :)
 					// if there are duplicates, then list wont be right size
