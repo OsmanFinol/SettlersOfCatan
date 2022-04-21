@@ -9,13 +9,7 @@ import java.awt.image.ImageObserver;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Scanner;
-import java.util.TreeSet;
+import java.util.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.JComboBox;
@@ -33,6 +27,7 @@ public class GameState {
 			seeHand, trade, backCard;
 	private Dice dice;
 	private PlayerManager pManage;
+	ArrayList<Player> pListTemp;
 	private boolean diceHaveBeenRolled;
 
 	public GameState() {
@@ -42,6 +37,7 @@ public class GameState {
 		subState = "title"; // initializes both for start of the game
 		pManage = new PlayerManager(4);
 		diceHaveBeenRolled = false;
+
 		try {
 			int randNum = (int) (Math.random() * 6) + 1;
 			Scanner app = new Scanner(new File("Tiles.txt"));
@@ -143,7 +139,7 @@ public class GameState {
 				g.drawImage(playerSelect, 300, 150, 900, 600, null);
 				pManage = new PlayerManager(2);
 			}
-
+			pListTemp = pManage.getPlayerList();
 			// g.drawRect(560, 520, 340, 150);
 		}
 		// RULES SCREEN
@@ -213,6 +209,9 @@ public class GameState {
 				g.drawImage(redDice, 690, 680, 71, 72, null);
 				g.drawImage(yellowDice, 745, 750, 71, 72, null);
 
+
+
+
 				// using a hashmap to store the color values with the color name
 				// that way, player 1 is in upper left corner, player 2 in upper right, etc etc
 				HashMap<String, Color> map = new HashMap<>();
@@ -220,7 +219,22 @@ public class GameState {
 				map.put("Orange", new Color(255, 168, 52, 255));
 				map.put("White", new Color(255, 255, 255, 255));
 				map.put("Blue", new Color(61, 138, 247, 255));
-				ArrayList<Player> pListTemp = pManage.getPlayerList();
+
+
+				//Test Data
+		/*	for(Player p:pListTemp)
+				{
+					String [] cards = {"stone", "brick", "sheep", "grain", "wood"};
+					ArrayList<ResourceCard> temp = new ArrayList();
+					int r = 2;
+					for(int i=0;i<r;i++)
+					{
+						int c = (int) Math.random()*6;
+						temp.add(new ResourceCard(cards[c]));
+					}
+					p.addResources(temp);
+				}*/
+				//End Test
 		
 				for (int i = 0; i < pManage.getNumPlayers(); i++) {
 					if (i == 0) {
@@ -544,6 +558,173 @@ public class GameState {
 		graphics.dispose();
 
 		return rotatedImage;
+	}
+
+
+	public void showCard(Graphics g, int p)
+	{
+		HashMap<String, Color> map = new HashMap<>();
+		map.put("Red", new Color(230, 22, 16, 255));
+		map.put("Orange", new Color(255, 168, 52, 255));
+		map.put("White", new Color(255, 255, 255, 255));
+		map.put("Blue", new Color(61, 138, 247, 255));
+
+		if(p==0)
+		{
+			g.setColor(map.get(pListTemp.get(p).getColor()));
+			g.fillRect(135, 12, 350, 120);
+			g.drawImage(build, 380, 15, 76, 25, null);
+			g.drawImage(seeHand, 280, 15, 83, 25, null);
+			g.drawImage(trade, 145, 15, 122, 25, null);
+
+			int s = pManage.getPlayersHand(p).size();//size of players hand
+			int startVal = 140;
+			if(s<=8) {
+				for (int j = 0; j < s; j++) {
+					ResourceCard temp=pManage.getPlayersHand(p).get(j);
+					if(temp.getName().equals("brick"))
+					{
+				g.drawImage(brickCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("stone"))
+					{
+				g.drawImage(stoneCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("sheep"))
+					{
+				g.drawImage(sheepCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("wood"))
+					{
+				g.drawImage(woodCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("grain"))
+					{
+				g.drawImage(grainCard, startVal, 40, 45, 90, null);
+					}
+
+					startVal += 50;
+
+				}
+			}
+		}
+		else if(p==1)
+		{
+			g.setColor(map.get(pListTemp.get(p).getColor()));
+			g.fillRect(1015, 12, 350, 120);
+			g.drawImage(build, 1260, 15, 76, 25, null);
+			g.drawImage(seeHand, 1160, 15, 83, 25, null);
+			g.drawImage(trade, 1025, 15, 122, 25, null);
+			int s = pManage.getPlayersHand(p).size();//size of players hand
+			int startVal = 1015;
+			if(s<=8) {
+				for (int j = 0; j < s; j++) {
+					ResourceCard temp=pManage.getPlayersHand(p).get(j);
+					if(temp.getName().equals("brick"))
+					{
+						g.drawImage(brickCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("stone"))
+					{
+						g.drawImage(stoneCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("sheep"))
+					{
+						g.drawImage(sheepCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("wood"))
+					{
+						g.drawImage(woodCard, startVal, 40, 45, 90, null);
+					}
+					else if(temp.getName().equals("grain"))
+					{
+						g.drawImage(grainCard, startVal, 40, 45, 90, null);
+					}
+
+					startVal += 50;
+
+				}
+			}
+		}
+		else if (p==2)
+		{
+			g.setColor(map.get(pListTemp.get(p).getColor()));
+			g.fillRect(290, 625, 350, 120);
+			g.drawImage(build, 535, 720, 76, 25, null);
+			g.drawImage(seeHand, 435, 720, 83, 25, null);
+			g.drawImage(trade, 300, 720, 122, 25, null);
+			int s = pManage.getPlayersHand(p).size();//size of players hand
+			int startVal = 290;
+			if(s<=8) {
+				for (int j = 0; j < s; j++) {
+					ResourceCard temp=pManage.getPlayersHand(p).get(j);
+					if(temp.getName().equals("brick"))
+					{
+						g.drawImage(brickCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("stone"))
+					{
+						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("sheep"))
+					{
+						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("wood"))
+					{
+						g.drawImage(woodCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("grain"))
+					{
+						g.drawImage(grainCard, startVal, 625, 45, 90, null);
+					}
+
+					startVal += 50;
+
+				}
+			}
+
+		}
+		else if (p==3)
+		{
+			g.setColor(map.get(pListTemp.get(p).getColor()));
+			g.fillRect(870, 625, 350, 120);
+			g.drawImage(build, 1115, 720, 76, 25, null);
+			g.drawImage(seeHand, 1015, 720, 83, 25, null);
+			g.drawImage(trade, 880, 720, 122, 25, null);
+
+			int s = pManage.getPlayersHand(p).size();//size of players hand
+			int startVal = 870;
+			if(s<=8) {
+				for (int j = 0; j < s; j++) {
+					ResourceCard temp=pManage.getPlayersHand(p).get(j);
+					if(temp.getName().equals("brick"))
+					{
+						g.drawImage(brickCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("stone"))
+					{
+						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("sheep"))
+					{
+						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("wood"))
+					{
+						g.drawImage(woodCard, startVal, 625, 45, 90, null);
+					}
+					else if(temp.getName().equals("grain"))
+					{
+						g.drawImage(grainCard, startVal, 625, 45, 90, null);
+					}
+
+					startVal += 50;
+
+				}
+			}
+		}
+
 	}
 
 }
