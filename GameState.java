@@ -325,7 +325,9 @@ public class GameState {
 			}
 		}
 	}
-
+public int cPlayerIndex() {
+		return pManage.cPlayerIndex();
+	}
 	public int[] rollDice() {
 		// this method'll be the one to distribute resources probably.............
 		// executed by the panel class
