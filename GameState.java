@@ -154,7 +154,7 @@ public class GameState {
 		else if (state.equals("GAME")) {
 			g.setColor(new Color(210, 180, 140, 255));
 			g.fillRect(0, 0, 2000, 2000);
-			else if (subState.equals("setcolors")) {
+			if (subState.equals("setcolors")) {
 				g.setColor(new Color(0, 200, 248, 255));
 				try {
 					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
