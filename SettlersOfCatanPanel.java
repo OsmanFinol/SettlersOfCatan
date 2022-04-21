@@ -18,7 +18,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
 										// add it here
-	private boolean actualGame = true;
+	private boolean actualGame = false;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
 	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
 	ArrayList<String> colorsToSet;
@@ -235,6 +235,16 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 
 				}
 			}
+			int i=-1;
+			if(x>=280 && x<=363 && y>=15 && y<=40)
+			{i=0;}
+			else if(x>=1160 && x<=1283 && y>=15 && y<=40)
+			{i=1;}
+			else if(x>=435 && x<=518 && y>=720 && y<=745)
+			{i=2;}
+			else if(x>=1015 && x<=1098 && y>=720 && y<=745)
+			{i=3;}
+			gs.showCard(getGraphics(), i);
 		}
 	}
 
