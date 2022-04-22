@@ -8,13 +8,13 @@ import java.util.TreeSet;
 public class PlayerManager {
 	ArrayList<Player> players;
 	int cPlayer;
-	TreeSet<Player> playerStanding;
+	ArrayList<Player> playerStanding;
 	int numP;
 	
 	public PlayerManager(int num) { //num of players playing
 		players = new ArrayList<>();
 		cPlayer = 0;
-		playerStanding = new TreeSet<Player>(new playerComparer());
+		playerStanding = new ArrayList<Player>();
 		Scanner scan = new Scanner("Red White Orange Blue"); //sets the player colors
 		numP = num;
 		for (int i = 0; i < num; i++) {
@@ -31,9 +31,7 @@ public class PlayerManager {
 			cPlayer = 0;
 		}
 	}
-		public int cPlayerIndex() {
-		return cPlayer;
-	}
+	
 	//returns player
 	public Player getCPlayer() {
 		return players.get(cPlayer);
@@ -91,8 +89,7 @@ public class PlayerManager {
 	}
 	
 	public void updateStanding() {
-		playerStanding.clear();
-		playerStanding.addAll(players);
+		Collections.sort(playerStanding, new playerComparer());
 	}
 	
 	public Player hasWon() {
@@ -106,8 +103,14 @@ public class PlayerManager {
 		}
 		return null;
 	}
+	
 	public ArrayList<ResourceCard> getPlayersHand(int index){return players.get(index).getInventory();}
-
+	
+	public void reOrderBasedOnRolls() {
+		Collections.sort(players, new rollReOrder());
+		Collections.reverse(players);
+	}
+	
 	//ignore this, it's just so that the treeset works :)
 	public class playerComparer implements Comparator<Player>
 	{
@@ -115,5 +118,16 @@ public class PlayerManager {
 	    {
 	        return p1.victoryPoints - p2.victoryPoints;
 	    }
+	}
+	
+	//also ignore this AHA AHA HAA
+	public class rollReOrder implements Comparator<Player> {
+		public int compare(Player p1, Player p2) {
+			return p1.orderRoll - p2.orderRoll;
+		}
+	}
+
+	public int cPlayerIndex() {
+		return cPlayer;
 	}
 }
