@@ -8,14 +8,14 @@ public class Player {
 	ArrayList<ResourceCard> inventory;	//inventory of resource cards
 	ArrayList<DevelopmentCard> vicCards;	//inventory of development cards
 	ArrayList<Structure> builds;	//their builds and structures
-
+	int orderRoll;
+	
 	public Player(String s) {
 		color = s;
 		victoryPoints = 0;
 		inventory = new ArrayList<>();
 		vicCards = new ArrayList<>();
 		builds = new ArrayList<>();
-
 	}
 	
 	public void setColor(String s) {
@@ -83,7 +83,7 @@ public class Player {
 	}
 	public void addVicCard(DevelopmentCard d){vicCards.add(d);}
 	public ArrayList<Structure> getBuilds(){return builds;}
-
+	
 	public ArrayList<ResourceCard> getInventory() {
 		return inventory;
 	}
@@ -93,3 +93,5 @@ public class Player {
 		return inventory.size();
 	}
 }
+
+
