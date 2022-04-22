@@ -710,7 +710,7 @@ public void HideCards(Graphics g)
 			g.drawString("GOOD LUCK!", 3 * 1500 / 13, 25 * 950 / 29);
 		}
 	}
-	
+	public PlayerManager getPM(){return pManage;}
 	public void showCard(Graphics g, int p)
 	{
 		HashMap<String, Color> map = new HashMap<>();
