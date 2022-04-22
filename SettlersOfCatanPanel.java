@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
-										// add it here
+	private int seeHandClick;									// add it here
 	private boolean actualGame = true;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
 	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
@@ -30,6 +30,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		c2 = "White";
 		c3 = "White";
 		c4 = "White"; // so they arent null
+		seeHandClick=0;
 	}
 
 	public void paintComponent(Graphics g) {
@@ -215,8 +216,15 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				{i=2;}
 				else if(x>=1015 && x<=1098 && y>=720 && y<=745)
 				{i=3;}
-				gs.showCard(getGraphics(), i);
-				
+				if(seeHandClick == 0) {
+					seeHandClick++;
+					gs.showCard(getGraphics(), i);
+				}
+				else if(seeHandClick == 1)
+				{
+					seeHandClick--;
+					gs.HideCards(getGraphics());
+				}
 			}
 			// rolling dice to figure out turn
 			else if (gs.getSubState().equals("setorder")) {
