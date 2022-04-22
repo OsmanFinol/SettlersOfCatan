@@ -227,20 +227,20 @@ public class GameState {
 
 
 				//Test Data
-		/*	for(Player p:pListTemp)
+	/*	for(Player p:pListTemp)
 				{
 					String [] cards = {"stone", "brick", "sheep", "grain", "wood"};
 					ArrayList<ResourceCard> temp = new ArrayList();
-					int r = 2;
+					int r = (int)Math.random()+1*4;
 					for(int i=0;i<r;i++)
 					{
-						int c = (int) Math.random()*6;
-						temp.add(new ResourceCard(cards[c]));
+
+						temp.add(new ResourceCard(cards[(int) Math.random()*6+1]));
 					}
 					p.addResources(temp);
-				}*/
+				}
 				//End Test
-		
+		*/
 				for (int i = 0; i < pManage.getNumPlayers(); i++) {
 					if (i == 0) {
 						g.setColor(map.get(pListTemp.get(i).getColor()));
