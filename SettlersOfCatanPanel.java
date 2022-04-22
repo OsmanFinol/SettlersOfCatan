@@ -252,6 +252,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 			else if(x>=1015 && x<=1098 && y>=720 && y<=745)
 			{i=3;}
 			gs.showCard(getGraphics(), i);
+			repaint();
 		}
 	}
 
