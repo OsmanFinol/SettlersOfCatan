@@ -227,7 +227,7 @@ public class GameState {
 
 
 				//Test Data
-	/*	for(Player p:pListTemp)
+		/*for(Player p:pListTemp)
 				{
 					String [] cards = {"stone", "brick", "sheep", "grain", "wood"};
 					ArrayList<ResourceCard> temp = new ArrayList();
@@ -240,7 +240,7 @@ public class GameState {
 					p.addResources(temp);
 				}
 				//End Test
-		*/
+*/
 				for (int i = 0; i < pManage.getNumPlayers(); i++) {
 					if (i == 0) {
 						g.setColor(map.get(pListTemp.get(i).getColor()));
@@ -301,9 +301,11 @@ public class GameState {
 							for (int j = 0; j < s; j++) {
 								g.drawImage(backCard, startVal, 625, 45, 90, null);
 								startVal += 50;
+
 							}
 						}
 					}
+
 				}
 				gBoard.paintTiles(g);
 			}
