@@ -1,16 +1,12 @@
 import java.awt.Graphics;
 import java.awt.LayoutManager;
-import java.awt.datatransfer.SystemFlavorMap;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeSet;
-
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
@@ -194,32 +190,58 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		// buttons on game screen
 		else if (gs.getState().equals("GAME")) {
 			// rolling dice
-			if (x >= 710 && x <= 710 + 95 && y >= 853 && y <= 853 + 47) {
-				if (!(gs.diceRolled())) {
-					int[] temp = gs.rollDice();
-					lines.add(gs.getCPlayer() + " rolled a " + temp[0] + " and a " + temp[1] + ".");
+			if (gs.getSubState().equals("default")) {
+				if (x >= 710 && x <= 710 + 95 && y >= 853 && y <= 853 + 47) {
+					if (!(gs.diceRolled())) {
+						int[] temp = gs.rollDice();
+						lines.add(gs.getCPlayer() + " rolled a " + temp[0] + " and a " + temp[1] + ".");
+						repaint();
+					}
+				}
+				// passing the dice/ending ur turn
+				else if (x >= 710 && y >= 600 && x <= 710 + 95 && y <= 600 + 47) {
+					lines.add(gs.getCPlayer() + " ended their turn.");
+					lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
+					gs.nextPlayer();
 					repaint();
 				}
+				
+				int i=-1;
+				if(x>=280 && x<=363 && y>=15 && y<=40)
+				{i=0;}
+				else if(x>=1160 && x<=1283 && y>=15 && y<=40)
+				{i=1;}
+				else if(x>=435 && x<=518 && y>=720 && y<=745)
+				{i=2;}
+				else if(x>=1015 && x<=1098 && y>=720 && y<=745)
+				{i=3;}
+				gs.showCard(getGraphics(), i);
+				
 			}
-			// passing the dice/ending ur turn
-			else if (x >= 710 && y >= 600 && x <= 710 + 95 && y <= 600 + 47) {
-				lines.add(gs.getCPlayer() + " ended their turn.");
-				lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
-				gs.nextPlayer();
+			// rolling dice to figure out turn
+			else if (gs.getSubState().equals("setorder")) {
+				if (x >= 620 && y >= 580 && x <= 620 + 270 && y <= 680) {
+					gs.rollForOrder(gs.getNumPlayers());
+					repaint();
+				}
+
+			}
+
+			// entering game (finally)
+			else if (x >= 605 && y >= 570 && x <= 605 + 289 && y <= 570 + 143) {
+				gs.setSubState("default");
+				lines.add("It's " + gs.getCPlayer() + "'s turn.");
 				repaint();
-			} 
-			if (gs.cPlayerIndex() == 1) {
-				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
-					gs.setSubState("buildmenu");
-					repaint();
-				}
 			}
+			// selecting colors
 			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
 				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
-					// add selected items to arraylist, then do some fun java stuff to remove the duplicates :)
+					// add selected items to arraylist, then do some fun java stuff to remove the
+					// duplicates :)
 					// if there are duplicates, then list wont be right size
 					// so thats how we know they selected a color more than once
-					//i tried to do this with a treeset and i forgot that it also sorted the elements so :|
+					// i tried to do this with a treeset and i forgot that it also sorted the
+					// elements so :|
 					ArrayList<String> temp = new ArrayList<String>();
 					temp.add(c1);
 					temp.add(c2);
@@ -234,25 +256,24 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					if (temp.size() != gs.getNumPlayers())
 						gs.setSubState("redocolor");
 					else {
-						gs.setSubState("default");
+						gs.setSubState("setorder");
 						gs.setPlayerColors(temp);
 						removeAll(); // this'll get rid of the jcomboboxes finally
 					}
 					repaint();
-
 				}
 			}
-			int i=-1;
-			if(x>=280 && x<=363 && y>=15 && y<=40)
-			{i=0;}
-			else if(x>=1160 && x<=1283 && y>=15 && y<=40)
-			{i=1;}
-			else if(x>=435 && x<=518 && y>=720 && y<=745)
-			{i=2;}
-			else if(x>=1015 && x<=1098 && y>=720 && y<=745)
-			{i=3;}
-			gs.showCard(getGraphics(), i);
-			repaint();
+			
+			//trading
+			else if (x >= 145 && y >= 15 && x <= 145+122 && y <= 40) {
+				if (gs.cPlayerIndex() != 0) {
+					
+				}
+				else {
+					
+				}
+			}
+			
 		}
 	}
 
