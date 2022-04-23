@@ -729,8 +729,8 @@ public void HideCards(Graphics g)
 
 			int s = pManage.getPlayersHand(p).size();//size of players hand
 			int startVal = 140;
-			if(s<=8) {
-				for (int j = 0; j < s; j++) {
+
+				for (int j = 0; j < 8; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -755,7 +755,7 @@ public void HideCards(Graphics g)
 
 					startVal += 50;
 
-				}
+
 			}
 		}
 		else if(p==1)
@@ -767,8 +767,8 @@ public void HideCards(Graphics g)
 			g.drawImage(trade, 1025, 15, 122, 25, null);
 			int s = pManage.getPlayersHand(p).size();//size of players hand
 			int startVal = 1015;
-			if(s<=8) {
-				for (int j = 0; j < s; j++) {
+
+				for (int j = 0; j < 8; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -794,7 +794,7 @@ public void HideCards(Graphics g)
 					startVal += 50;
 
 				}
-			}
+
 		}
 		else if (p==2)
 		{
@@ -805,8 +805,8 @@ public void HideCards(Graphics g)
 			g.drawImage(trade, 300, 720, 122, 25, null);
 			int s = pManage.getPlayersHand(p).size();//size of players hand
 			int startVal = 290;
-			if(s<=8) {
-				for (int j = 0; j < s; j++) {
+
+				for (int j = 0; j < 8; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -831,7 +831,7 @@ public void HideCards(Graphics g)
 
 					startVal += 50;
 
-				}
+
 			}
 
 		}
@@ -845,8 +845,8 @@ public void HideCards(Graphics g)
 
 			int s = pManage.getPlayersHand(p).size();//size of players hand
 			int startVal = 870;
-			if(s<=8) {
-				for (int j = 0; j < s; j++) {
+
+				for (int j = 0; j < 8; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -872,7 +872,7 @@ public void HideCards(Graphics g)
 					startVal += 50;
 
 				}
-			}
+
 		}
 
 	}
