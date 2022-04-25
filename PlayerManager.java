@@ -31,9 +31,7 @@ public class PlayerManager {
 			cPlayer = 0;
 		}
 	}
-	public int cPlayerIndex() {
-		return cPlayer;
-	}
+	
 	//returns player
 	public Player getCPlayer() {
 		return players.get(cPlayer);
