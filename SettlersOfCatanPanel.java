@@ -242,7 +242,8 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				repaint();
 			}
 			
-				if (gs.cPlayerIndex() == 0) {
+					
+			if (gs.cPlayerIndex() == 0) {
 				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
 					gs.setSubState("buildmenu");
@@ -257,6 +258,34 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 			}
 			if (gs.cPlayerIndex() == 1) {
 				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+			}
+			if (gs.cPlayerIndex() == 2) {
+				if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+			}
+			if (gs.cPlayerIndex() == 3) {
+				if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
 					gs.setSubState("buildmenu");
 					lines.add(gs.getCPlayer() + " started building.");
