@@ -30,7 +30,7 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
-			seeHand, trade, backCard;
+			seeHand, trade, buildMenu, backCard;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -104,6 +104,7 @@ public class GameState {
 
 			// build button + example
 			buildEx = ImageIO.read(GameState.class.getResource("/Images/building_example.png"));
+			buildMenu = ImageIO.read(GameState.class.getResource("/BuildImages/select_building.png"));
 
 			// player buttons
 			build = ImageIO.read(GameState.class.getResource("/Buttons/build_button_blue.png"));
@@ -277,7 +278,11 @@ public class GameState {
 				else if (pManage.getNumPlayers() == 3)
 					g.fillRect(320, 560, 560, 150);
 
-			} else if (subState.equals("redocolor")) {
+			} 
+			else if (subState.equals("buildmenu")) {
+				g.drawImage(buildMenu, 1150, 750, 205, 66, null);
+				}
+			else if (subState.equals("redocolor")) {
 				g.setColor(new Color(210, 180, 140, 255));
 				g.fillRect(0, 0, 2000, 2000);
 				g.setColor(new Color(0, 200, 248, 255));
