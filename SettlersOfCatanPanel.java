@@ -241,6 +241,35 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				lines.add("It's " + gs.getCPlayer() + "'s turn.");
 				repaint();
 			}
+			
+				if (gs.cPlayerIndex() == 0) {
+				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+			}
+			if (gs.cPlayerIndex() == 1) {
+				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+			}
+			
 			// selecting colors
 			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
 				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
