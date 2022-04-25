@@ -491,7 +491,7 @@ public class Board {
 			}
 		}
 	}
-	
+	public Intersection[][] getInters(){return inters;}
 	public void paintInters(Graphics g) {
 		g.setColor(new Color(222, 235, 52, 175));
 		for (int r = 0; r < 6; r++) {
