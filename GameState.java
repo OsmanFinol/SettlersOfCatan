@@ -742,36 +742,18 @@ public void HideCards(Graphics g)
 			g.drawImage(seeHand, 280, 15, 83, 25, null);
 			g.drawImage(trade, 145, 15, 122, 25, null);
 
+				g.drawImage(brickCard, 140, 40, 45, 90, null);
+				g.drawImage(stoneCard, 190, 40, 45, 90, null);
+				g.drawImage(sheepCard, 240, 40, 45, 90, null);
+				g.drawImage(woodCard, 290, 40, 45, 90, null);
+				g.drawImage(grainCard, 340, 40, 45, 90, null);
 
-			int startVal = 140;
+				g.drawString(String.valueOf(pListTemp.get(p).getCards()[0]), 140,135);
+				g.drawString(String.valueOf(pListTemp.get(p).getCards()[1]), 190,135);
+				g.drawString(String.valueOf(pListTemp.get(p).getCards()[2]), 240,135);
+				g.drawString(String.valueOf(pListTemp.get(p).getCards()[3]), 290,135);
+				g.drawString(String.valueOf(pListTemp.get(p).getCards()[4]), 3400,135);
 
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp=pManage.getPlayersHand(p).get(j);
-					if(temp.getName().equals("Brick"))
-					{
-				g.drawImage(brickCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Stone"))
-					{
-				g.drawImage(stoneCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Sheep"))
-					{
-				g.drawImage(sheepCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Wood"))
-					{
-				g.drawImage(woodCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Grain"))
-					{
-				g.drawImage(grainCard, startVal, 40, 45, 90, null);
-					}
-
-					startVal += 50;
-
-
-			}
 		}
 		else if(p==1)
 		{
@@ -782,35 +764,18 @@ public void HideCards(Graphics g)
 			g.drawImage(trade, 1025, 15, 122, 25, null);
 
 			int startVal = 1015;
-
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp=pManage.getPlayersHand(p).get(j);
-					if(temp.getName().equals("Brick"))
-					{
 						g.drawImage(brickCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Stone"))
-					{
-						g.drawImage(stoneCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Sheep"))
-					{
-						g.drawImage(sheepCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Wood"))
-					{
-						g.drawImage(woodCard, startVal, 40, 45, 90, null);
-					}
-					else if(temp.getName().equals("Grain"))
-					{
-						g.drawImage(grainCard, startVal, 40, 45, 90, null);
-					}
 
-					startVal += 50;
+						g.drawImage(stoneCard, 1065, 40, 45, 90, null);
 
-				}
+						g.drawImage(sheepCard, 1115, 40, 45, 90, null);
 
-		}
+						g.drawImage(woodCard, 1165, 40, 45, 90, null);
+
+						g.drawImage(grainCard, 1215, 40, 45, 90, null);
+}
+
+
 		else if (p==2)
 		{
 			g.setColor(map.get(pListTemp.get(p).getColor()));
@@ -821,35 +786,17 @@ public void HideCards(Graphics g)
 
 			int startVal = 290;
 
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp=pManage.getPlayersHand(p).get(j);
-					if(temp.getName().equals("Brick"))
-					{
+
 						g.drawImage(brickCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Stone"))
-					{
-						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Sheep"))
-					{
-						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Wood"))
-					{
-						g.drawImage(woodCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Grain"))
-					{
-						g.drawImage(grainCard, startVal, 625, 45, 90, null);
-					}
 
-					startVal += 50;
+						g.drawImage(stoneCard, 340, 625, 45, 90, null);
 
+						g.drawImage(sheepCard, 390, 625, 45, 90, null);
 
-			}
+						g.drawImage(woodCard, 440, 625, 45, 90, null);
 
-		}
+						g.drawImage(grainCard, 490, 625, 45, 90, null);
+					}
 		else if (p==3)
 		{
 			g.setColor(map.get(pListTemp.get(p).getColor()));
@@ -859,33 +806,16 @@ public void HideCards(Graphics g)
 			g.drawImage(trade, 880, 720, 122, 25, null);
 
 			int startVal = 870;
-
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp=pManage.getPlayersHand(p).get(j);
-					if(temp.getName().equals("Brick"))
-					{
 						g.drawImage(brickCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Stone"))
-					{
-						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Sheep"))
-					{
-						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Wood"))
-					{
-						g.drawImage(woodCard, startVal, 625, 45, 90, null);
-					}
-					else if(temp.getName().equals("Grain"))
-					{
-						g.drawImage(grainCard, startVal, 625, 45, 90, null);
-					}
 
-					startVal += 50;
+						g.drawImage(stoneCard, 920, 625, 45, 90, null);
 
-				}
+						g.drawImage(sheepCard, 970, 625, 45, 90, null);
+
+						g.drawImage(woodCard, 1020, 625, 45, 90, null);
+
+						g.drawImage(grainCard, 1070, 625, 45, 90, null);
+
 
 		}
 
