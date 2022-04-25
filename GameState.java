@@ -372,6 +372,10 @@ public class GameState {
 	}
 public void HideCards(Graphics g)
 {	for (int i = 0; i < pManage.getNumPlayers(); i++) {
+	int s;
+	if(pManage.getPlayersHand(i).size()>=8)
+	{s=8;}
+	else s = pManage.getPlayersHand(i).size();
 	if (i == 0) {
 		g.setColor(map.get(pListTemp.get(i).getColor()));
 		g.fillRect(135, 12, 350, 120);
@@ -379,14 +383,14 @@ public void HideCards(Graphics g)
 		g.drawImage(seeHand, 280, 15, 83, 25, null);
 		g.drawImage(trade, 145, 15, 122, 25, null);
 
-		int s = pManage.getPlayersHand(i).size();//size of players hand
+		;//size of players hand
 		int startVal = 140;
-		if(s<=8) {
+
 			for (int j = 0; j < s; j++) {
 				g.drawImage(backCard, startVal, 40, 45, 90, null);
 				startVal += 50;
 
-			}
+
 		}
 
 	} else if (i == 1) {
@@ -395,13 +399,13 @@ public void HideCards(Graphics g)
 		g.drawImage(build, 1260, 15, 76, 25, null);
 		g.drawImage(seeHand, 1160, 15, 83, 25, null);
 		g.drawImage(trade, 1025, 15, 122, 25, null);
-		int s = pManage.getPlayersHand(i).size();//size of players hand
+
 		int startVal = 1015;
-		if(s<=8) {
+
 			for (int j = 0; j < s; j++) {
 				g.drawImage(backCard, startVal, 40, 45, 90, null);
 				startVal += 50;
-			}
+
 		}
 
 	} else if (i == 2) {
@@ -410,13 +414,13 @@ public void HideCards(Graphics g)
 		g.drawImage(build, 535, 720, 76, 25, null);
 		g.drawImage(seeHand, 435, 720, 83, 25, null);
 		g.drawImage(trade, 300, 720, 122, 25, null);
-		int s = pManage.getPlayersHand(i).size();//size of players hand
+
 		int startVal = 290;
-		if(s<=8) {
+
 			for (int j = 0; j < s; j++) {
 				g.drawImage(backCard, startVal, 625, 45, 90, null);
 				startVal += 50;
-			}
+
 		}
 	} else if (i == 3) {
 		g.setColor(map.get(pListTemp.get(i).getColor()));
@@ -425,13 +429,13 @@ public void HideCards(Graphics g)
 		g.drawImage(seeHand, 1015, 720, 83, 25, null);
 		g.drawImage(trade, 880, 720, 122, 25, null);
 
-		int s = pManage.getPlayersHand(i).size();//size of players hand
+
 		int startVal = 870;
-		if(s<=8) {
+
 			for (int j = 0; j < s; j++) {
 				g.drawImage(backCard, startVal, 625, 45, 90, null);
 				startVal += 50;
-			}
+
 		}
 	}
 }}
@@ -718,8 +722,14 @@ public void HideCards(Graphics g)
 		map.put("Orange", new Color(255, 168, 52, 255));
 		map.put("White", new Color(255, 255, 255, 255));
 		map.put("Blue", new Color(61, 138, 247, 255));
+		int s;
+		if(pListTemp.get(p).handSize()>=8)
+		{
+			s=8;
+		}
+		else s=pListTemp.get(p).handSize();
 
-		if(p==0)
+		if(p==0)//p is the player index
 		{
 			g.setColor(map.get(pListTemp.get(p).getColor()));
 			g.fillRect(135, 12, 350, 120);
@@ -727,10 +737,10 @@ public void HideCards(Graphics g)
 			g.drawImage(seeHand, 280, 15, 83, 25, null);
 			g.drawImage(trade, 145, 15, 122, 25, null);
 
-			int s = pManage.getPlayersHand(p).size();//size of players hand
+
 			int startVal = 140;
 
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < s; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -765,10 +775,10 @@ public void HideCards(Graphics g)
 			g.drawImage(build, 1260, 15, 76, 25, null);
 			g.drawImage(seeHand, 1160, 15, 83, 25, null);
 			g.drawImage(trade, 1025, 15, 122, 25, null);
-			int s = pManage.getPlayersHand(p).size();//size of players hand
+
 			int startVal = 1015;
 
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < s; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -803,10 +813,10 @@ public void HideCards(Graphics g)
 			g.drawImage(build, 535, 720, 76, 25, null);
 			g.drawImage(seeHand, 435, 720, 83, 25, null);
 			g.drawImage(trade, 300, 720, 122, 25, null);
-			int s = pManage.getPlayersHand(p).size();//size of players hand
+
 			int startVal = 290;
 
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < s; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
@@ -843,10 +853,9 @@ public void HideCards(Graphics g)
 			g.drawImage(seeHand, 1015, 720, 83, 25, null);
 			g.drawImage(trade, 880, 720, 122, 25, null);
 
-			int s = pManage.getPlayersHand(p).size();//size of players hand
 			int startVal = 870;
 
-				for (int j = 0; j < 8; j++) {
+				for (int j = 0; j < s; j++) {
 					ResourceCard temp=pManage.getPlayersHand(p).get(j);
 					if(temp.getName().equals("Brick"))
 					{
