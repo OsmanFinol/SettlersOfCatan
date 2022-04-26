@@ -5,20 +5,35 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Set;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 
 public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
-	private int seeHandClick;									// add it here
-	private boolean actualGame = true;
+										// add it here
+	private boolean actualGame = false;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
 	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
 	ArrayList<String> colorsToSet;
-
+	int reqDropDowns, offDropDowns;
+	HashMap<Integer, JComboBox<ResourceCard>> reqTrades;
+	HashMap<Integer, JComboBox<Integer>>  reqTradeAmounts;
+	HashMap<Integer, JComboBox<ResourceCard>> offTrades;
+	HashMap<Integer, JComboBox<Integer>> offTradeAmounts;
+	int total = 0;
+	ArrayList<ResourceCard> request = new ArrayList<ResourceCard>();
+	ArrayList<ResourceCard> offers = new ArrayList<ResourceCard>();
+	boolean leftAccept = false;
+	boolean rightAccept = false;
+	boolean declined = false;
+	
 	public SettlersOfCatanPanel(LayoutManager lm) {
 		super(lm);
 		gs = new GameState();
@@ -30,7 +45,14 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 		c2 = "White";
 		c3 = "White";
 		c4 = "White"; // so they arent null
-		seeHandClick=0;
+		reqDropDowns = -1;
+		offDropDowns = -1;
+		reqTrades = new HashMap<>();
+		reqTradeAmounts = new HashMap<>();
+		offTrades = new HashMap<>();
+		offTradeAmounts = new HashMap<>();
+		
+		
 	}
 
 	public void paintComponent(Graphics g) {
@@ -83,6 +105,15 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				colorPicker3.setVisible(true);
 			if (gs.getNumPlayers() >= 4)
 				colorPicker4.setVisible(true);
+		} else if (gs.getSubState().equals("trading")) {
+			for (int i = 0; i <= reqDropDowns; i++) {
+				reqTrades.get(i).setVisible(true);
+				reqTradeAmounts.get(i).setVisible(true);
+			}
+			for (int i = 0; i <= offDropDowns; i++) {
+				offTrades.get(i).setVisible(true);
+				offTradeAmounts.get(i).setVisible(true);
+			}
 		}
 
 	}
@@ -206,25 +237,54 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					gs.nextPlayer();
 					repaint();
 				}
-				
-				int i=-1;
-				if(x>=280 && x<=363 && y>=15 && y<=40)
-				{i=0;}
-				else if(x>=1160 && x<=1283 && y>=15 && y<=40)
-				{i=1;}
-				else if(x>=435 && x<=518 && y>=720 && y<=745)
-				{i=2;}
-				else if(x>=1015 && x<=1098 && y>=720 && y<=745)
-				{i=3;}
-				if(seeHandClick == 0 && i==gs.getPM().cPlayerIndex()) {
-					seeHandClick++;
-					gs.showCard(getGraphics(), i);
+
+				// trading stuff
+				else if (x >= 145 && y >= 15 && x <= 145 + 122 && y <= 40) {
+					if (gs.cPlayerIndex() != 0) {
+						gs.setSubState("trading");
+						gs.setToTradeWith(gs.getPM().getPlayerList().get(0));
+						lines.add(gs.getCPlayer() + " requested to trade with " + gs.getPM().getPlayerList().get(0)
+								+ ".");
+						repaint();
+					}
+				} else if (x >= 1025 && y >= 15 && x <= 1025 + 122 && y <= 40) {
+					if (gs.cPlayerIndex() != 1) {
+						gs.setSubState("trading");
+						gs.setToTradeWith(gs.getPM().getPlayerList().get(1));
+						lines.add(gs.getCPlayer() + " requested to trade with " + gs.getPM().getPlayerList().get(1)
+								+ ".");
+						repaint();
+					}
+				} else if (x >= 300 && y >= 720 && x <= 300+122 && y <= 720+25 && gs.getNumPlayers() > 2) {
+					if (gs.cPlayerIndex() != 2) {
+						gs.setSubState("trading");
+						gs.setToTradeWith(gs.getPM().getPlayerList().get(2));
+						lines.add(gs.getCPlayer() + " requested to trade with " + gs.getPM().getPlayerList().get(2)
+								+ ".");
+						repaint();
+					}
+				} else if (x >= 880 && y >= 720 && x <= 880+122 && y <= 720+25 && gs.getNumPlayers() > 3) {
+					if (gs.cPlayerIndex() != 3) {
+						gs.setSubState("trading");
+						gs.setToTradeWith(gs.getPM().getPlayerList().get(3));
+						lines.add(gs.getCPlayer() + " requested to trade with " + gs.getPM().getPlayerList().get(3)
+								+ ".");
+						repaint();
+					}
 				}
-				else if(seeHandClick == 1 && i==gs.getPM().cPlayerIndex())
-				{
-					seeHandClick--;
-					gs.HideCards(getGraphics());
+
+				int i = -1;
+				if (x >= 280 && x <= 363 && y >= 15 && y <= 40) {
+					i = 0;
+				} else if (x >= 1160 && x <= 1283 && y >= 15 && y <= 40) {
+					i = 1;
+				} else if (x >= 435 && x <= 518 && y >= 720 && y <= 745) {
+					i = 2;
+				} else if (x >= 1015 && x <= 1098 && y >= 720 && y <= 745) {
+					i = 3;
 				}
+				gs.showCard(getGraphics(), i);
+
 			}
 			// rolling dice to figure out turn
 			else if (gs.getSubState().equals("setorder")) {
@@ -232,73 +292,15 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					gs.rollForOrder(gs.getNumPlayers());
 					repaint();
 				}
-
 			}
-
 			// entering game (finally)
-			else if (x >= 605 && y >= 570 && x <= 605 + 289 && y <= 570 + 143) {
-				gs.setSubState("default");
-				lines.add("It's " + gs.getCPlayer() + "'s turn.");
-				repaint();
-			}
-			
-					
-			if (gs.cPlayerIndex() == 0) {
-				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-					gs.setSubState("buildmenu");
-					lines.add(gs.getCPlayer() + " started building.");
-					}
-					else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
+			else if (gs.getSubState().equals("entergame")) {
+				if (x >= 605 && y >= 570 && x <= 605 + 289 && y <= 570 + 143) {
+					gs.setSubState("default");
+					lines.add("It's " + gs.getCPlayer() + "'s turn.");
 					repaint();
 				}
 			}
-			if (gs.cPlayerIndex() == 1) {
-				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-					gs.setSubState("buildmenu");
-					lines.add(gs.getCPlayer() + " started building.");
-
-					}
-					else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-			}
-			if (gs.cPlayerIndex() == 2) {
-				if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-					gs.setSubState("buildmenu");
-					lines.add(gs.getCPlayer() + " started building.");
-
-					}
-					else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-			}
-			if (gs.cPlayerIndex() == 3) {
-				if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-					gs.setSubState("buildmenu");
-					lines.add(gs.getCPlayer() + " started building.");
-
-					}
-					else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-			}
-			
 			// selecting colors
 			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
 				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
@@ -329,17 +331,153 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					repaint();
 				}
 			}
-			
-			//trading
-			else if (x >= 145 && y >= 15 && x <= 145+122 && y <= 40) {
-				if (gs.cPlayerIndex() != 0) {
-					
+
+			else if (gs.getSubState().equals("trading") || gs.getSubState().equals("redoTradeReq") || gs.getSubState().equals("redoTradeOff")) {
+				if (x >= 300 && y >= 270 && x <= 1200 && y <= 270 + 72) {
+					reqDropDowns++;
+					ResourceCard[] arr = gs.getToTradeWith().getNoDuplicateInventory();
+					JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
+					picker.setBounds(545 + (140 * reqDropDowns), 290, 130, 40);
+					picker.setVisible(false);
+					add(picker);
+					reqTrades.put(reqDropDowns, picker);
+
+					// nums
+					total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
+					for (int i = 0; i < picker.getItemCount(); i++) {
+						int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
+						if (temp > total)
+							total = temp;
+					}
+					Integer[] numArr = new Integer[total];
+					for (int i = 1; i <= total; i++)
+						numArr[i - 1] = i;
+					JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
+					nums.setBounds(560 + (140 * (reqDropDowns)), 340, 80, 20);
+					nums.setVisible(false);
+					add(nums);
+					reqTradeAmounts.put(reqDropDowns, nums);
+
+					repaint();
+				} else if (x >= 1050 && y >= 340 && x <= 1050 + 124 && y <= 340 + 72) {
+					if (reqDropDowns > -1) {
+						reqTrades.get(reqDropDowns).setVisible(false);
+						reqTrades.put(reqDropDowns, null);
+						reqTradeAmounts.get(reqDropDowns).setVisible(false);
+						reqTrades.put(reqDropDowns, null);
+						reqDropDowns--;
+						repaint();
+					}
+				} else if (x >= 1050 && y >= 430 && x <= 1050 + 124 && y <= 430 + 72) {
+					offDropDowns++;
+					ResourceCard[] arr = gs.getCPlayer().getNoDuplicateInventory();
+					JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
+					picker.setBounds(490 + (140 * offDropDowns), 440, 130, 40);
+					picker.setVisible(false);
+					add(picker);
+					offTrades.put(offDropDowns, picker);
+
+					// nums
+					total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
+					for (int i = 0; i < picker.getItemCount(); i++) {
+						int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
+						if (temp > total)
+							total = temp;
+					}
+					Integer[] numArr = new Integer[total];
+					for (int i = 1; i <= total; i++)
+						numArr[i - 1] = i;
+					JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
+					nums.setBounds(505 + (140 * (offDropDowns)), 490, 80, 20);
+					nums.setVisible(false);
+					add(nums);
+					offTradeAmounts.put(offDropDowns, nums);
+					repaint();
+				} else if (x >= 1050 && y >= 500 && x <= 1050 + 124 && y <= 500 + 72) {
+					if (offDropDowns > -1) {
+						offTrades.get(offDropDowns).setVisible(false);
+						offTrades.put(offDropDowns, null);
+						offTradeAmounts.get(offDropDowns).setVisible(false);
+						offTradeAmounts.put(offDropDowns, null);
+						offDropDowns--;
+						repaint();
+					}
+				} else if (x >= 1075 && y >= 190 && x <= 1075 + 90 && y <= 190 + 80) {
+					removeAll();
+					gs.setSubState("default");
+					offDropDowns = -1;
+					reqDropDowns = -1;
+					reqTrades = new HashMap<>();
+					offTrades = new HashMap<>();
+					reqTradeAmounts = new HashMap<>();
+					offTradeAmounts = new HashMap<>();
+					lines.add("...but it didn't work out.");
+					repaint();
 				}
-				else {
+
+				// doing the trade
+				else if (x >= 645 && y >= 605 && x <= 645 + 200 && y <= 705) {
+					request = new ArrayList<ResourceCard>();
+					for (int i = 0; i < reqTrades.size(); i++) {
+						for (int j = 0; j < (Integer) reqTradeAmounts.get(i).getSelectedItem(); j++) {
+							if (reqTrades.get(i) != null)
+								request.add((ResourceCard) reqTrades.get(i).getSelectedItem());
+						}
+					}
+					if (gs.getToTradeWith().hasThese(request)) {
+						offers = new ArrayList<ResourceCard>();
+						for (int i = 0; i < offTrades.size(); i++) {
+							for (int j = 0; j < (Integer) offTradeAmounts.get(i).getSelectedItem(); j++) {
+								if (offTrades.get(i) != null)
+									offers.add((ResourceCard) offTrades.get(i).getSelectedItem());
+							}
+						
+						}
+						if (gs.getCPlayer().hasThese(offers))  {
+							gs.setSubState("tradeconfirm");
+							removeAll();
+							gs.setOffers(offers);
+							gs.setRequests(request);
+						}
+							
+						else 
+							gs.setSubState("redoTradeOff");
+					}
+					else 
+						gs.setSubState("redoTradeReq");
 					
+					repaint();
 				}
+			} else if (gs.getSubState().equals("tradeconfirm")) {
+				if (x >= 420 && y >= 420 && x <= 720 && y <= 580) {
+					leftAccept = true;
+				}
+				else if (x >= 800 && y>= 420 && x <= 1100 && y <= 580) {
+					rightAccept = true;
+				}
+				else if ((x >=460 && y >= 600 && x <= 460+220 && y <= 700)
+						|| (x >= 840 && y >= 600 && x <= 840+220 && y <= 700)) {
+					declined = true;
+					System.out.println("hello");
+				}
+				if (leftAccept && rightAccept && (!declined)) {
+					gs.getPM().trade(gs.getToTradeWith(), request, offers);
+					lines.add("And the trade was successful!");
+					gs.setSubState("default");
+				}
+				if (declined || (x >= 1120 && y >= 175 && x <= 1180 && y <= 175+60)) {
+					request.clear();
+					offers.clear();
+					reqTrades.clear();
+					reqTradeAmounts.clear();
+					offTrades.clear();
+					offTradeAmounts.clear();
+					gs.setToTradeWith(null);
+					gs.setSubState("default");
+					lines.add("...but it didn't work out.");
+				}
+				repaint();
 			}
-			
 		}
 	}
 
