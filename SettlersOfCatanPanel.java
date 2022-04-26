@@ -301,6 +301,196 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					repaint();
 				}
 			}
+			if (gs.cPlayerIndex() == 0) {
+				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+					if (!(gs.getSubState().equals("buildSettlement"))) {
+						gs.setSubState("buildSettlement");
+						lines.add(gs.getCPlayer() + " selected to build Settlement.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+					if (!(gs.getSubState().equals("buildRoad"))) {
+						gs.setSubState("buildRoad");
+						lines.add(gs.getCPlayer() + " selected to build Road.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+			}
+			
+			if (gs.cPlayerIndex() == 1) {
+				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+					if (!(gs.getSubState().equals("buildSettlement"))) {
+						gs.setSubState("buildSettlement");
+						lines.add(gs.getCPlayer() + " selected to build Settlement.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+					if (!(gs.getSubState().equals("buildRoad"))) {
+						gs.setSubState("buildRoad");
+						lines.add(gs.getCPlayer() + " selected to build Road.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+			}
+			if (gs.cPlayerIndex() == 2) {
+				if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+					if (!(gs.getSubState().equals("buildSettlement"))) {
+						gs.setSubState("buildSettlement");
+						lines.add(gs.getCPlayer() + " selected to build Settlement.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+					if (!(gs.getSubState().equals("buildRoad"))) {
+						gs.setSubState("buildRoad");
+						lines.add(gs.getCPlayer() + " selected to build Road.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+			}
+			
+			if (gs.cPlayerIndex() == 3) {
+				if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
+					if (!(gs.getSubState().equals("buildmenu"))) {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+
+					}
+					else {
+						gs.setSubState("default");
+						System.out.println("hi");
+					}
+					repaint();
+				}
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+					if (!(gs.getSubState().equals("buildSettlement"))) {
+						gs.setSubState("buildSettlement");
+						lines.add(gs.getCPlayer() + " selected to build Settlement.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+					if (!(gs.getSubState().equals("buildRoad"))) {
+						gs.setSubState("buildRoad");
+						lines.add(gs.getCPlayer() + " selected to build Road.");
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+			}
+			
 			// selecting colors
 			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
 				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
