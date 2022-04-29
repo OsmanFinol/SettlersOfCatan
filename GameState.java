@@ -860,80 +860,80 @@ public class GameState {
 
 			g.drawString("A player can build a structure by clicking the \"Build\" button.", 4 * (1500 / 15),
 					15 * 950 / 29);
-			g.drawString("They must select a highlighted area to place their structure.", 4 * (1500 / 15),
-					16 * 950 / 29);
-			g.drawString(
-					"If a player wishes to upgrade a settlement, they must click the star and then click an existing city.",
-					4 * (1500 / 15), 17 * 950 / 29);
-			g.drawString(
-					"If a player does not have the necessary resources to build a structure, they will be barred from building.",
-					4 * (1500 / 15), 18 * 950 / 29);
-			g.drawString("All cities and settlements, barring the first two, must be connected by roads.",
-					4 * (1500 / 15), 19 * 950 / 29);
-			g.drawImage(build, 1500 / 15, 26 * (950 / 60) + 20, 181, 59, null);
-			g.drawImage(buildEx, 1500 / 30, 32 * (950 / 60), 12 * 1500 / 60, 6 * 950 / 29, null);
-			//
-			g.setFont(new Font("Castellar", Font.BOLD, 1500 / 15));
-			g.setColor(Color.RED);
-			g.drawString("GOOD LUCK!", 3 * 1500 / 13, 25 * 950 / 29);
-		}
-	}
-
-	public void showCards(Graphics g, int p) {
-
-		g.setFont(new Font("Times New Roman", Font.BOLD, 20));
-		g.setColor(Color.BLACK);
-
-		if (p == 0) {
-
-			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
-
-			int startVal = 140;
-			g.drawImage(brickCard, startVal, 40, 45, 90, null);
-			g.drawImage(stoneCard, 190, 40, 45, 90, null);
-			g.drawImage(sheepCard, 240, 40, 45, 90, null);
-			g.drawImage(woodCard, 290, 40, 45, 90, null);
-			g.drawImage(grainCard, 340, 40, 45, 90, null);
-						g.setColor(Color.BLACK);
-						g.drawString(String.valueOf(s[0]), 160, 150);
-						g.drawString(String.valueOf(s[1]), 210, 150);
-						g.drawString(String.valueOf(s[2]), 260, 150);
-						g.drawString(String.valueOf(s[3]), 310, 150);
-						g.drawString(String.valueOf(s[4]), 360, 150);
-
-
-					}
-
-
-		 else if (p == 1) {
-
-			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
-
-			g.drawImage(brickCard, 1015, 40, 45, 90, null);
-			g.drawImage(stoneCard, 1065, 40, 45, 90, null);
-			g.drawImage(sheepCard, 1115, 40, 45, 90, null);
-			g.drawImage(woodCard, 1165, 40, 45, 90, null);
-			g.drawImage(grainCard, 1215, 40, 45, 90, null);
-			g.setColor(Color.BLACK);
-			g.drawString(String.valueOf(s[0]), 1037, 150);
-			g.drawString(String.valueOf(s[1]), 1087, 150);
-			g.drawString(String.valueOf(s[2]), 1137, 150);
-			g.drawString(String.valueOf(s[3]), 1187, 150);
-			g.drawString(String.valueOf(s[4]), 1237, 150);
+				g.drawString("They must select a highlighted area to place their structure.", 4 * (1500 / 15),
+						16 * 950 / 29);
+				g.drawString(
+						"If a player wishes to upgrade a settlement, they must click the star and then click an existing city.",
+						4 * (1500 / 15), 17 * 950 / 29);
+				g.drawString(
+						"If a player does not have the necessary resources to build a structure, they will be barred from building.",
+						4 * (1500 / 15), 18 * 950 / 29);
+				g.drawString("All cities and settlements, barring the first two, must be connected by roads.",
+						4 * (1500 / 15), 19 * 950 / 29);
+				g.drawImage(build, 1500 / 15, 26 * (950 / 60) + 20, 181, 59, null);
+				g.drawImage(buildEx, 1500 / 30, 32 * (950 / 60), 12 * 1500 / 60, 6 * 950 / 29, null);
+				//
+				g.setFont(new Font("Castellar", Font.BOLD, 1500 / 15));
+				g.setColor(Color.RED);
+				g.drawString("GOOD LUCK!", 3 * 1500 / 13, 25 * 950 / 29);
 			}
-		 else if (p == 2) {
+		}
 
-			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+		public void showCards(Graphics g, int p) {
+
+			g.setFont(new Font("Times New Roman", Font.BOLD, 20));
 			g.setColor(Color.BLACK);
 
+			if (p == 0) {
 
-			g.drawImage(brickCard, 290, 625, 45, 90, null);
-			g.drawImage(stoneCard, 340, 625, 45, 90, null);
-			g.drawImage(sheepCard, 390, 625, 45, 90, null);
-			g.drawImage(woodCard, 440, 625, 45, 90, null);
-			g.drawImage(grainCard, 490, 625, 45, 90, null);
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
 
-			g.drawString(String.valueOf(s[0]), 312, 615);
+				int startVal = 140;
+				g.drawImage(brickCard, startVal, 40, 45, 90, null);
+				g.drawImage(stoneCard, 190, 40, 45, 90, null);
+				g.drawImage(sheepCard, 240, 40, 45, 90, null);
+				g.drawImage(woodCard, 290, 40, 45, 90, null);
+				g.drawImage(grainCard, 340, 40, 45, 90, null);
+							g.setColor(Color.BLACK);
+							g.drawString(String.valueOf(s[0]), 160, 150);
+							g.drawString(String.valueOf(s[1]), 210, 150);
+							g.drawString(String.valueOf(s[2]), 260, 150);
+							g.drawString(String.valueOf(s[3]), 310, 150);
+							g.drawString(String.valueOf(s[4]), 360, 150);
+
+
+						}
+
+
+			 else if (p == 1) {
+
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+
+				g.drawImage(brickCard, 1015, 40, 45, 90, null);
+				g.drawImage(stoneCard, 1065, 40, 45, 90, null);
+				g.drawImage(sheepCard, 1115, 40, 45, 90, null);
+				g.drawImage(woodCard, 1165, 40, 45, 90, null);
+				g.drawImage(grainCard, 1215, 40, 45, 90, null);
+				g.setColor(Color.BLACK);
+				g.drawString(String.valueOf(s[0]), 1037, 150);
+				g.drawString(String.valueOf(s[1]), 1087, 150);
+				g.drawString(String.valueOf(s[2]), 1137, 150);
+				g.drawString(String.valueOf(s[3]), 1187, 150);
+				g.drawString(String.valueOf(s[4]), 1237, 150);
+				}
+			 else if (p == 2) {
+
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+				g.setColor(Color.BLACK);
+
+
+				g.drawImage(brickCard, 290, 625, 45, 90, null);
+				g.drawImage(stoneCard, 340, 625, 45, 90, null);
+				g.drawImage(sheepCard, 390, 625, 45, 90, null);
+				g.drawImage(woodCard, 440, 625, 45, 90, null);
+				g.drawImage(grainCard, 490, 625, 45, 90, null);
+
+				g.drawString(String.valueOf(s[0]), 312, 615);
 			g.drawString(String.valueOf(s[1]), 362, 615);
 			g.drawString(String.valueOf(s[2]), 412, 615);
 			g.drawString(String.valueOf(s[3]), 462, 615);
@@ -959,7 +959,7 @@ public class GameState {
 		}
 
 	}
-
+ public int getCPlayerIndex(){return pManage.cPlayerIndex();}
 
 
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {

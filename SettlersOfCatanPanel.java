@@ -277,26 +277,26 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				if (x >= 280 && x <= 363 && y >= 15 && y <= 40) {
 
 					i = 0;
-					if(gs.getSeeHandClick()==0){
+					if(gs.getSeeHandClick()==0  && i==gs.getCPlayerIndex()){
 						gs.setSeeHandClick(1);
 
 					}
 					else{gs.setSeeHandClick(0);}
 				} else if (x >= 1160 && x <= 1283 && y >= 15 && y <= 40) {
 					i = 1;
-					if(gs.getSeeHandClick()==0){
+					if(gs.getSeeHandClick()==0 && i==gs.getCPlayerIndex()){
 						gs.setSeeHandClick(1);
 					}
 					else{gs.setSeeHandClick(0);}
 				} else if (x >= 435 && x <= 518 && y >= 720 && y <= 745) {
 					i = 2;
-					if(gs.getSeeHandClick()==0){
+					if(gs.getSeeHandClick()==0 && i==gs.getCPlayerIndex()){
 						gs.setSeeHandClick(1);
 					}
 					else{gs.setSeeHandClick(0);}
 				} else if (x >= 1015 && x <= 1098 && y >= 720 && y <= 745) {
 					i = 3;
-					if(gs.getSeeHandClick()==0){
+					if(gs.getSeeHandClick()==0 && i==gs.getCPlayerIndex()){
 						gs.setSeeHandClick(1);
 					}
 					else{gs.setSeeHandClick(0);}
