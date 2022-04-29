@@ -235,6 +235,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					lines.add(gs.getCPlayer() + " ended their turn.");
 					lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
 					gs.nextPlayer();
+					gs.setSeeHandClick(0);
 					repaint();
 				}
 
