@@ -275,15 +275,41 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 
 				int i = -1;
 				if (x >= 280 && x <= 363 && y >= 15 && y <= 40) {
+
 					i = 0;
+					if(gs.getSeeHandClick()==0){
+						gs.setSeeHandClick(1);
+
+					}
+					else{gs.setSeeHandClick(0);}
 				} else if (x >= 1160 && x <= 1283 && y >= 15 && y <= 40) {
 					i = 1;
+					if(gs.getSeeHandClick()==0){
+						gs.setSeeHandClick(1);
+					}
+					else{gs.setSeeHandClick(0);}
 				} else if (x >= 435 && x <= 518 && y >= 720 && y <= 745) {
 					i = 2;
+					if(gs.getSeeHandClick()==0){
+						gs.setSeeHandClick(1);
+					}
+					else{gs.setSeeHandClick(0);}
 				} else if (x >= 1015 && x <= 1098 && y >= 720 && y <= 745) {
 					i = 3;
+					if(gs.getSeeHandClick()==0){
+						gs.setSeeHandClick(1);
+					}
+					else{gs.setSeeHandClick(0);}
+
 				}
-				gs.showCard(getGraphics(), i);
+
+				if(gs.getSeeHandClick()==1)
+				{
+					gs.showCards(getGraphics(), i);
+				}
+				else {
+					repaint();
+				}
 
 			}
 			// rolling dice to figure out turn
