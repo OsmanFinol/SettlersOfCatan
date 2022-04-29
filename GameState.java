@@ -45,7 +45,7 @@ public class GameState {
 	int[] roll1, roll2, roll3, roll4; // also for deciding order <3
 	Font AlmendraSC;
 	ArrayList<ResourceCard> requests, offers;
-
+	private int seeHandClick;
 	public GameState() {
 		hexTiles = new ArrayList<>();
 		dice = new Dice();
@@ -53,6 +53,7 @@ public class GameState {
 		subState = "title"; // initializes both for start of the game
 		pManage = new PlayerManager(4);
 		diceHaveBeenRolled = false;
+		seeHandClick=0;
 		try {
 			int randNum = (int) (Math.random() * 6) + 1;
 			Scanner app = new Scanner(new File("Tiles.txt"));
@@ -496,85 +497,82 @@ public class GameState {
 		map.put("White", new Color(255, 255, 255, 255));
 		map.put("Blue", new Color(61, 138, 247, 255));
 		ArrayList<Player> pListTemp = pManage.getPlayerList();
-		for (int i = 0; i < pManage.getNumPlayers(); i++) {
-			if (i == 0) {
-				if (cPlayerIndex() == i) {
-					g.setColor(new Color(255, 16, 240, 255));
-					g.fillRect(125, 7, 370, 130);
-				}
-				g.setColor(map.get(pListTemp.get(i).getColor()));
+		for (int p = 0; p < pManage.getNumPlayers(); p++) {
+
+
+			if (p == 0) {
+				g.setColor(map.get(pListTemp.get(p).getColor()));
 				g.fillRect(135, 12, 350, 120);
 				g.drawImage(build, 380, 15, 76, 25, null);
 				g.drawImage(seeHand, 280, 15, 83, 25, null);
 				g.drawImage(trade, 145, 15, 122, 25, null);
 
-				int s = pManage.getPlayersHand(i).size();// size of players hand
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
 				int startVal = 140;
-				if (s <= 8) {
-					for (int j = 0; j < s; j++) {
-						g.drawImage(backCard, startVal, 40, 45, 90, null);
-						startVal += 50;
+				g.drawImage(backCard, startVal, 40, 45, 90, null);
+				g.drawImage(backCard, 190, 40, 45, 90, null);
+				g.drawImage(backCard, 240, 40, 45, 90, null);
+				g.drawImage(backCard, 290, 40, 45, 90, null);
+				g.drawImage(backCard, 340, 40, 45, 90, null);
+				g.setColor(Color.BLACK);
 
-					}
-				}
 
-			} else if (i == 1) {
-				if (cPlayerIndex() == i) {
-					g.setColor(new Color(255, 16, 240, 255));
-					g.fillRect(1005, 7, 370, 130);
-				}
-				g.setColor(map.get(pListTemp.get(i).getColor()));
+
+			}
+
+
+			else if (p == 1) {
+				g.setColor(map.get(pListTemp.get(p).getColor()));
 				g.fillRect(1015, 12, 350, 120);
 				g.drawImage(build, 1260, 15, 76, 25, null);
 				g.drawImage(seeHand, 1160, 15, 83, 25, null);
 				g.drawImage(trade, 1025, 15, 122, 25, null);
-				int s = pManage.getPlayersHand(i).size();// size of players hand
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
 				int startVal = 1015;
-				if (s <= 8) {
-					for (int j = 0; j < s; j++) {
-						g.drawImage(backCard, startVal, 40, 45, 90, null);
-						startVal += 50;
-					}
-				}
+				g.drawImage(backCard, 1015, 40, 45, 90, null);
+				g.drawImage(backCard, 1065, 40, 45, 90, null);
+				g.drawImage(backCard, 1115, 40, 45, 90, null);
+				g.drawImage(backCard, 1165, 40, 45, 90, null);
+				g.drawImage(backCard, 1215, 40, 45, 90, null);
 
-			} else if (i == 2) {
-				if (cPlayerIndex() == i) {
-					g.setColor(new Color(255, 16, 240, 255));
-					g.fillRect(280, 622, 370, 126);
-				}
-				g.setColor(map.get(pListTemp.get(i).getColor()));
+				g.setColor(Color.BLACK);
+
+			}
+			else if (p == 2) {
+				g.setColor(map.get(pListTemp.get(p).getColor()));
 				g.fillRect(290, 625, 350, 120);
 				g.drawImage(build, 535, 720, 76, 25, null);
 				g.drawImage(seeHand, 435, 720, 83, 25, null);
 				g.drawImage(trade, 300, 720, 122, 25, null);
-				int s = pManage.getPlayersHand(i).size();// size of players hand
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
 				int startVal = 290;
-				if (s <= 8) {
-					for (int j = 0; j < s; j++) {
-						g.drawImage(backCard, startVal, 625, 45, 90, null);
-						startVal += 50;
-					}
-				}
-			} else if (i == 3) {
-				if (cPlayerIndex() == i) {
-					g.setColor(new Color(255, 16, 240, 255));
-					g.fillRect(860, 622, 370, 126);
-				}
-				g.setColor(map.get(pListTemp.get(i).getColor()));
+
+				g.drawImage(backCard, startVal, 625, 45, 90, null);
+				g.drawImage(backCard, 340, 625, 45, 90, null);
+				g.drawImage(backCard, 390, 625, 45, 90, null);
+				g.drawImage(backCard, 440, 625, 45, 90, null);
+				g.drawImage(backCard, 490, 625, 45, 90, null);
+
+				g.setColor(Color.BLACK);
+
+			}
+			else if (p == 3) {
+				g.setColor(map.get(pListTemp.get(p).getColor()));
 				g.fillRect(870, 625, 350, 120);
 				g.drawImage(build, 1115, 720, 76, 25, null);
 				g.drawImage(seeHand, 1015, 720, 83, 25, null);
 				g.drawImage(trade, 880, 720, 122, 25, null);
 
-				int s = pManage.getPlayersHand(i).size();// size of players hand
+				int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
 				int startVal = 870;
-				if (s <= 8) {
-					for (int j = 0; j < s; j++) {
-						g.drawImage(backCard, startVal, 625, 45, 90, null);
-						startVal += 50;
-					}
-				}
+				g.drawImage(backCard, startVal, 625, 45, 90, null);
+				g.drawImage(backCard, 920, 625, 45, 90, null);
+				g.drawImage(backCard, 970, 625, 45, 90, null);
+				g.drawImage(backCard, 1020, 625, 45, 90, null);
+				g.drawImage(backCard, 1070, 625, 45, 90, null);
+
 			}
+
 		}
 		gBoard.paintTiles(g);
 		// gBoard.paintInters(g);
@@ -713,6 +711,8 @@ public class GameState {
 	public Player getToTradeWith() {
 		return toTradeWith;
 	}
+	public int getSeeHandClick(){return seeHandClick;}
+	public void setSeeHandClick(int num){seeHandClick=num;}
 
 	public void setOffers(ArrayList<ResourceCard> off) {
 		offers = off;
@@ -879,127 +879,88 @@ public class GameState {
 		}
 	}
 
-	public void showCard(Graphics g, int p) {
-		HashMap<String, Color> map = new HashMap<>();
-		map.put("Red", new Color(230, 22, 16, 255));
-		map.put("Orange", new Color(255, 168, 52, 255));
-		map.put("White", new Color(255, 255, 255, 255));
-		map.put("Blue", new Color(61, 138, 247, 255));
+	public void showCards(Graphics g, int p) {
+
+		g.setFont(new Font("Times New Roman", Font.BOLD, 20));
+		g.setColor(Color.BLACK);
 
 		if (p == 0) {
-			g.setColor(map.get(pListTemp.get(p).getColor()));
-			g.fillRect(135, 12, 350, 120);
-			g.drawImage(build, 380, 15, 76, 25, null);
-			g.drawImage(seeHand, 280, 15, 83, 25, null);
-			g.drawImage(trade, 145, 15, 122, 25, null);
 
-			int s = pManage.getPlayersHand(p).size();// size of players hand
+			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+
 			int startVal = 140;
-			if (s <= 8) {
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp = pManage.getPlayersHand(p).get(j);
-					if (temp.getName().equals("Brick")) {
-						g.drawImage(brickCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Stone")) {
-						g.drawImage(stoneCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Sheep")) {
-						g.drawImage(sheepCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Wood")) {
-						g.drawImage(woodCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Grain")) {
-						g.drawImage(grainCard, startVal, 40, 45, 90, null);
+			g.drawImage(brickCard, startVal, 40, 45, 90, null);
+			g.drawImage(stoneCard, 190, 40, 45, 90, null);
+			g.drawImage(sheepCard, 240, 40, 45, 90, null);
+			g.drawImage(woodCard, 290, 40, 45, 90, null);
+			g.drawImage(grainCard, 340, 40, 45, 90, null);
+						g.setColor(Color.BLACK);
+						g.drawString(String.valueOf(s[0]), 160, 150);
+						g.drawString(String.valueOf(s[1]), 210, 150);
+						g.drawString(String.valueOf(s[2]), 260, 150);
+						g.drawString(String.valueOf(s[3]), 310, 150);
+						g.drawString(String.valueOf(s[4]), 360, 150);
+
+
 					}
 
-					startVal += 50;
 
-				}
+		 else if (p == 1) {
+
+			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+
+			g.drawImage(brickCard, 1015, 40, 45, 90, null);
+			g.drawImage(stoneCard, 1065, 40, 45, 90, null);
+			g.drawImage(sheepCard, 1115, 40, 45, 90, null);
+			g.drawImage(woodCard, 1165, 40, 45, 90, null);
+			g.drawImage(grainCard, 1215, 40, 45, 90, null);
+			g.setColor(Color.BLACK);
+			g.drawString(String.valueOf(s[0]), 1037, 150);
+			g.drawString(String.valueOf(s[1]), 1087, 150);
+			g.drawString(String.valueOf(s[2]), 1137, 150);
+			g.drawString(String.valueOf(s[3]), 1187, 150);
+			g.drawString(String.valueOf(s[4]), 1237, 150);
 			}
-		} else if (p == 1) {
-			g.setColor(map.get(pListTemp.get(p).getColor()));
-			g.fillRect(1015, 12, 350, 120);
-			g.drawImage(build, 1260, 15, 76, 25, null);
-			g.drawImage(seeHand, 1160, 15, 83, 25, null);
-			g.drawImage(trade, 1025, 15, 122, 25, null);
-			int s = pManage.getPlayersHand(p).size();// size of players hand
-			int startVal = 1015;
-			if (s <= 8) {
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp = pManage.getPlayersHand(p).get(j);
-					if (temp.getName().equals("Brick")) {
-						g.drawImage(brickCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Stone")) {
-						g.drawImage(stoneCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Sheep")) {
-						g.drawImage(sheepCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Wood")) {
-						g.drawImage(woodCard, startVal, 40, 45, 90, null);
-					} else if (temp.getName().equals("Grain")) {
-						g.drawImage(grainCard, startVal, 40, 45, 90, null);
-					}
+		 else if (p == 2) {
 
-					startVal += 50;
+			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+			g.setColor(Color.BLACK);
 
-				}
-			}
-		} else if (p == 2) {
-			g.setColor(map.get(pListTemp.get(p).getColor()));
-			g.fillRect(290, 625, 350, 120);
-			g.drawImage(build, 535, 720, 76, 25, null);
-			g.drawImage(seeHand, 435, 720, 83, 25, null);
-			g.drawImage(trade, 300, 720, 122, 25, null);
-			int s = pManage.getPlayersHand(p).size();// size of players hand
-			int startVal = 290;
-			if (s <= 8) {
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp = pManage.getPlayersHand(p).get(j);
-					if (temp.getName().equals("Brick")) {
-						g.drawImage(brickCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Stone")) {
-						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Sheep")) {
-						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Wood")) {
-						g.drawImage(woodCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Grain")) {
-						g.drawImage(grainCard, startVal, 625, 45, 90, null);
-					}
 
-					startVal += 50;
+			g.drawImage(brickCard, 290, 625, 45, 90, null);
+			g.drawImage(stoneCard, 340, 625, 45, 90, null);
+			g.drawImage(sheepCard, 390, 625, 45, 90, null);
+			g.drawImage(woodCard, 440, 625, 45, 90, null);
+			g.drawImage(grainCard, 490, 625, 45, 90, null);
 
-				}
-			}
+			g.drawString(String.valueOf(s[0]), 312, 615);
+			g.drawString(String.valueOf(s[1]), 362, 615);
+			g.drawString(String.valueOf(s[2]), 412, 615);
+			g.drawString(String.valueOf(s[3]), 462, 615);
+			g.drawString(String.valueOf(s[4]), 512, 615);
+		}
+		 else if (p == 3) {
 
-		} else if (p == 3) {
-			g.setColor(map.get(pListTemp.get(p).getColor()));
-			g.fillRect(870, 625, 350, 120);
-			g.drawImage(build, 1115, 720, 76, 25, null);
-			g.drawImage(seeHand, 1015, 720, 83, 25, null);
-			g.drawImage(trade, 880, 720, 122, 25, null);
 
-			int s = pManage.getPlayersHand(p).size();// size of players hand
 			int startVal = 870;
-			if (s <= 8) {
-				for (int j = 0; j < s; j++) {
-					ResourceCard temp = pManage.getPlayersHand(p).get(j);
-					if (temp.getName().equals("Brick")) {
-						g.drawImage(brickCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Stone")) {
-						g.drawImage(stoneCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Sheep")) {
-						g.drawImage(sheepCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Wood")) {
-						g.drawImage(woodCard, startVal, 625, 45, 90, null);
-					} else if (temp.getName().equals("Grain")) {
-						g.drawImage(grainCard, startVal, 625, 45, 90, null);
-					}
+			g.drawImage(brickCard, startVal, 625, 45, 90, null);
+			g.drawImage(stoneCard, 920, 625, 45, 90, null);
+			g.drawImage(sheepCard, 970, 625, 45, 90, null);
+			g.drawImage(woodCard, 1020, 625, 45, 90, null);
+			g.drawImage(grainCard, 1070, 625, 45, 90, null);
 
-					startVal += 50;
-
-				}
-			}
+			int[] s = pManage.getPlayerList().get(p).getCards();// size of players hand
+			g.setColor(Color.BLACK);
+			g.drawString(String.valueOf(s[0]), 892, 615);
+			g.drawString(String.valueOf(s[1]), 942, 615);
+			g.drawString(String.valueOf(s[2]), 992, 615);
+			g.drawString(String.valueOf(s[3]), 1042, 615);
+			g.drawString(String.valueOf(s[4]), 1092, 615);
 		}
 
 	}
+
+
 
 	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
 		double radian = Math.toRadians(angle);
