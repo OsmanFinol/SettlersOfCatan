@@ -612,6 +612,7 @@ public class GameState {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		seeHandClick=0;
 		return rolls;
 	}
 
