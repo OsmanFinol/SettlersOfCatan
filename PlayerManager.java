@@ -10,7 +10,7 @@ public class PlayerManager {
 	int cPlayer;
 	ArrayList<Player> playerStanding;
 	int numP;
-	private Player longestArmy;
+	private Player largestArmy;
 	public PlayerManager(int num) { //num of players playing
 		players = new ArrayList<>();
 		cPlayer = 0;
@@ -131,7 +131,7 @@ public class PlayerManager {
 		return cPlayer;
 	}
 
-	public Player findLongestArmy()
+	public Player findLargestArmy()
 	{
 		Player temp = players.get(0);
 		int num=0;
@@ -139,15 +139,15 @@ public class PlayerManager {
 		{
 			if(P.getKnightCards()>num && P.getKnightCards()>3)
 			{
-				longestArmy=P;
+				largestArmy=P;
 				num=P.getKnightCards();
 			}
 		}
-		longestArmy.addVictoryPoints(2);
-		return longestArmy;
+		largestArmy.addVictoryPoints(2);
+		return largestArmy;
 	}
 
 	public Player getLongestArmy() {
-		return longestArmy;
+		return largestArmy;
 	}
 }
