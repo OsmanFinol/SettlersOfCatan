@@ -147,7 +147,7 @@ public class PlayerManager {
 		return largestArmy;
 	}
 
-	public Player getLongestArmy() {
+	public Player getLargestArmy() {
 		return largestArmy;
 	}
 }
