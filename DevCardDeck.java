@@ -31,6 +31,10 @@ public class DevCardDeck
     public DevelopmentCard draw (Player player)
     {
         DevelopmentCard dc = deck.pop();
+        if(dc.getName().equals("Knight"))
+        {
+            player.setKnightCards(1);
+        }
         player.addVicCard(dc);
         player.addVictoryPoints(dc.getPoints());
         return dc;
@@ -41,4 +45,6 @@ public class DevCardDeck
     {
         Collections.shuffle(deck);
     }
+
+
 }

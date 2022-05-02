@@ -5,7 +5,7 @@ import java.util.TreeSet;
 import java.util.Arrays;
 
 public class Player {
-
+	int knightCards;
 	int victoryPoints; // num victorypoints player has
 	String color; // color, self-explanatory
 	ArrayList<ResourceCard> inventory; // inventory of resource cards
@@ -21,6 +21,7 @@ public class Player {
 		vicCards = new ArrayList<>();
 		builds = new ArrayList<>();
 		cards=new int[5];
+		knightCards = 0;
 	}
 
 	public void setColor(String s) {
@@ -30,6 +31,11 @@ public class Player {
 	public String getColor() {
 		return color;
 	}
+
+	public int getKnightCards() {
+		return knightCards;
+	}
+	public void setKnightCards(int n){knightCards+=n;}
 
 	public void buildStructure(int t, Intersection i) {
 		boolean canPay = false;
