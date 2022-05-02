@@ -90,6 +90,15 @@ public class Player {
 	public void addVicCard(DevelopmentCard d) {
 		vicCards.add(d);
 	}
+	public void removeVicCard(DevelopmentCard d) {
+		vicCards.remove(d);
+	}
+	public ArrayList<DevelopmentCard> getDevCards() {
+		return vicCards;
+	}
+	public boolean hasDevCards() {
+		return vicCards.size() > 0;
+	}
 
 	public ArrayList<Structure> getBuilds() {
 		return builds;
@@ -128,6 +137,7 @@ public class Player {
 
 	public void reviseCount()
 	{//brick, stone, sheep, wood, grain
+		cards = new int[5];
 		for(ResourceCard c:inventory)
 		{
 			if(c.getName().equals("Brick"))
