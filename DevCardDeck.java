@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 
 public class DevCardDeck
@@ -7,7 +9,13 @@ public class DevCardDeck
 
     public DevCardDeck()
     {
-        app = new Scanner("DevCards.txt");
+    	deck = new Stack<>();
+        try {
+			app = new Scanner(new File("DevCards.txt"));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         while (app.hasNextLine())
         {
             //Put in order
@@ -23,6 +31,7 @@ public class DevCardDeck
     {
         DevelopmentCard dc = deck.pop();
         player.addVicCard(dc);
+        player.addVictoryPoints(dc.getPoints());
         return dc;
 
     }
