@@ -59,7 +59,7 @@ public class Tile {
 		//set numPic to this later
 		number = i;
 		try {
-			numPic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/NumImages/num" + i +".png"));
+			numPic = ImageIO.read(SettlersOfCatanPanel.class.getResource("/NumImages/num" + String.valueOf(i)+".png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
