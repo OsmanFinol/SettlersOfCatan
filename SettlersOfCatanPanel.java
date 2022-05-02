@@ -608,10 +608,11 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						gs.setSubState("default");
 						lines.add(gs.getCPlayer() + " traded with the bank.");
 					} else {
-						System.out.println(gs.getCPlayer().hasThese(temp));
+					/*	System.out.println(gs.getCPlayer().hasThese(temp));
 						System.out.println(temp);
 						System.out.println(gs.getCPlayer().getInventory());
-						gs.setSubState("redobanktrade");
+						gs.setSubState("redobanktrade");*/
+						System.out.println("ERROR");
 					}
 					repaint();
 
