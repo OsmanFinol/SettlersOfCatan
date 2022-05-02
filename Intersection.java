@@ -29,6 +29,8 @@ public class Intersection {
 		return borders;
 	}
 	
-	
+	public boolean hasHarbor() {
+		return hasHarbor;
+	}
 	
 }
