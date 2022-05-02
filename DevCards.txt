@@ -1,27 +1,25 @@
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Knight,True,0
-Road Building,True,0
-Road Building,True,0
-Year Of Plenty,True,0
-Year Of Plenty,True,0
-Monopoly,True,0
-Monopoly,True,0
-Library,False,1
-Market,False,1
-Chapel,False,1
-Great Hall,False,1
-University,False,1
-Largest Army,False,2
-Longest Road,False,2
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+Knight true 0
+RoadBuilding true 0
+RoadBuilding true 0
+YearOfPlenty true 0
+YearOfPlenty true 0
+Monopoly true 0
+Monopoly true 0
+Library false 1
+Market false 1
+Chapel false 1
+Palace false 1
+University false 1
