@@ -33,7 +33,8 @@ public class GameState {
 	private BufferedImage titleScreen, blueHex, diceHex, backDiceHex, buildingCost, sheepCard, stoneCard, grainCard,
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
-			seeHand, trade, backCard, bankTradeButton, buildMenu, buildCity, buildSettlement, buildRoad, playButton;
+			seeHand, trade, backCard, bankTradeButton, buildMenu, buildCity, buildSettlement, buildRoad, playButton,
+			makeDevCard;
 	private Dice dice;
 	private PlayerManager pManage;
 	private boolean diceHaveBeenRolled;
@@ -78,7 +79,7 @@ public class GameState {
 				// hexTiles.get(i).setNum(tempList.get(i));
 				hexTiles.get(i).setImage(tempStrList.get(i));
 			}
-			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
+			titleScreen = ImageIO.read(GameState.class.getResource("Images/title_screen.PNG"));
 			harTrade = ImageIO.read(GameState.class.getResource("/Images/harbor trade system.png"));
 			bankTrade = ImageIO.read(GameState.class.getResource("/Images/bank trade system.PNG"));
 			tradeMenu = ImageIO.read(GameState.class.getResource("/Images/trade menu.png"));
@@ -91,7 +92,7 @@ public class GameState {
 
 			// buildingcost card
 			buildingCost = ImageIO.read(GameState.class.getResource("/Images/building_costs.png"));
-
+			makeDevCard = ImageIO.read(GameState.class.getResource("/Buttons/makecard_button.png"));
 			// perimeter resource cards
 			sheepCard = ImageIO.read(GameState.class.getResource("/CardImages/Sheep.jpg"));
 			stoneCard = ImageIO.read(GameState.class.getResource("/CardImages/Stone.jpg"));
@@ -570,8 +571,7 @@ public class GameState {
 		g.drawImage(perimArmyCard, 365, 381, 72, 104, null);
 		g.drawImage(redDice, 690, 680, 71, 72, null);
 		g.drawImage(yellowDice, 745, 750, 71, 72, null);
-		g.setColor(Color.green);
-		g.fillRect(340, 500, 140, 70);
+		g.drawImage(makeDevCard, 340, 500, 165, 78,null);
 		// using a hashmap to store the color values with the color name
 		// that way, player 1 is in upper left corner, player 2 in upper right, etc etc
 		HashMap<String, Color> map = new HashMap<>();
