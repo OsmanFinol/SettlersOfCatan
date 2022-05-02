@@ -78,7 +78,7 @@ public class GameState {
 				// hexTiles.get(i).setNum(tempList.get(i));
 				hexTiles.get(i).setImage(tempStrList.get(i));
 			}
-			titleScreen = ImageIO.read(GameState.class.getResource("Images/title_screen.PNG"));
+			titleScreen = ImageIO.read(GameState.class.getResource("Images/title screen.PNG"));
 			harTrade = ImageIO.read(GameState.class.getResource("/Images/harbor trade system.png"));
 			bankTrade = ImageIO.read(GameState.class.getResource("/Images/bank trade system.PNG"));
 			tradeMenu = ImageIO.read(GameState.class.getResource("/Images/trade menu.png"));
