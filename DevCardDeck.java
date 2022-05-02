@@ -19,9 +19,10 @@ public class DevCardDeck
         while (app.hasNextLine())
         {
             //Put in order
-            String name = app.next();
-            boolean playable = Boolean.parseBoolean(app.next());
-            int pts = Integer.parseInt(app.next());
+            Scanner t = new Scanner(app.nextLine());
+            String name = t.next();
+            boolean playable = Boolean.parseBoolean(t.next());
+            int pts = Integer.parseInt(t.next());
             DevelopmentCard temp =
                     new DevelopmentCard(name, playable, pts);
             deck.push(temp);
