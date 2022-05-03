@@ -133,18 +133,17 @@ public class PlayerManager {
 
 	public Player findLargestArmy()
 	{
-		Player temp = players.get(0);
-		int num=0;
-		for(Player P:players)
+		int min=3;
+		Player temp=players.get(0);
+		for(Player p:players)
 		{
-			if(P.getKnightCards()>num && P.getKnightCards()>3)
+			if(p.getKnightCards()>=min)
 			{
-				largestArmy=P;
-				num=P.getKnightCards();
+				temp=p;
 			}
 		}
-		largestArmy.addVictoryPoints(2);
-		return largestArmy;
+		temp.setLargestArmy(true);
+		return temp;
 	}
 
 	public Player getLargestArmy() {

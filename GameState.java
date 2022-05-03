@@ -483,6 +483,7 @@ public class GameState {
 					}
 					x += 200;
 					px += 200;
+
 				}
 				g.setFont(AlmendraSC.deriveFont(30F));
 				g.setColor(Color.black);

@@ -632,6 +632,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						if (dev.getName().equals("Knight")) {
 							gs.setSubState("moverobber");
 							lines.add(gs.getCPlayer() + " has played a Knight card!");
+
 							gs.getCPlayer().removeVicCard(dev);
 							repaint();
 						} else if (dev.getName().equals("Monopoly")) {
