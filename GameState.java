@@ -325,12 +325,75 @@ public class GameState {
 				// MAIN SCREEN
 			} else if (subState.equals("buildmenu")) {
 				g.drawImage(buildMenu, 1150, 750, 205, 66, null);
-			} else if (subState.equals("buildCity")) {
-				g.drawImage(buildCity, 1150, 750, 205, 66, null);
-			} else if (subState.equals("buildSettlement")) {
+				}
+			else if(subState.equals("buildSettlement")) {
 				g.drawImage(buildSettlement, 1150, 750, 205, 66, null);
-			} else if (subState.equals("buildRoad")) {
+				if (buildingSettlement == true) {
+					System.out.println("hiiiii!!!!");
+				gBoard.paintInters(g);
+				String cpp = pManage.getCPlayer().getColor();
+				if (cpp.equals("Orange")) {
+					g.drawImage(orangeSettlement, sX, sY, 20, 20, null);
+				}
+				if (cpp.equals("Blue")) {
+					g.drawImage(blueSettlement, sX, sY, 20, 20, null);
+				}
+				if (cpp.equals("Red")) {
+					g.drawImage(redSettlement, sX, sY, 20, 20, null);
+				}
+				if (cpp.equals("White")) {
+					g.drawImage(whiteSettlement, sX, sY, 20, 20, null);
+				}
+
+				}
+			}
+			else if(subState.equals("buildCity")) {
+				buildingCity = true;
+				g.drawImage(buildCity, 1150, 750, 205, 66, null);
+				if (buildingCity == true) {
+					System.out.println("hiiiii");
+				gBoard.paintInters(g);
+				String cpp = pManage.getCPlayer().getColor();
+				if (cpp.equals("Orange")) {
+					g.drawImage(orangeCity, cX-13, cY-16, 46, 46, null);
+				}
+				if (cpp.equals("Blue")) {
+					g.drawImage(blueCity, cX-13, cY-16, 46, 46, null);
+				}
+				if (cpp.equals("Red")) {
+					g.drawImage(redCity, cX-13, cY-16, 46, 46, null);
+				}
+				if (cpp.equals("White")) {
+					g.drawImage(whiteCity, cX-13, cY-16, 46, 46, null);
+				}
+
+				}
+				//gBoard.paintInters(g);
+			}
+			else if(subState.equals("buildRoad")) {
 				g.drawImage(buildRoad, 1150, 750, 205, 66, null);
+			}
+			
+			else if (subState.equals("redocolor")) {
+				g.setColor(new Color(210, 180, 140, 255));
+				g.fillRect(0, 0, 2000, 2000);
+				g.setColor(new Color(0, 200, 248, 255));
+				try {
+					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
+							587, null);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				g.fillRect(880, 260, 200, 300);
+				if (pManage.getNumPlayers() == 2)
+					g.fillRect(320, 450, 560, 200);
+				else if (pManage.getNumPlayers() == 3)
+					g.fillRect(320, 560, 560, 150);
+				g.setColor(Color.black);
+				g.setFont(AlmendraSC);
+				g.drawString("Two players can't have the same color!", 400, 700);
+
+				// MAIN SCREEN
 			} else if (subState.equals("default")) {
 				paintDefaultScreen(g);
 			}
