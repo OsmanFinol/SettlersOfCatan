@@ -446,7 +446,23 @@ public class Board {
 			}
 		}
 	}
-
+	public void paintStructures(Graphics g) {
+		for (int r = 0; r < 6; r++) {
+			for (int c = 0; c < 11; c++) {
+				Intersection temp = inters[r][c];
+				if (temp!=null && temp.hasStructure() == true /*&& temp.getSet().equals("full")*/) {
+					/*if (temp.getSet("settlement1") || temp.getSet("settlement2") || temp.getSet("settlement3") || temp.getSet("settlement4")) {
+					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
+					//temp.setSet("no");
+					}*/
+					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
+					//temp.setSet("no");
+					System.out.println(temp.getBorders() + "hi???");
+				}
+			}
+			System.out.println();
+		}
+	}
 	public void paintInters(Graphics g) {
 		g.setColor(new Color(222, 235, 52, 175));
 		for (int r = 0; r < 6; r++) {
