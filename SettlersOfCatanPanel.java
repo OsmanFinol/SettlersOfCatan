@@ -684,64 +684,106 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 			if (gs.cPlayerIndex() == 0) {
 				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
-					} else {
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
+					}
+					else {
 						gs.setSubState("default");
 						System.out.println("hi");
 					}
 					repaint();
 				}
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
+				
 				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
 					if (!(gs.getSubState().equals("buildSettlement"))) {
 						gs.setSubState("buildSettlement");
 						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+						gs.setBuildingSettlement(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildSettlement")) {
+					
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null) && temp.hasStructure() == false && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(1);
+								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("settlement1");
+								//temp.setSet("settlement");
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ " " + temp.getYCord());
+							repaint();
+							}
+						}
 					}
-					repaint();
+					
+				}
+				
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						gs.setBuildingCity(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildCity")) {
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null)  && temp.getSet().equals("settlement1") && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(2);
+								gs.setCityCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("city1");
+								//temp.setSet("full");
+								structX = temp.getXCord();
+								structY = temp.getYCord();
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ "hiiii " + temp.getYCord());
+							repaint();
+							}
+						}
+					}
+					
 				}
 				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
 					if (!(gs.getSubState().equals("buildRoad"))) {
 						gs.setSubState("buildRoad");
 						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 			}
-
+				
+			}
+			
 			if (gs.cPlayerIndex() == 1) {
 				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
 
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
 					}
-					repaint();
-				}
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-					} else {
-						gs.setSubState("buildmenu");
+					else {
+						gs.setSubState("default");
 						System.out.println("hi");
 					}
 					repaint();
@@ -750,41 +792,90 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					if (!(gs.getSubState().equals("buildSettlement"))) {
 						gs.setSubState("buildSettlement");
 						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+						gs.setBuildingSettlement(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildSettlement")) {
+					
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null) && temp.hasStructure() == false && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(1);
+								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("settlement2");
+								//temp.setSet("settlement");
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ " " + temp.getYCord());
+							repaint();
+							}
+						}
 					}
-					repaint();
+					
+				}
+				
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						gs.setBuildingCity(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildCity")) {
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null)  && temp.getSet().equals("settlement2") && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(2);
+								gs.setCityCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("city2");
+								//temp.setSet("full");
+								structX = temp.getXCord();
+								structY = temp.getYCord();
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ "hiiii " + temp.getYCord());
+							repaint();
+							}
+						}
+					}
+					
 				}
 				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
 					if (!(gs.getSubState().equals("buildRoad"))) {
 						gs.setSubState("buildRoad");
 						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
 			}
 			if (gs.cPlayerIndex() == 2) {
 				if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
 
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
 					}
-					repaint();
-				}
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-					} else {
-						gs.setSubState("buildmenu");
+					else {
+						gs.setSubState("default");
 						System.out.println("hi");
 					}
 					repaint();
@@ -793,42 +884,91 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					if (!(gs.getSubState().equals("buildSettlement"))) {
 						gs.setSubState("buildSettlement");
 						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+						gs.setBuildingSettlement(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildSettlement")) {
+					
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null) && temp.hasStructure() == false && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(1);
+								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("settlement3");
+								//temp.setSet("settlement");
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ " " + temp.getYCord());
+							repaint();
+							}
+						}
 					}
-					repaint();
+					
+				}
+				
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						gs.setBuildingCity(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildCity")) {
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null)  && temp.getSet().equals("settlement3") && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(2);
+								gs.setCityCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("city3");
+								//temp.setSet("full");
+								structX = temp.getXCord();
+								structY = temp.getYCord();
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ "hiiii " + temp.getYCord());
+							repaint();
+							}
+						}
+					}
+					
 				}
 				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
 					if (!(gs.getSubState().equals("buildRoad"))) {
 						gs.setSubState("buildRoad");
 						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 			}
-
+			}
+			
 			if (gs.cPlayerIndex() == 3) {
 				if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
 					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
+					gs.setSubState("buildmenu");
+					lines.add(gs.getCPlayer() + " started building.");
 
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
 					}
-					repaint();
-				}
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-					} else {
-						gs.setSubState("buildmenu");
+					else {
+						gs.setSubState("default");
 						System.out.println("hi");
 					}
 					repaint();
@@ -837,22 +977,80 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					if (!(gs.getSubState().equals("buildSettlement"))) {
 						gs.setSubState("buildSettlement");
 						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+						gs.setBuildingSettlement(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildSettlement")) {
+					
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null) && temp.hasStructure() == false && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(1);
+								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("settlement1");
+								//temp.setSet("settlement");
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ " " + temp.getYCord());
+							repaint();
+							}
+						}
 					}
-					repaint();
+					
+				}
+				
+				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+					if (!(gs.getSubState().equals("buildCity"))) {
+						gs.setSubState("buildCity");
+						lines.add(gs.getCPlayer() + " selected to build City.");
+						gs.setBuildingCity(true);
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
+				if (gs.getSubState().equals("buildCity")) {
+					for (Intersection[] tmp: gs.getBoard().getInters()) {
+						for (Intersection temp: tmp) {
+							if (!(temp==null)  && temp.getSet().equals("settlement1") && x >= temp.getXCord() && x <= temp.getXCord()+20 &&  y >= temp.getYCord() && y <= temp.getYCord()+20) {
+								temp.setColor(gs.getCPlayer().getColor());
+								temp.setImageStructure(2);
+								gs.setCityCords(temp.getXCord(), temp.getYCord());
+								temp.setStructure(true);
+								temp.setSet("city1");
+								//temp.setSet("full");
+								structX = temp.getXCord();
+								structY = temp.getYCord();
+								temp.setColor(gs.getCPlayer().getColor());
+								System.out.println(x +" " + y);
+								System.out.println(temp.getXCord()+ "hiiii " + temp.getYCord());
+							repaint();
+							}
+						}
+					}
+					
 				}
 				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
 					if (!(gs.getSubState().equals("buildRoad"))) {
 						gs.setSubState("buildRoad");
 						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
+						}
+						else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+			}
 			}
 		}
 	}
