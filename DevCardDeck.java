@@ -46,5 +46,4 @@ public class DevCardDeck
         Collections.shuffle(deck);
     }
 
-
 }
