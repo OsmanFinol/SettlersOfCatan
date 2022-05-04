@@ -34,9 +34,11 @@ public class GameState {
 			woodCard, brickCard, perimDevBack, perimLongRoad, perimArmyCard, rollDice, passDice, redDice, yellowDice,
 			actionLog, diceRollingImage, harTrade, bankTrade, tradeMenu, tradeCon, buildEx, playerSelect, build,
 			seeHand, trade, backCard, bankTradeButton, buildMenu, buildCity, buildSettlement, buildRoad, playButton,
-			makeDevCard;
+			makeDevCard, whiteCity, redCity, orangeCity, blueCity, whiteSettlement, redSettlement, orangeSettlement, blueSettlement;
 	private Dice dice;
 	private PlayerManager pManage;
+	boolean buildingSettlement = false,buildingCity = false;
+	int cX = 0, cY = 0, sX = 0, sY = 0;
 	private boolean diceHaveBeenRolled;
 	Player toTradeWith;
 	ArrayList<Player> pListTemp;
@@ -60,6 +62,7 @@ public class GameState {
 		seeHandClick = 0;
 		mustDiscard = new ArrayList<Player>();
 		forcedDiscard = new ArrayList<ResourceCard>();
+		
 		try {
 			int randNum = (int) (Math.random() * 6) + 1;
 			Scanner app = new Scanner(new File("Tiles.txt"));
@@ -90,6 +93,17 @@ public class GameState {
 			diceHex = ImageIO.read(GameState.class.getResource("/Images/dice_hex.png"));
 			backDiceHex = ImageIO.read(GameState.class.getResource("/Images/back_dice_hex.png"));
 
+			
+			//settlements, roads, cities
+			whiteCity = ImageIO.read(GameState.class.getResource("BuildImages/city_white.PNG"));
+			redCity = ImageIO.read(GameState.class.getResource("BuildImages/city_red.png"));
+			orangeCity= ImageIO.read(GameState.class.getResource("BuildImages/city_orange.png"));
+			blueCity = ImageIO.read(GameState.class.getResource("BuildImages/city_blue.png"));
+			whiteSettlement = ImageIO.read(GameState.class.getResource("BuildImages/settlement_white.PNG"));
+			redSettlement = ImageIO.read(GameState.class.getResource("BuildImages/settlement_red.PNG"));
+			orangeSettlement = ImageIO.read(GameState.class.getResource("BuildImages/settlement_orange.PNG"));
+			blueSettlement = ImageIO.read(GameState.class.getResource("BuildImages/settlement_blue.PNG"));
+			
 			// buildingcost card
 			buildingCost = ImageIO.read(GameState.class.getResource("/Images/building_costs.png"));
 			makeDevCard = ImageIO.read(GameState.class.getResource("/Buttons/makecard_button.png"));
@@ -323,13 +337,13 @@ public class GameState {
 				g.drawString("Two players can't have the same color!", 400, 700);
 
 				// MAIN SCREEN
-			} else if (subState.equals("buildmenu")) {
+			}else if (subState.equals("buildmenu")) {
 				g.drawImage(buildMenu, 1150, 750, 205, 66, null);
 				}
 			else if(subState.equals("buildSettlement")) {
 				g.drawImage(buildSettlement, 1150, 750, 205, 66, null);
 				if (buildingSettlement == true) {
-					System.out.println("hiiiii!!!!");
+				//	System.out.println("hiiiii!!!!");
 				gBoard.paintInters(g);
 				String cpp = pManage.getCPlayer().getColor();
 				if (cpp.equals("Orange")) {
@@ -351,7 +365,7 @@ public class GameState {
 				buildingCity = true;
 				g.drawImage(buildCity, 1150, 750, 205, 66, null);
 				if (buildingCity == true) {
-					System.out.println("hiiiii");
+				//	System.out.println("hiiiii");
 				gBoard.paintInters(g);
 				String cpp = pManage.getCPlayer().getColor();
 				if (cpp.equals("Orange")) {
@@ -372,29 +386,7 @@ public class GameState {
 			}
 			else if(subState.equals("buildRoad")) {
 				g.drawImage(buildRoad, 1150, 750, 205, 66, null);
-			}
-			
-			else if (subState.equals("redocolor")) {
-				g.setColor(new Color(210, 180, 140, 255));
-				g.fillRect(0, 0, 2000, 2000);
-				g.setColor(new Color(0, 200, 248, 255));
-				try {
-					g.drawImage(ImageIO.read(GameState.class.getResource("/Images/color_select.png")), 300, 150, 900,
-							587, null);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				g.fillRect(880, 260, 200, 300);
-				if (pManage.getNumPlayers() == 2)
-					g.fillRect(320, 450, 560, 200);
-				else if (pManage.getNumPlayers() == 3)
-					g.fillRect(320, 560, 560, 150);
-				g.setColor(Color.black);
-				g.setFont(AlmendraSC);
-				g.drawString("Two players can't have the same color!", 400, 700);
-
-				// MAIN SCREEN
-			} else if (subState.equals("default")) {
+			}else if (subState.equals("default")) {
 				paintDefaultScreen(g);
 			}
 
@@ -541,12 +533,11 @@ public class GameState {
 				for (int i = 0; i < pManage.getCPlayer().getDevCards().size(); i++) {
 					DevelopmentCard dc = pManage.getCPlayer().getDevCards().get(i);
 					g.drawImage(dc.getImage(), x, 200, 187, 280, null);
-					if (dc.canPlay()) {
+					if (dc.canPlay() && dc.getTurns() > 0) {
 						g.drawImage(playButton, px, 500, 158, 40, null);
 					}
 					x += 200;
 					px += 200;
-
 				}
 				g.setFont(AlmendraSC.deriveFont(30F));
 				g.setColor(Color.black);
@@ -596,6 +587,9 @@ public class GameState {
 				forcedDiscard.clear();
 				forcedDiscardCords.clear();
 				gBoard.paintNotRobberTiles(g);
+				g.setColor(Color.black);
+				g.setFont(AlmendraSC.deriveFont(30F));
+				g.drawString("You rolled a 7 and must move the robber!", 850, 850);
 			}
 
 		}
@@ -733,6 +727,8 @@ public class GameState {
 		}
 		gBoard.paintTiles(g);
 		gBoard.paintHarbors(g);
+		gBoard.paintStructures(g);
+		
 	}
 
 	public void paintLog(Graphics g, ArrayList<String> lines) {
@@ -885,6 +881,13 @@ public class GameState {
 
 	public void setRequests(ArrayList<ResourceCard> req) {
 		requests = req;
+	}
+	
+	public void setBuildingSettlement(boolean b) {
+		buildingSettlement = b;
+	}
+	public void setBuildingCity(boolean b) {
+		buildingCity = b;
 	}
 
 	public void paintRules(Graphics g) {
@@ -1148,6 +1151,17 @@ public class GameState {
 
 	public PlayerManager getPM() {
 		return pManage;
+	}
+
+	public void setSettlementCords(int xCord, int yCord) {
+		sX = xCord;
+		sY = yCord;
+	}
+
+	public void setCityCords(int xCord, int yCord) {
+		cX = xCord;
+		cY = yCord;
+		
 	}
 
 }
