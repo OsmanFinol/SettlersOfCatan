@@ -12,6 +12,7 @@ public class Intersection {
 	private BufferedImage structImage;
 	private String color;
 	private String st;
+	private Harbor har;
 	public Intersection(int x, int y, boolean hasHarb, ArrayList<Tile> b) {
 		xCord = x;
 		yCord = y;
@@ -75,6 +76,12 @@ public class Intersection {
 		return borders;
 	}
 	
+	public boolean hasHarbor() {
+		return hasHarbor;
+	}
 	
+	public void addHarbor(Harbor h) {
+		har = h;
+	}
 	
 }
