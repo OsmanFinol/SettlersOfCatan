@@ -1,18 +1,68 @@
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GraphicsEnvironment;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.Scanner;
 
+import javax.imageio.ImageIO;
+
 public class Board {
 
 	private Tile[][] gameBoard;
 	private Intersection[][] inters;
+	private ArrayList<Harbor> harbs;
+	private BufferedImage rob;
+	Font AlmendraSC;
 
 	public Board(ArrayList<Tile> arrList) {
+		harbs = new ArrayList<>();
+		try {
+			Scanner harb = new Scanner(new File("Harbors.txt"));
+			while (harb.hasNextLine()) {
+				harbs.add(new Harbor(Integer.parseInt(harb.next()), Integer.parseInt(harb.next()),
+						new ResourceCard(harb.next())));
+			}
+
+			Collections.shuffle(harbs);
+
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			AlmendraSC = Font.createFont(Font.TRUETYPE_FONT, new File("AlmendraSC-Regular.ttf")).deriveFont(15f)
+					.deriveFont(AlmendraSC.BOLD);
+		} catch (FontFormatException | IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+		try {
+			ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("AlmendraSC-Regular.ttf")));
+		} catch (FontFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			rob = ImageIO.read(Board.class.getResource("/Images/robber_icon.png"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		while (arrList.get(9).getType().equals("Desert"))
 			Collections.shuffle(arrList);
 		Iterator<Tile> iter = arrList.iterator();
@@ -425,8 +475,7 @@ public class Board {
 					if (!temp.isRobber()) {
 						g.drawImage(temp.getNumImage(), temp.getXCord() + 40, temp.getYCord() + 35, 30, 30, null);
 					} else {
-						g.setColor(Color.gray);
-						g.fillOval(temp.getXCord() + 40, temp.getYCord() + 35, 30, 30);
+						g.drawImage(rob, temp.getXCord() + 40, temp.getYCord() + 15, 30, 60, null);
 					}
 				}
 			}
@@ -446,47 +495,53 @@ public class Board {
 			}
 		}
 	}
+
 	public void paintStructures(Graphics g) {
 		for (int r = 0; r < 6; r++) {
 			for (int c = 0; c < 11; c++) {
 				Intersection temp = inters[r][c];
-				if (temp!=null && temp.hasStructure() == true /*&& temp.getSet().equals("full")*/) {
-					/*if (temp.getSet("settlement1") || temp.getSet("settlement2") || temp.getSet("settlement3") || temp.getSet("settlement4")) {
+				if (temp != null && temp.hasStructure() == true /* && temp.getSet().equals("full") */) {
+					/*
+					 * if (temp.getSet("settlement1") || temp.getSet("settlement2") ||
+					 * temp.getSet("settlement3") || temp.getSet("settlement4")) {
+					 * g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20,
+					 * 20, null); //temp.setSet("no"); }
+					 */
 					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
-					//temp.setSet("no");
-					}*/
-					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
-					//temp.setSet("no");
+					// temp.setSet("no");
 					System.out.println(temp.getBorders() + "hi???");
 				}
 			}
 			System.out.println();
 		}
 	}
+
 	public void paintInters(Graphics g) {
 		g.setColor(new Color(222, 235, 52, 175));
 		for (int r = 0; r < 6; r++) {
 			for (int c = 0; c < 11; c++) {
 				Intersection temp = inters[r][c];
-				if (temp != null) {
+				if (temp != null && !temp.hasStructure()) {
 					g.fillOval(temp.getXCord(), temp.getYCord(), 20, 20);
-					System.out.println(temp.getBorders());
 				}
 			}
-			System.out.println();
 		}
 	}
 
 	public void paintHarbors(Graphics g) {
-		g.setColor(Color.blue);
-		for (int r = 0; r < 6; r++) {
-			for (int c = 0; c < 11; c++) {
-				Intersection temp = inters[r][c];
-				if (temp != null && temp.hasHarbor()) {
-					g.fillOval(temp.getXCord(), temp.getYCord(), 20, 20);
-				}
-			}
-		}
+		g.setColor(Color.white);
+		g.setFont(AlmendraSC);
+
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 340), 568, 80, 80, 80, null);
+		g.drawString(harbs.get(0).toString(), 590, 100);
+
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 20), 743, 80, 80, 80, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 18), 908, 162, 80, 80, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 90), 1025, 310, 30, 70, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 162), 908, 450, 80, 80, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 150), 745, 535, 80, 60, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 210), 568, 530, 80, 70, null);
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 270), 450, 310, 30, 75, null);
 	}
 
 	public void spiral() {
@@ -560,6 +615,36 @@ public class Board {
 			}
 		}
 		return null;
+	}
+	
+	public Intersection[][] getInters() {
+		return inters;
+	}
+
+	private static BufferedImage rotateImageByDegrees(BufferedImage buffImage, double angle) {
+		double radian = Math.toRadians(angle);
+		double sin = Math.abs(Math.sin(radian));
+		double cos = Math.abs(Math.cos(radian));
+
+		int width = buffImage.getWidth();
+		int height = buffImage.getHeight();
+
+		int nWidth = (int) Math.floor((double) width * cos + (double) height * sin);
+		int nHeight = (int) Math.floor((double) height * cos + (double) width * sin);
+
+		BufferedImage rotatedImage = new BufferedImage(nWidth, nHeight, BufferedImage.TYPE_INT_ARGB);
+
+		Graphics2D graphics = rotatedImage.createGraphics();
+
+		graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+
+		graphics.translate((nWidth - width) / 2, (nHeight - height) / 2);
+		// rotation around the center point
+		graphics.rotate(radian, (double) (width / 2), (double) (height / 2));
+		graphics.drawImage(buffImage, 0, 0, null);
+		graphics.dispose();
+
+		return rotatedImage;
 	}
 
 }
