@@ -11,11 +11,13 @@ public class DevelopmentCard {
     private boolean isPlayable;
     private int vicPoints;
     private BufferedImage image;
+    private int numTurns; //number of turns since being drawn
     public DevelopmentCard(String n, boolean u, int vP)
     {
         name=n;
         vicPoints=vP;
         isPlayable=u;
+        numTurns = 0;
         try {
 			image = ImageIO.read(GameState.class.getResource("/DevCards/"+name+".jpg"));
 		} catch (IOException e) {
@@ -31,6 +33,12 @@ public class DevelopmentCard {
     public int getPoints()
     {
         return vicPoints;
+    }
+    public void incrementTurns() {
+    	numTurns++;
+    }
+    public int getTurns() {
+    	return numTurns;
     }
 
     public boolean canPlay()
