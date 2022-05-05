@@ -509,10 +509,8 @@ public class Board {
 					 */
 					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
 					// temp.setSet("no");
-					System.out.println(temp.getBorders() + "hi???");
 				}
 			}
-			System.out.println();
 		}
 	}
 
@@ -531,17 +529,44 @@ public class Board {
 	public void paintHarbors(Graphics g) {
 		g.setColor(Color.white);
 		g.setFont(AlmendraSC);
-
+		System.out.println(harbs.size());
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 340), 568, 80, 80, 80, null);
-		g.drawString(harbs.get(0).toString(), 590, 100);
+		g.drawString(harbs.get(0).toString(), 590, 95);
 
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 20), 743, 80, 80, 80, null);
+		g.drawString(harbs.get(1).toString(), 780, 95);
+		
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 18), 908, 162, 80, 80, null);
+		g.drawString(harbs.get(2).toString(), 945, 175);
+		
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 90), 1025, 310, 30, 70, null);
+		g.drawString(harbs.get(3).toString(), 1050, 340);
+		
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 162), 908, 450, 80, 80, null);
+		g.drawString(harbs.get(4).toString(), 945, 510);
+		
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 150), 745, 535, 80, 60, null);
+		g.drawString(harbs.get(5).toString(), 780, 580);
+		
 		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 210), 568, 530, 80, 70, null);
-		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 270), 450, 310, 30, 75, null);
+		g.drawString(harbs.get(6).toString(), 590, 575);
+		
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 270), 500, 390, 30, 75, null);
+		g.drawString(harbs.get(7).toString(), 480, 420);
+		
+		g.drawImage(rotateImageByDegrees(harbs.get(0).getImage(), 270), 500, 228, 30, 75, null);
+		g.drawString(harbs.get(8).toString(), 480, 260);
+		
+		g.setFont(AlmendraSC.deriveFont(15F));
+		g.drawString(harbs.get(0).resource(), 590, 110);
+		g.drawString(harbs.get(1).resource(), 780, 110);
+		g.drawString(harbs.get(2).resource(), 945, 190);
+		g.drawString(harbs.get(3).resource(), 1050, 355);
+		g.drawString(harbs.get(4).resource(), 945, 525);
+		g.drawString(harbs.get(5).resource(), 785, 590);
+		g.drawString(harbs.get(6).resource(), 595, 590);
+		g.drawString(harbs.get(7).resource(), 480, 435);
+		g.drawString(harbs.get(8).resource(), 480, 275);
 	}
 
 	public void spiral() {
