@@ -18,7 +18,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
 										// add it here
-	private boolean actualGame = true;
+	private boolean actualGame = false;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
 	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
 	ArrayList<String> colorsToSet;
@@ -99,10 +99,11 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 
 		if (gs.getSubState().equals("default") || gs.getSubState().equals("trading")
 				|| gs.getSubState().equals("redoTradeReq") || gs.getSubState().equals("redoTradeOff")
-				|| gs.getSubState().equals("buildmenu") || gs.getSubState().equals("buildSettlement")
-				|| gs.getSubState().equals("buildCity") || gs.getSubState().equals("buildRoad")
-				|| gs.getSubState().equals("banktrade") || gs.getSubState().equals("redobanktrade")
-				|| gs.getSubState().equals("faileddevcard") || gs.getSubState().equals("moverobber")) {
+				|| gs.getSubState().equals("buildmenu") || gs.getSubState().equals("redobuildmenu")
+				|| gs.getSubState().equals("buildSettlement") || gs.getSubState().equals("buildCity")
+				|| gs.getSubState().equals("buildRoad") || gs.getSubState().equals("banktrade")
+				|| gs.getSubState().equals("redobanktrade") || gs.getSubState().equals("faileddevcard")
+				|| gs.getSubState().equals("moverobber")) {
 			gs.paintLog(g, lines);
 			if (gs.getSubState().equals("trading")) {
 				for (int i = 0; i <= reqDropDowns; i++) {
@@ -259,7 +260,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					}
 				}
 				// passing the dice/ending ur turn
-				else if (x >= 710 && y >= 600 && x <= 710 + 95 && y <= 600 + 47) {
+				else if (x >= 710 && y >= 600 && x <= 710 + 95 && y <= 600 + 47 && gs.haveDiceBeenRolled()) {
 					lines.add(gs.getCPlayer() + " ended their turn.");
 					lines.add("It is now " + gs.getNextPlayer() + "'s turn.");
 					for (int i = 0; i < gs.getPM().getPlayerList().size(); i++) {
@@ -273,7 +274,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				}
 
 				// trading stuff
-				else if (x >= 145 && y >= 15 && x <= 145 + 122 && y <= 40) {
+				else if (x >= 145 && y >= 15 && x <= 145 + 122 && y <= 40 && gs.haveDiceBeenRolled()) {
 					if (gs.cPlayerIndex() != 0) {
 						gs.setSubState("trading");
 						gs.setToTradeWith(gs.getPM().getPlayerList().get(0));
@@ -281,7 +282,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 								+ ".");
 						repaint();
 					}
-				} else if (x >= 1025 && y >= 15 && x <= 1025 + 122 && y <= 40) {
+				} else if (x >= 1025 && y >= 15 && x <= 1025 + 122 && y <= 40 && gs.haveDiceBeenRolled()) {
 					if (gs.cPlayerIndex() != 1) {
 						gs.setSubState("trading");
 						gs.setToTradeWith(gs.getPM().getPlayerList().get(1));
@@ -289,7 +290,8 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 								+ ".");
 						repaint();
 					}
-				} else if (x >= 300 && y >= 720 && x <= 300 + 122 && y <= 720 + 25 && gs.getNumPlayers() > 2) {
+				} else if (x >= 300 && y >= 720 && x <= 300 + 122 && y <= 720 + 25 && gs.getNumPlayers() > 2
+						&& gs.haveDiceBeenRolled()) {
 					if (gs.cPlayerIndex() != 2) {
 						gs.setSubState("trading");
 						gs.setToTradeWith(gs.getPM().getPlayerList().get(2));
@@ -297,7 +299,8 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 								+ ".");
 						repaint();
 					}
-				} else if (x >= 880 && y >= 720 && x <= 880 + 122 && y <= 720 + 25 && gs.getNumPlayers() > 3) {
+				} else if (x >= 880 && y >= 720 && x <= 880 + 122 && y <= 720 + 25 && gs.getNumPlayers() > 3
+						&& gs.haveDiceBeenRolled()) {
 					if (gs.cPlayerIndex() != 3) {
 						gs.setSubState("trading");
 						gs.setToTradeWith(gs.getPM().getPlayerList().get(3));
@@ -305,7 +308,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 								+ ".");
 						repaint();
 					}
-				} else if (x >= 1235 && y >= 568 && x <= 1235 + 193 && y <= 568 + 66) {
+				} else if (x >= 1235 && y >= 568 && x <= 1235 + 193 && y <= 568 + 66 && gs.haveDiceBeenRolled()) {
 					gs.setSubState("banktrade");
 					offDropDowns++;
 					ResourceCard[] arr = gs.getCPlayer().getNoDuplicateInventory();
@@ -325,7 +328,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 					offTrades.put(offDropDowns, picker2);
 					lines.add(gs.getCPlayer() + " selected to trade with the bank.");
 					repaint();
-				} else if (x >= 340 && y >= 500 && x <= 340 + 165 && y <= 578) {
+				} else if (x >= 340 && y >= 500 && x <= 340 + 165 && y <= 578 && gs.haveDiceBeenRolled()) {
 					ArrayList<ResourceCard> temp = new ArrayList<>();
 					temp.add(new ResourceCard("Sheep"));
 					temp.add(new ResourceCard("Grain"));
@@ -385,684 +388,850 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						repaint();
 					}
 				}
-				
-		}
-		// rolling dice to figure out turn
-		else if (gs.getSubState().equals("setorder")) {
-			if (x >= 620 && y >= 580 && x <= 620 + 270 && y <= 680) {
-				gs.rollForOrder(gs.getNumPlayers());
-				repaint();
+
 			}
-		}
-		// entering game (finally)
-		else if (gs.getSubState().equals("entergame")) {
-			if (x >= 605 && y >= 570 && x <= 605 + 289 && y <= 570 + 143) {
-				gs.setSubState("default");
-				lines.add("It's " + gs.getCPlayer() + "'s turn.");
-				repaint();
-			}
-		}
-
-		// selecting colors
-		else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
-			if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
-				// add selected items to arraylist, then do some fun java stuff to remove the
-				// duplicates :)
-				// if there are duplicates, then list wont be right size
-				// so thats how we know they selected a color more than once
-				// i tried to do this with a treeset and i forgot that it also sorted the
-				// elements so :|
-				ArrayList<String> temp = new ArrayList<String>();
-				temp.add(c1);
-				temp.add(c2);
-				if (gs.getNumPlayers() > 2)
-					temp.add(c3);
-				if (gs.getNumPlayers() > 3)
-					temp.add(c4);
-				Set<String> s = new LinkedHashSet<>();
-				s.addAll(temp);
-				temp.clear();
-				temp.addAll(s);
-				if (temp.size() != gs.getNumPlayers())
-					gs.setSubState("redocolor");
-				else {
-					gs.setSubState("setorder");
-					gs.setPlayerColors(temp);
-					removeAll(); // this'll get rid of the jcomboboxes finally
-				}
-				repaint();
-			}
-		}
-
-		else if (gs.getSubState().equals("trading") || gs.getSubState().equals("redoTradeReq")
-				|| gs.getSubState().equals("redoTradeOff")) {
-			if (x >= 300 && y >= 270 && x <= 1200 && y <= 270 + 72) {
-				reqDropDowns++;
-				ResourceCard[] arr = gs.getToTradeWith().getNoDuplicateInventory();
-				JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
-				picker.setBounds(545 + (140 * reqDropDowns), 290, 130, 40);
-				picker.setVisible(false);
-				add(picker);
-				reqTrades.put(reqDropDowns, picker);
-
-				// nums
-				total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
-				for (int i = 0; i < picker.getItemCount(); i++) {
-					int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
-					if (temp > total)
-						total = temp;
-				}
-				Integer[] numArr = new Integer[total];
-				for (int i = 1; i <= total; i++)
-					numArr[i - 1] = i;
-				JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
-				nums.setBounds(560 + (140 * (reqDropDowns)), 340, 80, 20);
-				nums.setVisible(false);
-				add(nums);
-				reqTradeAmounts.put(reqDropDowns, nums);
-
-				repaint();
-			} else if (x >= 1050 && y >= 340 && x <= 1050 + 124 && y <= 340 + 72) {
-				if (reqDropDowns > -1) {
-					reqTrades.get(reqDropDowns).setVisible(false);
-					reqTrades.put(reqDropDowns, null);
-					reqTradeAmounts.get(reqDropDowns).setVisible(false);
-					reqTrades.put(reqDropDowns, null);
-					reqDropDowns--;
+			// rolling dice to figure out turn
+			else if (gs.getSubState().equals("setorder")) {
+				if (x >= 620 && y >= 580 && x <= 620 + 270 && y <= 680) {
+					gs.rollForOrder(gs.getNumPlayers());
 					repaint();
 				}
-			} else if (x >= 1050 && y >= 430 && x <= 1050 + 124 && y <= 430 + 72) {
-				offDropDowns++;
-				ResourceCard[] arr = gs.getCPlayer().getNoDuplicateInventory();
-				JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
-				picker.setBounds(490 + (140 * offDropDowns), 440, 130, 40);
-				picker.setVisible(false);
-				add(picker);
-				offTrades.put(offDropDowns, picker);
-
-				// nums
-				total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
-				for (int i = 0; i < picker.getItemCount(); i++) {
-					int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
-					if (temp > total)
-						total = temp;
-				}
-				Integer[] numArr = new Integer[total];
-				for (int i = 1; i <= total; i++)
-					numArr[i - 1] = i;
-				JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
-				nums.setBounds(505 + (140 * (offDropDowns)), 490, 80, 20);
-				nums.setVisible(false);
-				add(nums);
-				offTradeAmounts.put(offDropDowns, nums);
-				repaint();
-			} else if (x >= 1050 && y >= 500 && x <= 1050 + 124 && y <= 500 + 72) {
-				if (offDropDowns > -1) {
-					offTrades.get(offDropDowns).setVisible(false);
-					offTrades.put(offDropDowns, null);
-					offTradeAmounts.get(offDropDowns).setVisible(false);
-					offTradeAmounts.put(offDropDowns, null);
-					offDropDowns--;
+			}
+			// entering game (finally)
+			else if (gs.getSubState().equals("entergame")) {
+				if (x >= 605 && y >= 570 && x <= 605 + 289 && y <= 570 + 143) {
+					gs.setSubState("default");
+					lines.add("It's " + gs.getCPlayer() + "'s turn.");
 					repaint();
 				}
-			} else if (x >= 1075 && y >= 190 && x <= 1075 + 90 && y <= 190 + 80) {
-				removeAll();
-				gs.setSubState("default");
-				offDropDowns = -1;
-				reqDropDowns = -1;
-				reqTrades = new HashMap<>();
-				offTrades = new HashMap<>();
-				reqTradeAmounts = new HashMap<>();
-				offTradeAmounts = new HashMap<>();
-				lines.add("...but it didn't work out.");
-				repaint();
 			}
 
-			// doing the trade
-			else if (x >= 645 && y >= 605 && x <= 645 + 200 && y <= 705) {
-				request = new ArrayList<ResourceCard>();
-				for (int i = 0; i < reqTrades.size(); i++) {
-					for (int j = 0; j < (Integer) reqTradeAmounts.get(i).getSelectedItem(); j++) {
-						if (reqTrades.get(i) != null)
-							request.add((ResourceCard) reqTrades.get(i).getSelectedItem());
+			// selecting colors
+			else if (gs.getSubState().equals("setcolors") || gs.getSubState().equals("redocolor")) {
+				if (x >= 890 && y >= 565 && x <= 890 + 170 && y <= 565 + 70) {
+					// add selected items to arraylist, then do some fun java stuff to remove the
+					// duplicates :)
+					// if there are duplicates, then list wont be right size
+					// so thats how we know they selected a color more than once
+					// i tried to do this with a treeset and i forgot that it also sorted the
+					// elements so :|
+					ArrayList<String> temp = new ArrayList<String>();
+					temp.add(c1);
+					temp.add(c2);
+					if (gs.getNumPlayers() > 2)
+						temp.add(c3);
+					if (gs.getNumPlayers() > 3)
+						temp.add(c4);
+					Set<String> s = new LinkedHashSet<>();
+					s.addAll(temp);
+					temp.clear();
+					temp.addAll(s);
+					if (temp.size() != gs.getNumPlayers())
+						gs.setSubState("redocolor");
+					else {
+						gs.setSubState("setorder");
+						gs.setPlayerColors(temp);
+						removeAll(); // this'll get rid of the jcomboboxes finally
 					}
+					repaint();
 				}
-				if (gs.getToTradeWith().hasThese(request)) {
-					offers = new ArrayList<ResourceCard>();
-					for (int i = 0; i < offTrades.size(); i++) {
-						if (offTradeAmounts.get(i) != null) {
-							for (int j = 0; j < (Integer) offTradeAmounts.get(i).getSelectedItem(); j++) {
-								if (offTrades.get(i) != null)
-									offers.add((ResourceCard) offTrades.get(i).getSelectedItem());
-							}
-						}
+			}
 
+			else if (gs.getSubState().equals("trading") || gs.getSubState().equals("redoTradeReq")
+					|| gs.getSubState().equals("redoTradeOff")) {
+				if (x >= 300 && y >= 270 && x <= 1200 && y <= 270 + 72) {
+					reqDropDowns++;
+					ResourceCard[] arr = gs.getToTradeWith().getNoDuplicateInventory();
+					JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
+					picker.setBounds(545 + (140 * reqDropDowns), 290, 130, 40);
+					picker.setVisible(false);
+					add(picker);
+					reqTrades.put(reqDropDowns, picker);
+
+					// nums
+					total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
+					for (int i = 0; i < picker.getItemCount(); i++) {
+						int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
+						if (temp > total)
+							total = temp;
 					}
-					if (gs.getCPlayer().hasThese(offers)) {
-						gs.setSubState("tradeconfirm");
-						removeAll();
-						gs.setOffers(offers);
-						gs.setRequests(request);
+					Integer[] numArr = new Integer[total];
+					for (int i = 1; i <= total; i++)
+						numArr[i - 1] = i;
+					JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
+					nums.setBounds(560 + (140 * (reqDropDowns)), 340, 80, 20);
+					nums.setVisible(false);
+					add(nums);
+					reqTradeAmounts.put(reqDropDowns, nums);
+
+					repaint();
+				} else if (x >= 1050 && y >= 340 && x <= 1050 + 124 && y <= 340 + 72) {
+					if (reqDropDowns > -1) {
+						reqTrades.get(reqDropDowns).setVisible(false);
+						reqTrades.put(reqDropDowns, null);
+						reqTradeAmounts.get(reqDropDowns).setVisible(false);
+						reqTrades.put(reqDropDowns, null);
+						reqDropDowns--;
+						repaint();
 					}
+				} else if (x >= 1050 && y >= 430 && x <= 1050 + 124 && y <= 430 + 72) {
+					offDropDowns++;
+					ResourceCard[] arr = gs.getCPlayer().getNoDuplicateInventory();
+					JComboBox<ResourceCard> picker = new JComboBox<ResourceCard>(arr);
+					picker.setBounds(490 + (140 * offDropDowns), 440, 130, 40);
+					picker.setVisible(false);
+					add(picker);
+					offTrades.put(offDropDowns, picker);
 
-					else
-						gs.setSubState("redoTradeOff");
-				} else
-					gs.setSubState("redoTradeReq");
-
-				repaint();
-			}
-		} else if (gs.getSubState().equals("tradeconfirm")) {
-			if (x >= 420 && y >= 420 && x <= 720 && y <= 580) {
-				leftAccept = true;
-			} else if (x >= 800 && y >= 420 && x <= 1100 && y <= 580) {
-				rightAccept = true;
-			} else if ((x >= 460 && y >= 600 && x <= 460 + 220 && y <= 700)
-					|| (x >= 840 && y >= 600 && x <= 840 + 220 && y <= 700)) {
-				declined = true;
-			}
-			if (leftAccept && rightAccept && (!declined)) {
-				gs.getPM().trade(gs.getToTradeWith(), request, offers);
-				request.clear();
-				offers.clear();
-				reqTrades.clear();
-				reqTradeAmounts.clear();
-				offTrades.clear();
-				offTradeAmounts.clear();
-				gs.setToTradeWith(null);
-				reqDropDowns = -1;
-				offDropDowns = -1;
-				leftAccept = false;
-				rightAccept = false;
-				lines.add("And the trade was successful!");
-				gs.setSubState("default");
-			}
-			if (declined || (x >= 1120 && y >= 175 && x <= 1180 && y <= 175 + 60)) {
-				request.clear();
-				offers.clear();
-				reqTrades.clear();
-				reqTradeAmounts.clear();
-				offTrades.clear();
-				offTradeAmounts.clear();
-				gs.setToTradeWith(null);
-				gs.setSubState("default");
-				reqDropDowns = -1;
-				offDropDowns = -1;
-				leftAccept = false;
-				rightAccept = false;
-				lines.add("...but it didn't work out.");
-			}
-			repaint();
-		} else if (gs.getSubState().equals("banktrade") || gs.getSubState().equals("redobanktrade")) {
-			if (x >= 1110 && y >= 170 && x <= 1110 + 65 & y <= 170 + 65) {
-				gs.setSubState("default");
-				lines.add("...but it didn't work out.");
-				offTrades.clear();
-				offDropDowns = -1;
-				removeAll();
-				repaint();
-			} else if (x >= 600 && y >= 550 && x <= 900 && y <= 550 + 145) {
-				ArrayList<ResourceCard> temp = new ArrayList<>();
-				ResourceCard rc = (ResourceCard) offTrades.get(0).getSelectedItem();
-				for (int i = 0; i < 4; i++)
-					temp.add(rc);
-
-				if (temp.get(3) != null && gs.getCPlayer().hasThese(temp)) {
-					gs.getCPlayer().removeResources(temp);
-					temp = new ArrayList<ResourceCard>();
-					temp.add((ResourceCard) offTrades.get(1).getSelectedItem());
-					gs.getCPlayer().addResources(temp);
+					// nums
+					total = gs.getToTradeWith().numOfCards((ResourceCard) picker.getSelectedItem());
+					for (int i = 0; i < picker.getItemCount(); i++) {
+						int temp = gs.getToTradeWith().numOfCards((ResourceCard) picker.getItemAt(i));
+						if (temp > total)
+							total = temp;
+					}
+					Integer[] numArr = new Integer[total];
+					for (int i = 1; i <= total; i++)
+						numArr[i - 1] = i;
+					JComboBox<Integer> nums = new JComboBox<Integer>(numArr);
+					nums.setBounds(505 + (140 * (offDropDowns)), 490, 80, 20);
+					nums.setVisible(false);
+					add(nums);
+					offTradeAmounts.put(offDropDowns, nums);
+					repaint();
+				} else if (x >= 1050 && y >= 500 && x <= 1050 + 124 && y <= 500 + 72) {
+					if (offDropDowns > -1) {
+						offTrades.get(offDropDowns).setVisible(false);
+						offTrades.put(offDropDowns, null);
+						offTradeAmounts.get(offDropDowns).setVisible(false);
+						offTradeAmounts.put(offDropDowns, null);
+						offDropDowns--;
+						repaint();
+					}
+				} else if (x >= 1075 && y >= 190 && x <= 1075 + 90 && y <= 190 + 80) {
 					removeAll();
 					gs.setSubState("default");
-					lines.add(gs.getCPlayer() + " traded with the bank.");
-				} else {
-					System.out.println(gs.getCPlayer().hasThese(temp));
-					System.out.println(temp);
-					System.out.println(gs.getCPlayer().getInventory());
-					gs.setSubState("redobanktrade");
+					offDropDowns = -1;
+					reqDropDowns = -1;
+					reqTrades = new HashMap<>();
+					offTrades = new HashMap<>();
+					reqTradeAmounts = new HashMap<>();
+					offTradeAmounts = new HashMap<>();
+					lines.add("...but it didn't work out.");
+					repaint();
+				}
+
+				// doing the trade
+				else if (x >= 645 && y >= 605 && x <= 645 + 200 && y <= 705) {
+					request = new ArrayList<ResourceCard>();
+					for (int i = 0; i < reqTrades.size(); i++) {
+						for (int j = 0; j < (Integer) reqTradeAmounts.get(i).getSelectedItem(); j++) {
+							if (reqTrades.get(i) != null)
+								request.add((ResourceCard) reqTrades.get(i).getSelectedItem());
+						}
+					}
+					if (gs.getToTradeWith().hasThese(request)) {
+						offers = new ArrayList<ResourceCard>();
+						for (int i = 0; i < offTrades.size(); i++) {
+							if (offTradeAmounts.get(i) != null) {
+								for (int j = 0; j < (Integer) offTradeAmounts.get(i).getSelectedItem(); j++) {
+									if (offTrades.get(i) != null)
+										offers.add((ResourceCard) offTrades.get(i).getSelectedItem());
+								}
+							}
+
+						}
+						if (gs.getCPlayer().hasThese(offers)) {
+							gs.setSubState("tradeconfirm");
+							removeAll();
+							gs.setOffers(offers);
+							gs.setRequests(request);
+						}
+
+						else
+							gs.setSubState("redoTradeOff");
+					} else
+						gs.setSubState("redoTradeReq");
+
+					repaint();
+				}
+			} else if (gs.getSubState().equals("tradeconfirm")) {
+				if (x >= 420 && y >= 420 && x <= 720 && y <= 580) {
+					leftAccept = true;
+				} else if (x >= 800 && y >= 420 && x <= 1100 && y <= 580) {
+					rightAccept = true;
+				} else if ((x >= 460 && y >= 600 && x <= 460 + 220 && y <= 700)
+						|| (x >= 840 && y >= 600 && x <= 840 + 220 && y <= 700)) {
+					declined = true;
+				}
+				if (leftAccept && rightAccept && (!declined)) {
+					gs.getPM().trade(gs.getToTradeWith(), request, offers);
+					request.clear();
+					offers.clear();
+					reqTrades.clear();
+					reqTradeAmounts.clear();
+					offTrades.clear();
+					offTradeAmounts.clear();
+					gs.setToTradeWith(null);
+					reqDropDowns = -1;
+					offDropDowns = -1;
+					leftAccept = false;
+					rightAccept = false;
+					lines.add("And the trade was successful!");
+					gs.setSubState("default");
+				}
+				if (declined || (x >= 1120 && y >= 175 && x <= 1180 && y <= 175 + 60)) {
+					request.clear();
+					offers.clear();
+					reqTrades.clear();
+					reqTradeAmounts.clear();
+					offTrades.clear();
+					offTradeAmounts.clear();
+					gs.setToTradeWith(null);
+					gs.setSubState("default");
+					reqDropDowns = -1;
+					offDropDowns = -1;
+					leftAccept = false;
+					rightAccept = false;
+					lines.add("...but it didn't work out.");
 				}
 				repaint();
+			} else if (gs.getSubState().equals("banktrade") || gs.getSubState().equals("redobanktrade")) {
+				if (x >= 1110 && y >= 170 && x <= 1110 + 65 & y <= 170 + 65) {
+					gs.setSubState("default");
+					lines.add("...but it didn't work out.");
+					offTrades.clear();
+					offDropDowns = -1;
+					removeAll();
+					repaint();
+				} else if (x >= 600 && y >= 550 && x <= 900 && y <= 550 + 145) {
+					ArrayList<ResourceCard> temp = new ArrayList<>();
+					ResourceCard rc = (ResourceCard) offTrades.get(0).getSelectedItem();
+					for (int i = 0; i < 4; i++)
+						temp.add(rc);
 
-			}
-		} else if (gs.getSubState().equals("showdevcards")) {
-			if (x >= 1110 && y >= 170 && x <= 1110 + 65 & y <= 170 + 65) {
-				gs.setSubState("default");
-				repaint();
-			}
+					if (temp.get(3) != null && gs.getCPlayer().hasThese(temp)) {
+						gs.getCPlayer().removeResources(temp);
+						temp = new ArrayList<ResourceCard>();
+						temp.add((ResourceCard) offTrades.get(1).getSelectedItem());
+						gs.getCPlayer().addResources(temp);
+						removeAll();
+						gs.setSubState("default");
+						lines.add(gs.getCPlayer() + " traded with the bank.");
+					} else {
+						System.out.println(gs.getCPlayer().hasThese(temp));
+						System.out.println(temp);
+						System.out.println(gs.getCPlayer().getInventory());
+						gs.setSubState("redobanktrade");
+					}
+					repaint();
 
-			// playing devcards
-			int px = 340;
-			for (int i = 0; i < gs.getCPlayer().getDevCards().size(); i++) {
-				if (x >= px && y >= 500 && x <= px + 158 && y <= 540
-						&& gs.getCPlayer().getDevCards().get(i).canPlay()) {
-					DevelopmentCard dev = gs.getCPlayer().getDevCards().get(i);
-					if (dev.getName().equals("Knight")) {
-						gs.setSubState("moverobber");
-						lines.add(gs.getCPlayer() + " has played a Knight card!");
-						gs.getCPlayer().removeVicCard(dev);
-						repaint();
-					} else if (dev.getName().equals("Monopoly")) {
-						System.out.println("mono");
-					} else if (dev.getName().equals("YearOfPlenty")) {
-						System.out.println("year");
-					} else if (dev.getName().equals("RoadBuilding")) {
-						System.out.println("road");
+				}
+			} else if (gs.getSubState().equals("showdevcards")) {
+				if (x >= 1110 && y >= 170 && x <= 1110 + 65 & y <= 170 + 65) {
+					gs.setSubState("default");
+					repaint();
+				}
+
+				// playing devcards
+				int px = 340;
+				for (int i = 0; i < gs.getCPlayer().getDevCards().size(); i++) {
+					if (x >= px && y >= 500 && x <= px + 158 && y <= 540
+							&& gs.getCPlayer().getDevCards().get(i).canPlay()) {
+						DevelopmentCard dev = gs.getCPlayer().getDevCards().get(i);
+						if (dev.getName().equals("Knight")) {
+							gs.setSubState("moverobber");
+							lines.add(gs.getCPlayer() + " has played a Knight card!");
+							gs.getCPlayer().removeVicCard(dev);
+							repaint();
+						} else if (dev.getName().equals("Monopoly")) {
+							//choose a resource, every player has to give that resource
+							gs.setSubState("monopoly");
+							lines.add(gs.getCPlayer() + " has played a Monopoly card!");
+							gs.getCPlayer().removeVicCard(dev);
+							repaint();
+						} else if (dev.getName().equals("YearOfPlenty")) {
+							gs.setSubState("yearofplenty");
+							lines.add(gs.getCPlayer() + " has played a Year of Plenty card!");
+							gs.getCPlayer().removeVicCard(dev);
+							repaint();
+						} else if (dev.getName().equals("RoadBuilding")) {
+							System.out.println("road");
+						}
+					}
+					px += 200;
+				}
+			} else if (gs.getSubState().equals("forcingdiscard")) {
+				int x1 = 330;
+				int y1 = 200;
+				for (int i = 0; i < gs.mustDiscard.get(0).getInventory().size(); i++) {
+					if (x >= x1 && y >= y1 && x <= x1 + 94 && y <= y1 + 140
+							&& !(gs.forcedDiscardCords.indexOf(x1) + 1 == gs.forcedDiscardCords.indexOf(y1))) {
+						gs.forcedDiscard.add(gs.mustDiscard.get(0).getInventory().get(i));
+						gs.forcedDiscardCords.add(x1);
+						gs.forcedDiscardCords.add(y1);
+					}
+					x1 += 100;
+					if (x1 == 1130) {
+						x1 = 330;
+						y1 += 150;
 					}
 				}
-				px += 200;
-			}
-		} else if (gs.getSubState().equals("forcingdiscard")) {
-			int x1 = 330;
-			int y1 = 200;
-			for (int i = 0; i < gs.mustDiscard.get(0).getInventory().size(); i++) {
-				if (x >= x1 && y >= y1 && x <= x1 + 94 && y <= y1 + 140
-						&& !(gs.forcedDiscardCords.indexOf(x1) + 1 == gs.forcedDiscardCords.indexOf(y1))) {
-					gs.forcedDiscard.add(gs.mustDiscard.get(0).getInventory().get(i));
-					gs.forcedDiscardCords.add(x1);
-					gs.forcedDiscardCords.add(y1);
+				repaint();
+			} else if (gs.getSubState().equals("moverobber")) {
+				Board b = gs.getBoard();
+				int l = lines.size();
+				for (Tile[] arr : b.getTiles()) {
+					for (Tile temp : arr) {
+						if (temp != null && !temp.isRobber()) {
+							if (x >= temp.getXCord() + 40 && y >= temp.getYCord() + 35 && x <= temp.getXCord() + 70
+									&& y <= temp.getYCord() + 65) {
+								b.robberLocation().removeRobber();
+								temp.addRobber();
+								lines.add("Robber has been moved to " + temp.getType() + ".");
+								gs.setSubState("default");
+							}
+						}
+					}
 				}
-				x1 += 100;
-				if (x1 == 1130) {
-					x1 = 330;
-					y1 += 150;
+				repaint();
+			} else if (gs.getSubState().equals("monopoly")) {
+				ResourceCard rc = null;
+				if (x >= 360 && y >= 300 && x <= 360+142 && y <= 300+208) { 		//sheep
+					rc = new ResourceCard("Sheep");
+				} else if (x >= 510 && y >= 300 && x <= 510+142 && y <= 300+208) { //wood
+					rc = new ResourceCard("Wood");
+				} else if (x >= 660 && y >= 300 && x <= 660+142 && y <= 300+208) { //grain
+					rc = new ResourceCard("Grain");
+				} else if (x >= 810 && y >= 300 && x <= 810+142 && y <= 300+208) { //brick
+					rc = new ResourceCard("Brick");
+				} else if (x >= 960 && y >= 300 && x <= 960+142 && y <= 300+208) { //stone
+					rc = new ResourceCard("Stone");
 				}
+				if (rc != null) {
+					System.out.println(rc);
+					gs.getPM().monopoly(rc);
+					gs.setSubState("default");
+					repaint();
+				}
+				
+			} else if (gs.getSubState().equals("yearofplenty")) {
+				if (x >= 360 && (( y >= 200  && y <= 200+208) || y >= 420 && y <= 420+208) && x <= 360+142) {
+					gs.getCPlayer().inventory.add(new ResourceCard("Sheep"));
+					gs.forcedDiscardCords.add(360);
+					if (y < 409)
+						gs.forcedDiscardCords.add(200);
+					else 
+						gs.forcedDiscardCords.add(420);
+				}
+				else if (x >= 510 && (( y >= 200  && y <= 200+208) || y >= 420 && y <= 420+208) && x <= 510+142) {
+					gs.getCPlayer().inventory.add(new ResourceCard("Wood"));
+					gs.forcedDiscardCords.add(510);
+					if (y < 409)
+						gs.forcedDiscardCords.add(200);
+					else 
+						gs.forcedDiscardCords.add(420);
+				}
+				else if (x >= 660 && (( y >= 200  && y <= 200+208) || y >= 420 && y <= 420+208) && x <= 660+142) {
+					gs.getCPlayer().inventory.add(new ResourceCard("Grain"));
+					gs.forcedDiscardCords.add(660);
+					if (y < 409)
+						gs.forcedDiscardCords.add(200);
+					else 
+						gs.forcedDiscardCords.add(420);
+				} else if (x >= 810 && (( y >= 200  && y <= 200+208) || y >= 420 && y <= 420+208) && x <= 810+142) {
+					gs.getCPlayer().inventory.add(new ResourceCard("Brick"));
+					gs.forcedDiscardCords.add(810);
+					if (y < 409)
+						gs.forcedDiscardCords.add(200);
+					else 
+						gs.forcedDiscardCords.add(420);
+				} else if (x >= 960 && (( y >= 200  && y <= 200+208) || y >= 420 && y <= 420+208) && x <= 960+142) {
+					gs.getCPlayer().inventory.add(new ResourceCard("Stone"));
+					gs.forcedDiscardCords.add(960);
+					if (y < 409)
+						gs.forcedDiscardCords.add(200);
+					else 
+						gs.forcedDiscardCords.add(420);
+				}
+				if (gs.forcedDiscardCords.size() >= 4) {
+					gs.forcedDiscardCords.clear();
+					gs.setSubState("default");
+				}
+				
+				repaint();
 			}
-			repaint();
-		} else if (gs.getSubState().equals("moverobber")) {
-			Board b = gs.getBoard();
-			int l = lines.size();
-			for (Tile[] arr : b.getTiles()) {
-				for (Tile temp : arr) {
-					if (temp != null && !temp.isRobber()) {
-						if (x >= temp.getXCord() + 40 && y >= temp.getYCord() + 35 && x <= temp.getXCord() + 70
-								&& y <= temp.getYCord() + 65) {
-							b.robberLocation().removeRobber();
-							temp.addRobber();
-							lines.add("Robber has been moved to " + temp.getType() + ".");
+
+			// stuff for building
+			if (gs.haveDiceBeenRolled()) {
+				if (gs.cPlayerIndex() == 0) {
+					if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
+						if (gs.getSubState().equals("default") || gs.getSubState().equals("faileddevcard")
+								|| gs.getSubState().equals("showcards")) {
+							gs.setSubState("buildmenu");
+							lines.add(gs.getCPlayer() + " started building.");
+						} else {
+							gs.setSubState("default");
+							System.out.println("hi");
+						}
+						repaint();
+					}
+
+					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+						if (!(gs.getSubState().equals("buildSettlement"))) {
+							gs.setSubState("buildSettlement");
+							lines.add(gs.getCPlayer() + " selected to build Settlement.");
+							gs.setBuildingSettlement(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildSettlement")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						/*cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain")); */
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(1);
+										gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("settlement1");
+										// temp.setSet("settlement");
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + " " + temp.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
+
+					}
+
+					if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+						if (!(gs.getSubState().equals("buildCity"))) {
+							gs.setSubState("buildCity");
+							lines.add(gs.getCPlayer() + " selected to build City.");
+							gs.setBuildingCity(true);
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildCity")) {
+						System.out.println("jksngjknsg");
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.getSet().equals("settlement1") && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(2);
+										gs.setCityCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("city1");
+										// temp.setSet("full");
+										// structX = temp.getXCord();
+										// structY = temp.getYCord();
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
+										repaint();
+									}
+									else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
+
+					}
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+					}
+
+				}
+
+				if (gs.cPlayerIndex() == 1) {
+					if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
+						if (gs.getSubState().equals("default") || gs.getSubState().equals("faileddevcard")
+								|| gs.getSubState().equals("showcards")) {
+							gs.setSubState("buildmenu");
+							lines.add(gs.getCPlayer() + " started building.");
+
+						} else {
 							gs.setSubState("default");
 						}
+						repaint();
 					}
-				}
-			}
-			repaint();
-		}
-
-		// stuff for building
-			if (gs.cPlayerIndex() == 0) {
-				if (x >= 380 && x <= 456 && y >= 15 && y <= 40) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
+					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+						if (!(gs.getSubState().equals("buildSettlement"))) {
+							gs.setSubState("buildSettlement");
+							lines.add(gs.getCPlayer() + " selected to build Settlement.");
+							gs.setBuildingSettlement(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-
-				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
-					if (!(gs.getSubState().equals("buildSettlement"))) {
-						gs.setSubState("buildSettlement");
-						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-						gs.setBuildingSettlement(true);
-					} else {
-						gs.setSubState("buildmenu");
-						gs.setBuildingSettlement(false);
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildSettlement")) {
-
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(1);
-								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("settlement1");
-								// temp.setSet("settlement");
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + " " + temp.getYCord());
-								repaint();
+					if (gs.getSubState().equals("buildSettlement")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(1);
+										gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("settlement2");
+										// temp.setSet("settlement");
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + " " + temp.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
+
 					}
 
-				}
-
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-						gs.setBuildingCity(true);
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+					if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+						if (!(gs.getSubState().equals("buildCity"))) {
+							gs.setSubState("buildCity");
+							lines.add(gs.getCPlayer() + " selected to build City.");
+							gs.setBuildingCity(true);
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildCity")) {
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.getSet().equals("settlement1") && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(2);
-								gs.setCityCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("city1");
-								// temp.setSet("full");
-								//structX = temp.getXCord();
-								//structY = temp.getYCord();
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
-								repaint();
+					if (gs.getSubState().equals("buildCity")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.getSet().equals("settlement2") && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(2);
+										gs.setCityCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("city2");
+										// temp.setSet("full");
+										// structX = temp.getXCord();
+										// structY = temp.getYCord();
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
+										repaint();
+									}
+									else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
+
 					}
-
-				}
-				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-					if (!(gs.getSubState().equals("buildRoad"))) {
-						gs.setSubState("buildRoad");
-						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
 				}
+				if (gs.cPlayerIndex() == 2) {
+					if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
+						if (gs.getSubState().equals("default") || gs.getSubState().equals("faileddevcard")
+								|| gs.getSubState().equals("showcards")) {
+							gs.setSubState("buildmenu");
+							lines.add(gs.getCPlayer() + " started building.");
 
-			}
-
-			if (gs.cPlayerIndex() == 1) {
-				if (x >= 1260 && x <= 1336 && y >= 15 && y <= 40) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
-
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
+						} else {
+							gs.setSubState("default");
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
-					if (!(gs.getSubState().equals("buildSettlement"))) {
-						gs.setSubState("buildSettlement");
-						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-						gs.setBuildingSettlement(true);
-					} else {
-						gs.setSubState("buildmenu");
-						gs.setBuildingSettlement(false);
-						System.out.println("hi");
+					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+						if (!(gs.getSubState().equals("buildSettlement"))) {
+							gs.setSubState("buildSettlement");
+							lines.add(gs.getCPlayer() + " selected to build Settlement.");
+							gs.setBuildingSettlement(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildSettlement")) {
-
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(1);
-								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("settlement2");
-								// temp.setSet("settlement");
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + " " + temp.getYCord());
-								repaint();
+					if (gs.getSubState().equals("buildSettlement")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(1);
+										gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("settlement3");
+										// temp.setSet("settlement");
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + " " + temp.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
+
 					}
 
-				}
-
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-						gs.setBuildingCity(true);
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+					if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+						if (!(gs.getSubState().equals("buildCity"))) {
+							gs.setSubState("buildCity");
+							lines.add(gs.getCPlayer() + " selected to build City.");
+							gs.setBuildingCity(true);
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildCity")) {
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.getSet().equals("settlement2") && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(2);
-								gs.setCityCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("city2");
-								// temp.setSet("full");
-							//	structX = temp.getXCord();
-							//	structY = temp.getYCord();
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
-								repaint();
+					if (gs.getSubState().equals("buildCity")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.getSet().equals("settlement3") && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(2);
+										gs.setCityCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("city3");
+										// temp.setSet("full");
+										// structX = temp.getXCord();
+										// structY = temp.getYCord();
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
+										repaint();
+									}
+									else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
-					}
 
-				}
-				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-					if (!(gs.getSubState().equals("buildRoad"))) {
-						gs.setSubState("buildRoad");
-						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
 					}
-					repaint();
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
+					}
 				}
-			}
-			if (gs.cPlayerIndex() == 2) {
-				if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
 
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
-					if (!(gs.getSubState().equals("buildSettlement"))) {
-						gs.setSubState("buildSettlement");
-						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-						gs.setBuildingSettlement(true);
-					} else {
-						gs.setSubState("buildmenu");
-						gs.setBuildingSettlement(false);
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildSettlement")) {
+				if (gs.cPlayerIndex() == 3) {
+					if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
+						if (gs.getSubState().equals("default") || gs.getSubState().equals("faileddevcard")
+								|| gs.getSubState().equals("showcards")) {
+							gs.setSubState("buildmenu");
+							lines.add(gs.getCPlayer() + " started building.");
 
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(1);
-								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("settlement3");
-								// temp.setSet("settlement");
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + " " + temp.getYCord());
-								repaint();
+						} else {
+							gs.setSubState("default");
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
+						if (!(gs.getSubState().equals("buildSettlement"))) {
+							gs.setSubState("buildSettlement");
+							lines.add(gs.getCPlayer() + " selected to build Settlement.");
+							gs.setBuildingSettlement(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingSettlement(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildSettlement")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(1);
+										gs.setSettlementCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("settlement4");
+										// temp.setSet("settlement");
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + " " + temp.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
+
 					}
 
-				}
-
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-						gs.setBuildingCity(true);
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
+					if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
+						if (!(gs.getSubState().equals("buildCity"))) {
+							gs.setSubState("buildCity");
+							lines.add(gs.getCPlayer() + " selected to build City.");
+							gs.setBuildingCity(true);
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
+						}
+						repaint();
 					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildCity")) {
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.getSet().equals("settlement3") && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(2);
-								gs.setCityCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("city3");
-								// temp.setSet("full");
-							//	structX = temp.getXCord();
-							//	structY = temp.getYCord();
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
-								repaint();
+					if (gs.getSubState().equals("buildCity")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Grain"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						cost.add(new ResourceCard("Stone"));
+						for (Intersection[] tmp : gs.getBoard().getInters()) {
+							for (Intersection temp : tmp) {
+								if (!(temp == null) && temp.getSet().equals("settlement4") && x >= temp.getXCord()
+										&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
+										&& y <= temp.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										temp.setColor(gs.getCPlayer().getColor());
+										temp.setImageStructure(2);
+										gs.setCityCords(temp.getXCord(), temp.getYCord());
+										temp.setStructure(true);
+										temp.setSet("city4");
+										// temp.setSet("full");
+										// structX = temp.getXCord();
+										// structY = temp.getYCord();
+										temp.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
+										repaint();
+									}
+									else {
+										System.out.println("L*");
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
 							}
 						}
-					}
 
-				}
-				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-					if (!(gs.getSubState().equals("buildRoad"))) {
-						gs.setSubState("buildRoad");
-						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
 					}
-					repaint();
-				}
-			}
-
-			if (gs.cPlayerIndex() == 3) {
-				if (x >= 1115 && x <= 1191 && y >= 720 && y <= 745) {
-					if (!(gs.getSubState().equals("buildmenu"))) {
-						gs.setSubState("buildmenu");
-						lines.add(gs.getCPlayer() + " started building.");
-
-					} else {
-						gs.setSubState("default");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
-					if (!(gs.getSubState().equals("buildSettlement"))) {
-						gs.setSubState("buildSettlement");
-						lines.add(gs.getCPlayer() + " selected to build Settlement.");
-						gs.setBuildingSettlement(true);
-					} else {
-						gs.setSubState("buildmenu");
-						gs.setBuildingSettlement(false);
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildSettlement")) {
-
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.hasStructure() == false && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(1);
-								gs.setSettlementCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("settlement1");
-								// temp.setSet("settlement");
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + " " + temp.getYCord());
-								repaint();
-							}
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+						} else {
+							gs.setSubState("buildmenu");
+							System.out.println("hi");
 						}
+						repaint();
 					}
-
-				}
-
-				if (x >= 1155 && x <= 1190 && y >= 765 && y <= 810) {
-					if (!(gs.getSubState().equals("buildCity"))) {
-						gs.setSubState("buildCity");
-						lines.add(gs.getCPlayer() + " selected to build City.");
-						gs.setBuildingCity(true);
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
-				}
-				if (gs.getSubState().equals("buildCity")) {
-					for (Intersection[] tmp : gs.getBoard().getInters()) {
-						for (Intersection temp : tmp) {
-							if (!(temp == null) && temp.getSet().equals("settlement1") && x >= temp.getXCord()
-									&& x <= temp.getXCord() + 20 && y >= temp.getYCord()
-									&& y <= temp.getYCord() + 20) {
-								temp.setColor(gs.getCPlayer().getColor());
-								temp.setImageStructure(2);
-								gs.setCityCords(temp.getXCord(), temp.getYCord());
-								temp.setStructure(true);
-								temp.setSet("city1");
-								// temp.setSet("full");
-						//		structX = temp.getXCord();
-						//		structY = temp.getYCord();
-								temp.setColor(gs.getCPlayer().getColor());
-								System.out.println(x + " " + y);
-								System.out.println(temp.getXCord() + "hiiii " + temp.getYCord());
-								repaint();
-							}
-						}
-					}
-
-				}
-				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-					if (!(gs.getSubState().equals("buildRoad"))) {
-						gs.setSubState("buildRoad");
-						lines.add(gs.getCPlayer() + " selected to build Road.");
-					} else {
-						gs.setSubState("buildmenu");
-						System.out.println("hi");
-					}
-					repaint();
 				}
 			}
 		}
 
 	}
-
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
