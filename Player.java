@@ -5,15 +5,14 @@ import java.util.TreeSet;
 import java.util.Arrays;
 
 public class Player {
-	int knightCards;
+
 	int victoryPoints; // num victorypoints player has
 	String color; // color, self-explanatory
 	ArrayList<ResourceCard> inventory; // inventory of resource cards
 	ArrayList<DevelopmentCard> vicCards; // inventory of development cards
 	ArrayList<Structure> builds; // their builds and structures
 	int orderRoll;
-	int[]cards;//brick, stone, sheep, wood, grain
-	private boolean isLargestArmy;
+	int[] cards;// brick, stone, sheep, wood, grain
 
 	public Player(String s) {
 		color = s;
@@ -21,9 +20,7 @@ public class Player {
 		inventory = new ArrayList<>();
 		vicCards = new ArrayList<>();
 		builds = new ArrayList<>();
-		cards=new int[5];
-		knightCards = 0;
-		isLargestArmy=false;
+		cards = new int[5];
 	}
 
 	public void setColor(String s) {
@@ -33,11 +30,6 @@ public class Player {
 	public String getColor() {
 		return color;
 	}
-
-	public int getKnightCards() {
-		return knightCards;
-	}
-	public void setKnightCards(int n){knightCards+=n;}
 
 	public void buildStructure(int t, Intersection i) {
 		boolean canPay = false;
@@ -86,8 +78,10 @@ public class Player {
 		reviseCount();
 	}
 
-	public void removeResources(ArrayList<ResourceCard> arrList) { // adds resource cards
-		inventory.removeAll(arrList);
+	public void removeResources(ArrayList<ResourceCard> arrList) { // removes resource cards
+		for (int i = 0; i < arrList.size(); i++) {
+			inventory.remove(arrList.get(i));
+		}
 		reviseCount();
 	}
 
@@ -98,12 +92,15 @@ public class Player {
 	public void addVicCard(DevelopmentCard d) {
 		vicCards.add(d);
 	}
+
 	public void removeVicCard(DevelopmentCard d) {
 		vicCards.remove(d);
 	}
+
 	public ArrayList<DevelopmentCard> getDevCards() {
 		return vicCards;
 	}
+
 	public boolean hasDevCards() {
 		return vicCards.size() > 0;
 	}
@@ -132,7 +129,7 @@ public class Player {
 		return inventory.size();
 	}
 
-	public int numOfCards(ResourceCard rc) {	//checks how many of the given resource card the player has
+	public int numOfCards(ResourceCard rc) { // checks how many of the given resource card the player has
 		int cnt = 0;
 		for (int i = 0; i < inventory.size(); i++) {
 			if (inventory.get(i).equals(rc))
@@ -141,32 +138,26 @@ public class Player {
 		return cnt;
 	}
 
-	public int[]getCards(){return cards;}
+	public int[] getCards() {
+		reviseCount();
+		return cards;
+	}
 
-	public void reviseCount()
-	{//brick, stone, sheep, wood, grain
+	public void reviseCount() {// brick, stone, sheep, wood, grain
 		cards = new int[5];
-		for(ResourceCard c:inventory)
-		{
-			if(c.getName().equals("Brick"))
-			{
-				cards[0]++;
-			}
-			else if(c.getName().equals("Stone"))
-			{
-				cards[1]++;
-			}
-			else if(c.getName().equals("Sheep"))
-			{
-				cards[2]++;
-			}
-			else if(c.getName().equals("Wood"))
-			{
-				cards[3]++;
-			}
-			else if(c.getName().equals("Grain"))
-			{
-				cards[4]++;
+		for (ResourceCard c : inventory) {
+			if (c != null) {
+				if (c.getName().equals("Brick")) {
+					cards[0]++;
+				} else if (c.getName().equals("Stone")) {
+					cards[1]++;
+				} else if (c.getName().equals("Sheep")) {
+					cards[2]++;
+				} else if (c.getName().equals("Wood")) {
+					cards[3]++;
+				} else if (c.getName().equals("Grain")) {
+					cards[4]++;
+				}
 			}
 		}
 	}
@@ -176,7 +167,7 @@ public class Player {
 			ResourceCard card = list.get(i);
 			int temp1 = 0;
 			int temp2 = 0;
-			for (int j = 0; j < list.size(); j++)  {
+			for (int j = 0; j < list.size(); j++) {
 				if (list.get(j).equals(card))
 					temp1++;
 			}
@@ -190,14 +181,5 @@ public class Player {
 		}
 		return true;
 	}
-
-	public boolean getIsLargestArmy() {
-		return isLargestArmy;
-	}
-
-	public void setLargestArmy(boolean b){
-		isLargestArmy=b;
-	}
-
 
 }
