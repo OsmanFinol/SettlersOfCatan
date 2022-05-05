@@ -1,22 +1,29 @@
 import java.util.*;
+
+import javax.imageio.ImageIO;
+
 import static java.lang.System.*;
 import java.io.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 public class Harbor
 {
     private int inputNum;
     private int outputNum;
     private ResourceCard input;
     private ResourceCard output;
+    private BufferedImage im;
 
-    public Harbor(ResourceCard iR,
-                  ResourceCard oR,
-                  int iP, int oP)
+    public Harbor(int iP, int oP, ResourceCard iR)
     {
         input = iR;
-        output = oR;
         inputNum=iP;
         outputNum = oP;
+        try {
+  			im = ImageIO.read(Harbor.class.getResource("/Images/harbor.png"));
+  		} catch (IOException e) {
+  			
+  		}
     }
 
     public boolean canUse(Player P)
@@ -30,5 +37,20 @@ public class Harbor
             }
         }
         return false;
+    }
+    
+    public BufferedImage getImage() {
+    	return im;
+    }
+    
+    public String resource() {
+    	if (input.getName().length() > 1)
+    		return input.getName().substring(0, 2);
+    	else
+    		return input.getName().substring(0, 1);
+    }
+    
+    public String toString() {
+    	return inputNum + ":" + outputNum;
     }
 }
