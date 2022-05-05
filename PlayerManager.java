@@ -10,7 +10,7 @@ public class PlayerManager {
 	int cPlayer;
 	ArrayList<Player> playerStanding;
 	int numP;
-	private Player largestArmy;
+	
 	public PlayerManager(int num) { //num of players playing
 		players = new ArrayList<>();
 		cPlayer = 0;
@@ -130,23 +130,39 @@ public class PlayerManager {
 	public int cPlayerIndex() {
 		return cPlayer;
 	}
-
-	public Player findLargestArmy()
-	{
-		int min=3;
-		Player temp=players.get(0);
-		for(Player p:players)
-		{
-			if(p.getKnightCards()>=min)
-			{
-				temp=p;
+	
+	public Player getColoredPlayer(String c) {
+		for (int i =0; i < players.size(); i++) {
+			if (players.get(i).getColor().equalsIgnoreCase(c)) {
+				return players.get(i);
 			}
 		}
-		temp.setLargestArmy(true);
-		return temp;
+		return null;
 	}
-
-	public Player getLargestArmy() {
-		return largestArmy;
+	
+	public void monopoly(ResourceCard rc) {
+		int cnt = 0;
+		for (int i = 0; i < numP; i++) {
+			if (i!=cPlayer) {
+				Player temp = players.get(i);
+				for (int j = 0; j < temp.getInventory().size(); j++) {
+					if (temp.getInventory().get(j).equals(rc)) {
+						cnt++;
+						temp.inventory.remove(j);
+						j--;
+					}
+				}
+				
+			}
+			
+		}
+		
+		ArrayList<ResourceCard> arrList = new ArrayList<>();
+		for (int h = 0; h < cnt; h++) {
+			arrList.add(rc);
+		}
+		players.get(cPlayer).addResources(arrList);
 	}
+	
+	
 }
