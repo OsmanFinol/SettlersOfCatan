@@ -23,7 +23,8 @@ public class ResourceCard {
 		else if (t.equals("Wood"))
 			code = 5;
 		try {
-			image = ImageIO.read(ResourceCard.class.getResource("/CardImages/" + t + ".jpg"));
+			if (t.equals("Brick") || t.equals("Grain") || t.equals("Sheep") || t.equals("Stone") || t.equals("Wood"))
+				image = ImageIO.read(ResourceCard.class.getResource("/CardImages/" + t + ".jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
