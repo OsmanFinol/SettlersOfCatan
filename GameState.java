@@ -44,7 +44,7 @@ public class GameState {
 	Player toTradeWith;
 	ArrayList<Player> pListTemp;
 	BufferedImage redDice1, yellowDice1, redDice2, yellowDice2, redDice3, yellowDice3, redDice4, yellowDice4; // for
-																												// deciding
+	Player LargestArmy;// deciding
 																												// order
 	int[] roll1, roll2, roll3, roll4; // also for deciding order <3
 	Font AlmendraSC;
@@ -796,6 +796,14 @@ public class GameState {
 		int[] rolls = dice.roll();
 		System.out.println(Arrays.toString(rolls));
 		diceHaveBeenRolled = true;
+		ArrayList<ResourceCard> rc = new ArrayList<>();
+
+		rc.add(new ResourceCard("Sheep"));
+		rc.add(new ResourceCard("Stone"));
+		rc.add(new ResourceCard("Brick"));
+		rc.add(new ResourceCard("Grain"));
+		rc.add(new ResourceCard("Wood"));
+		getCPlayer().addResources(rc);
 		if (rolls[2] != 7) {
 			for (Intersection[] arr : gBoard.getInters()) {
 				for (Intersection temp : arr) {
@@ -1217,5 +1225,7 @@ public class GameState {
 	public boolean haveDiceBeenRolled() {
 		return diceHaveBeenRolled;
 	}
+
+
 
 }

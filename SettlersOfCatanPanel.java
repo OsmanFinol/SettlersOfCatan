@@ -338,6 +338,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						gs.getCPlayer().removeResources(temp);
 						deck.draw(gs.getCPlayer());
 						lines.add(gs.getCPlayer() + " made a Development Card.");
+
 						repaint();
 					} else {
 						gs.setSubState("faileddevcard");
@@ -637,7 +638,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 				int px = 340;
 				for (int i = 0; i < gs.getCPlayer().getDevCards().size(); i++) {
 					if (x >= px && y >= 500 && x <= px + 158 && y <= 540
-							&& gs.getCPlayer().getDevCards().get(i).canPlay()) {
+							&& gs.getCPlayer().getDevCards().get(i).canPlay() && gs.getCPlayer().getDevCards().get(i).getTurns()>0) {
 						DevelopmentCard dev = gs.getCPlayer().getDevCards().get(i);
 						if (dev.getName().equals("Knight")) {
 							gs.setSubState("moverobber");

@@ -13,7 +13,7 @@ public class Player {
 	ArrayList<Structure> builds; // their builds and structures
 	int orderRoll;
 	int[] cards;// brick, stone, sheep, wood, grain
-
+	boolean isLargestArmy;
 	int knightCards;
 
 	public Player(String s) {
@@ -23,6 +23,7 @@ public class Player {
 		vicCards = new ArrayList<>();
 		builds = new ArrayList<>();
 		cards = new int[5];
+		isLargestArmy=false;
 	}
 
 	public void setColor(String s) {
@@ -186,4 +187,10 @@ public class Player {
  public int getKnightCards(){return knightCards;}
 
 	public void setKnightCards(int i){knightCards+=i;}
+
+	public boolean isLargestArmy() {
+		return isLargestArmy;
+	}
+
+	public void setLargestArmy(boolean b){isLargestArmy=b;}
 }

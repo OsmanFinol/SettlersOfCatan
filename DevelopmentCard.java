@@ -51,4 +51,6 @@ public class DevelopmentCard {
         return image;
     }
 
+    public void setImage(BufferedImage a){image=a;}
+
 }

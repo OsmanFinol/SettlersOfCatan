@@ -10,13 +10,14 @@ public class PlayerManager {
 	int cPlayer;
 	ArrayList<Player> playerStanding;
 	int numP;
-	
+	Player largestArmy;
 	public PlayerManager(int num) { //num of players playing
 		players = new ArrayList<>();
 		cPlayer = 0;
 		playerStanding = new ArrayList<Player>();
 		Scanner scan = new Scanner("Red White Orange Blue"); //sets the player colors
 		numP = num;
+		largestArmy=null;
 		for (int i = 0; i < num; i++) {
 			players.add(new Player(scan.next()));
 			playerStanding.add(players.get(i));
@@ -163,6 +164,28 @@ public class PlayerManager {
 		}
 		players.get(cPlayer).addResources(arrList);
 	}
-	
+
+
+	public Player giveLargestArmy()
+	{
+		Player temp=null;
+		int min=2;
+		for(int i=0;i< players.size();i++)
+		{
+			if(players.get(i).getKnightCards()>min)
+			{
+				min=players.get(i).getKnightCards();
+				temp=players.get(i);
+			}
+			for(int j=0;j<i;j++)
+			{
+				players.get(i).setLargestArmy(false);
+			}
+		}
+		temp.setLargestArmy(true);
+		largestArmy=temp;
+
+		return largestArmy;
+	}
 	
 }
