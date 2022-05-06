@@ -18,7 +18,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 	private GameState gs;
 	private ArrayList<String> lines; // this arraylist has all the log stuff, to add something to the log,
 										// add it here
-	private boolean actualGame = false;
+	private boolean actualGame = true;
 	String[] colors = { "White", "Orange", "Blue", "Red" };
 	String c1, c2, c3, c4; // how we'll access the drop-downs, since they have to be locally made
 	ArrayList<String> colorsToSet;

@@ -14,6 +14,8 @@ public class Player {
 	int orderRoll;
 	int[] cards;// brick, stone, sheep, wood, grain
 
+	int knightCards;
+
 	public Player(String s) {
 		color = s;
 		victoryPoints = 0;
@@ -181,5 +183,7 @@ public class Player {
 		}
 		return true;
 	}
+ public int getKnightCards(){return knightCards;}
 
+	public void setKnightCards(int i){knightCards+=i;}
 }
