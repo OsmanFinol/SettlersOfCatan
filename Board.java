@@ -21,6 +21,7 @@ public class Board {
 
 	private Tile[][] gameBoard;
 	private Intersection[][] inters;
+	private Side[][] sides;
 	private ArrayList<Harbor> harbs;
 	private BufferedImage rob;
 	Font AlmendraSC;
@@ -464,6 +465,94 @@ public class Board {
 				}
 			}
 		}
+		sides = new Side[11][10];
+		for (int r = 0; r < 11; r++) {
+			for (int c = 0; c < 10; c++) {
+				sides[r][c] = null;
+			}
+		}
+		sides[0][2] = new Side(610, 135, "slash");
+		sides[0][3] = new Side(660, 135, "backslash");
+		sides[0][4] = new Side(720, 135, "slash");
+		sides[0][5] = new Side(770, 135, "backslash");
+		sides[0][6] = new Side(830, 135, "slash");
+		sides[0][7] = new Side(880, 135, "backslash");
+		
+		sides[2][1] = new Side(555, 217, "slash");
+		sides[2][2] = new Side(605, 217, "backslash");
+		sides[2][3] = new Side(665, 217, "slash");
+		sides[2][4] = new Side(715, 217, "backslash");
+		sides[2][5] = new Side(775, 217, "slash");
+		sides[2][6] = new Side(825, 217, "backslash");
+		sides[2][7] = new Side(885, 217, "slash");
+		sides[2][8] = new Side(935, 217, "backslash");
+
+		sides[4][0] = new Side(500, 299, "slash");
+		sides[4][1] = new Side(550, 299, "backslash");
+		sides[4][2] = new Side(610, 299, "slash");
+		sides[4][3] = new Side(660, 299, "backslash");
+		sides[4][4] = new Side(720, 299, "slash");
+		sides[4][5] = new Side(770, 299, "backslash");
+		sides[4][6] = new Side(830, 299, "slash");
+		sides[4][7] = new Side(880, 299, "backslash");
+		sides[4][8] = new Side(940, 299, "slash");
+		sides[4][9] = new Side(990, 299, "backslash");
+
+		sides[6][0] = new Side(495, 381, "backslash");
+		sides[6][1] = new Side(555, 381, "slash");
+		sides[6][2] = new Side(605, 381, "backslash");
+		sides[6][3] = new Side(665, 381, "slash");
+		sides[6][4] = new Side(715, 381, "backslash");
+		sides[6][5] = new Side(775, 381, "slash");
+		sides[6][6] = new Side(825, 381, "backslash");
+		sides[6][7] = new Side(885, 381, "slash");
+		sides[6][8] = new Side(935, 381, "backslash");
+		sides[6][9] = new Side(995, 381, "slash");
+
+		sides[8][1] = new Side(550, 463, "backslash");
+		sides[8][2] = new Side(610, 463, "slash");
+		sides[8][3] = new Side(660, 463, "backslash");
+		sides[8][4] = new Side(720, 463, "slash");
+		sides[8][5] = new Side(770, 463, "backslash");
+		sides[8][6] = new Side(830, 463, "slash");
+		sides[8][7] = new Side(880, 463, "backslash");
+		sides[8][8] = new Side(940, 463, "slash");
+	
+		sides[10][2] = new Side(605, 545, "backslash");
+		sides[10][3] = new Side(665, 545, "slash");
+		sides[10][4] = new Side(715, 545, "backslash");
+		sides[10][5] = new Side(775, 545, "slash");
+		sides[10][6] = new Side(825, 545, "backslash");
+		sides[10][7] = new Side(885, 545, "slash");
+		
+		sides[1][1] = new Side(580, 170, "vertical");
+		sides[1][2] = new Side(690, 170, "vertical");
+		sides[1][3] = new Side(800, 170, "vertical");
+		sides[1][4] = new Side(910, 170, "vertical");
+		
+		sides[3][1] = new Side(525, 255, "vertical");
+		sides[3][2] = new Side(635, 255, "vertical");
+		sides[3][3] = new Side(745, 255, "vertical");
+		sides[3][4] = new Side(855, 255, "vertical");
+		sides[3][5] = new Side(965, 255, "vertical");
+		
+		sides[5][0] = new Side(470, 340, "vertical");
+		sides[5][1] = new Side(580, 340, "vertical");
+		sides[5][2] = new Side(690, 340, "vertical");
+		sides[5][3] = new Side(800, 340, "vertical");
+		sides[5][4] = new Side(910, 340, "vertical");
+		sides[5][5] = new Side(1020, 340, "vertical");
+		
+		sides[7][1] = new Side(525, 425, "vertical");
+		sides[7][2] = new Side(635, 425, "vertical");
+		sides[7][3] = new Side(745, 425, "vertical");
+		sides[7][4] = new Side(855, 425, "vertical");
+		sides[7][5] = new Side(965, 425, "vertical");
+
+		sides[9][1] = new Side(580, 510, "vertical");
+		sides[9][2] = new Side(690, 510, "vertical");
+		sides[9][3] = new Side(800, 510, "vertical");
+		sides[9][4] = new Side(910, 510, "vertical");
 	}
 
 	public void paintTiles(Graphics g) {
@@ -497,10 +586,26 @@ public class Board {
 	}
 
 	public void paintStructures(Graphics g) {
+		for (int rr = 0; rr < 11; rr++) {
+			for (int cc = 0; cc < 10; cc++) {
+				Side semp = sides[rr][cc];
+				if (semp != null && semp.hasRoad() == true) {
+					if (semp.getDirection().equals("vertical")) {
+						g.drawImage(semp.getImageRoad(), semp.getXCord(), semp.getYCord()-22, 12, 60, null);
+						}
+						if (semp.getDirection().equals("backslash")) {
+							g.drawImage(rotateImageByDegrees(semp.getImageRoad(), 14), semp.getXCord()-21, semp.getYCord()-15, 58, 42, null);
+						}
+						if (semp.getDirection().equals("slash")) {
+							g.drawImage(rotateImageByDegrees(semp.getImageRoad(), 167), semp.getXCord()-27, semp.getYCord()-15, 58, 42, null);
+						}
+				}
+			}
+		}
 		for (int r = 0; r < 6; r++) {
 			for (int c = 0; c < 11; c++) {
 				Intersection temp = inters[r][c];
-				if (temp != null && temp.hasStructure() == true /* && temp.getSet().equals("full") */) {
+				if (temp != null && temp.hasStructure() == true && !(temp.getSet().equals("road"+1))) {
 					/*
 					 * if (temp.getSet("settlement1") || temp.getSet("settlement2") ||
 					 * temp.getSet("settlement3") || temp.getSet("settlement4")) {
@@ -510,6 +615,9 @@ public class Board {
 					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 20, 20, null);
 					// temp.setSet("no");
 				}
+				/*else if (temp != null && temp.hasStructure() == true && (temp.getSet().equals("road"+1))){
+					g.drawImage(temp.getImageStructure(), temp.getXCord(), temp.getYCord(), 10, 40, null);
+				}*/
 			}
 		}
 	}
@@ -525,7 +633,25 @@ public class Board {
 			}
 		}
 	}
-
+public void paintSides(Graphics g) {
+		g.setColor(new Color(100, 235, 52, 175));
+		for (int r = 0; r < 11; r++) {
+			for (int c = 0; c < 10; c++) {
+				Side temp = sides[r][c];
+				if (temp != null && !temp.hasRoad()) {
+					if (sides[r][c].getDirection().equals("vertical")) {
+					g.fillRect(temp.getXCord(), temp.getYCord()-20, 12, 55);
+					}
+					if (sides[r][c].getDirection().equals("slash")) {
+						g.fillRect(temp.getXCord()-10, temp.getYCord()-7, 20, 23);
+					}
+					if (sides[r][c].getDirection().equals("backslash")) {
+						g.fillRect(temp.getXCord(), temp.getYCord()-7, 20, 23);
+					}
+				}
+			}
+		}
+	}
 	public void paintHarbors(Graphics g) {
 		g.setColor(Color.white);
 		g.setFont(AlmendraSC);
