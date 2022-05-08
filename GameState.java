@@ -38,7 +38,7 @@ public class GameState {
 			blueSettlement;
 	private Dice dice;
 	private PlayerManager pManage;
-	boolean buildingSettlement = false, buildingCity = false;
+	boolean buildinbRoad = false, buildingSettlement = false, buildingCity = false;
 	String setDirection = "";
 	int rX=0,rY=0,cX = 0, cY = 0, sX = 0, sY = 0;
 	private boolean diceHaveBeenRolled;
