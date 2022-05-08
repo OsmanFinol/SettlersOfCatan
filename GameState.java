@@ -39,7 +39,8 @@ public class GameState {
 	private Dice dice;
 	private PlayerManager pManage;
 	boolean buildingSettlement = false, buildingCity = false;
-	int cX = 0, cY = 0, sX = 0, sY = 0;
+	String setDirection = "";
+	int rX=0,rY=0,cX = 0, cY = 0, sX = 0, sY = 0;
 	private boolean diceHaveBeenRolled;
 	Player toTradeWith;
 	ArrayList<Player> pListTemp;
@@ -94,6 +95,10 @@ public class GameState {
 			diceHex = ImageIO.read(GameState.class.getResource("/Images/dice_hex.png"));
 			backDiceHex = ImageIO.read(GameState.class.getResource("/Images/back_dice_hex.png"));
 
+			whiteRoad = ImageIO.read(GameState.class.getResource("BuildImages/road_white.PNG"));
+			redRoad = ImageIO.read(GameState.class.getResource("BuildImages/road_red.PNG"));
+			orangeRoad = ImageIO.read(GameState.class.getResource("BuildImages/road_orange.PNG"));
+			blueRoad = ImageIO.read(GameState.class.getResource("BuildImages/road_blue.PNG"));
 			// settlements, roads, cities
 			whiteCity = ImageIO.read(GameState.class.getResource("BuildImages/city_white.PNG"));
 			redCity = ImageIO.read(GameState.class.getResource("BuildImages/city_red.png"));
@@ -346,6 +351,79 @@ public class GameState {
 					g.setColor(Color.BLACK);
 					g.drawString("You don't have enough resources!", 850, 850);
 				}
+				else if (subState.equals("buildRoad")) {
+				gBoard.paintSides(g);
+				g.setColor(new Color(210, 180, 140, 255));
+				g.fillRect(830, 825, 1000, 300);
+				g.drawImage(buildRoad, 1150, 750, 205, 66, null);
+				if (buildingRoad == true) {
+					String cpp = pManage.getCPlayer().getColor();
+					if (cpp.equals("Red")) {
+						if (setDirection.equals("vertical")) {
+						g.drawImage(redRoad, rX, rY-22, 12, 60, null);
+						}
+						if (setDirection.equals("backslash")) {
+							g.drawImage(rotateImageByDegrees(redRoad, 14), rX-21, rY-15, 58, 42, null);
+						}
+						if (setDirection.equals("slash")) {
+							g.drawImage(rotateImageByDegrees(redRoad, 167), rX-27, rY-15, 58, 42, null);
+						}
+					}
+					if (cpp.equals("White")) {
+						if (setDirection.equals("vertical")) {
+						g.drawImage(whiteRoad, rX, rY-22, 12, 60, null);
+						}
+						if (setDirection.equals("backslash")) {
+							g.drawImage(rotateImageByDegrees(whiteRoad, 14), rX-21, rY-15, 58, 42, null);
+						}
+						if (setDirection.equals("slash")) {
+							g.drawImage(rotateImageByDegrees(whiteRoad, 167), rX-27, rY-15, 58, 42, null);
+						}
+					}
+					if (cpp.equals("Blue")) {
+						if (setDirection.equals("vertical")) {
+						g.drawImage(blueRoad, rX, rY-22, 12, 60, null);
+						}
+						if (setDirection.equals("backslash")) {
+							g.drawImage(rotateImageByDegrees(blueRoad, 14), rX-21, rY-15, 58, 42, null);
+						}
+						if (setDirection.equals("slash")) {
+							g.drawImage(rotateImageByDegrees(blueRoad, 167), rX-27, rY-15, 58, 42, null);
+						}
+					}
+					if (cpp.equals("Orange")) {
+						if (setDirection.equals("vertical")) {
+						g.drawImage(orangeRoad, rX, rY-22, 12, 60, null);
+						}
+						if (setDirection.equals("backslash")) {
+							g.drawImage(rotateImageByDegrees(orangeRoad, 14), rX-21, rY-15, 58, 42, null);
+						}
+						if (setDirection.equals("slash")) {
+							g.drawImage(rotateImageByDegrees(orangeRoad, 167), rX-27, rY-15, 58, 42, null);
+						}
+					}
+				}
+				//gBoard.getSides().
+				/*if (buildingRoad == true) {
+					
+					// System.out.println("hiiiii!!!!");
+				
+					String cpp = pManage.getCPlayer().getColor();
+					if (cpp.equals("Orange")) {
+						g.drawImage(orangeRoad, rX, rY, 10, 40, null);
+					}
+					if (cpp.equals("Blue")) {
+						g.drawImage(blueRoad, rX, rY, 10, 40, null);
+					}
+					if (cpp.equals("Red")) {
+						g.drawImage(redRoad, rX, rY, 10, 40, null);
+					}
+					if (cpp.equals("White")) {
+						g.drawImage(whiteRoad, rX, rY, 10, 40, null);
+					}
+
+				}*/
+			}
 			} else if (subState.equals("buildSettlement")) {
 				g.setColor(new Color(210, 180, 140, 255));
 				g.fillRect(830, 825, 1000, 300);
@@ -640,6 +718,8 @@ public class GameState {
 		sY = 0;
 		cX = 0;
 		cY = 0;
+		rX = 0;
+		rY = 0;
 		g.setColor(new Color(210, 180, 140, 255));
 		g.fillRect(0, 0, 2000, 2000);
 		// background hexagons
@@ -940,7 +1020,9 @@ public class GameState {
 	public void setRequests(ArrayList<ResourceCard> req) {
 		requests = req;
 	}
-
+	public void setBuildingRoad(boolean b) {
+		buildingRoad = b;
+	}
 	public void setBuildingSettlement(boolean b) {
 		buildingSettlement = b;
 	}
@@ -1211,12 +1293,17 @@ public class GameState {
 	public PlayerManager getPM() {
 		return pManage;
 	}
-
+	public void setRoadCords(int xCord, int yCord) {
+		rX = xCord;
+		rY = yCord;
+	}
 	public void setSettlementCords(int xCord, int yCord) {
 		sX = xCord;
 		sY = yCord;
 	}
-
+	public void setDir(String s) {
+		setDirection = s;
+	}
 	public void setCityCords(int xCord, int yCord) {
 		cX = xCord;
 		cY = yCord;
