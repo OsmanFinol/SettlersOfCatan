@@ -777,7 +777,51 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						}
 						repaint();
 					}
+				if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+							gs.setBuildingRoad(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingRoad(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildRoad")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						/*cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain")); */
+						for (Side[] sidee : gs.getBoard().getSides()) {
+							for (Side s : sidee) {
+								if (!(s == null) && s.hasRoad() == false && x >= s.getXCord() -20
+										&& x <= s.getXCord() + 20 && y >= s.getYCord() -20
+										&& y <= s.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										s.setColor(gs.getCPlayer().getColor());
+										s.setImageRoad(0);
+										gs.setRoadCords(s.getXCord(), s.getYCord());
+										gs.setDir(s.getDirection());
+										s.setRoad(true);
+										//s.setSet("road1");
+										// temp.setSet("settlement");
+										s.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(s.getXCord() + " road " + s.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
 
+					}
 					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
 						if (!(gs.getSubState().equals("buildSettlement"))) {
 							gs.setSubState("buildSettlement");
@@ -870,16 +914,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						}
 
 					}
-					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-						if (!(gs.getSubState().equals("buildRoad"))) {
-							gs.setSubState("buildRoad");
-							lines.add(gs.getCPlayer() + " selected to build Road.");
-						} else {
-							gs.setSubState("buildmenu");
-							System.out.println("hi");
-						}
-						repaint();
-					}
+				
 
 				}
 
@@ -894,6 +929,51 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 							gs.setSubState("default");
 						}
 						repaint();
+					}
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+							gs.setBuildingRoad(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingRoad(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildRoad")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						/*cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain")); */
+						for (Side[] sidee : gs.getBoard().getSides()) {
+							for (Side s : sidee) {
+								if (!(s == null) && s.hasRoad() == false && x >= s.getXCord() -20
+										&& x <= s.getXCord() + 20 && y >= s.getYCord() -20
+										&& y <= s.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										s.setColor(gs.getCPlayer().getColor());
+										s.setImageRoad(0);
+										gs.setRoadCords(s.getXCord(), s.getYCord());
+										gs.setDir(s.getDirection());
+										s.setRoad(true);
+										//s.setSet("road1");
+										// temp.setSet("settlement");
+										s.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(s.getXCord() + " road " + s.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
+
 					}
 					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
 						if (!(gs.getSubState().equals("buildSettlement"))) {
@@ -986,16 +1066,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						}
 
 					}
-					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-						if (!(gs.getSubState().equals("buildRoad"))) {
-							gs.setSubState("buildRoad");
-							lines.add(gs.getCPlayer() + " selected to build Road.");
-						} else {
-							gs.setSubState("buildmenu");
-							System.out.println("hi");
-						}
-						repaint();
-					}
+				
 				}
 				if (gs.cPlayerIndex() == 2) {
 					if (x >= 535 && x <= 611 && y >= 720 && y <= 745) {
@@ -1009,6 +1080,51 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 							System.out.println("hi");
 						}
 						repaint();
+					}
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+							gs.setBuildingRoad(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingRoad(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildRoad")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						/*cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain")); */
+						for (Side[] sidee : gs.getBoard().getSides()) {
+							for (Side s : sidee) {
+								if (!(s == null) && s.hasRoad() == false && x >= s.getXCord() -20
+										&& x <= s.getXCord() + 20 && y >= s.getYCord() -20
+										&& y <= s.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										s.setColor(gs.getCPlayer().getColor());
+										s.setImageRoad(0);
+										gs.setRoadCords(s.getXCord(), s.getYCord());
+										gs.setDir(s.getDirection());
+										s.setRoad(true);
+										//s.setSet("road1");
+										// temp.setSet("settlement");
+										s.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(s.getXCord() + " road " + s.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
+
 					}
 					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
 						if (!(gs.getSubState().equals("buildSettlement"))) {
@@ -1101,16 +1217,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						}
 
 					}
-					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-						if (!(gs.getSubState().equals("buildRoad"))) {
-							gs.setSubState("buildRoad");
-							lines.add(gs.getCPlayer() + " selected to build Road.");
-						} else {
-							gs.setSubState("buildmenu");
-							System.out.println("hi");
-						}
-						repaint();
-					}
+					
 				}
 
 				if (gs.cPlayerIndex() == 3) {
@@ -1125,6 +1232,51 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 							System.out.println("hi");
 						}
 						repaint();
+					}
+					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
+						if (!(gs.getSubState().equals("buildRoad"))) {
+							gs.setSubState("buildRoad");
+							lines.add(gs.getCPlayer() + " selected to build Road.");
+							gs.setBuildingRoad(true);
+						} else {
+							gs.setSubState("buildmenu");
+							gs.setBuildingRoad(false);
+							System.out.println("hi");
+						}
+						repaint();
+					}
+					if (gs.getSubState().equals("buildRoad")) {
+						ArrayList<ResourceCard> cost = new ArrayList<>();
+						/*cost.add(new ResourceCard("Brick"));
+						cost.add(new ResourceCard("Wood"));
+						cost.add(new ResourceCard("Sheep"));
+						cost.add(new ResourceCard("Grain")); */
+						for (Side[] sidee : gs.getBoard().getSides()) {
+							for (Side s : sidee) {
+								if (!(s == null) && s.hasRoad() == false && x >= s.getXCord() -20
+										&& x <= s.getXCord() + 20 && y >= s.getYCord() -20
+										&& y <= s.getYCord() + 20) {
+									if (gs.getCPlayer().hasThese(cost)) {
+										gs.getCPlayer().removeResources(cost);
+										s.setColor(gs.getCPlayer().getColor());
+										s.setImageRoad(0);
+										gs.setRoadCords(s.getXCord(), s.getYCord());
+										gs.setDir(s.getDirection());
+										s.setRoad(true);
+										//s.setSet("road1");
+										// temp.setSet("settlement");
+										s.setColor(gs.getCPlayer().getColor());
+										System.out.println(x + " " + y);
+										System.out.println(s.getXCord() + " road " + s.getYCord());
+										repaint();
+									} else {
+										gs.setSubState("redobuildmenu");
+										repaint();
+									}
+								}
+							}
+						}
+
 					}
 					if (x >= 1200 && x <= 1220 && y >= 775 && y <= 805) {
 						if (!(gs.getSubState().equals("buildSettlement"))) {
@@ -1218,16 +1370,7 @@ public class SettlersOfCatanPanel extends JPanel implements MouseListener {
 						}
 
 					}
-					if (x >= 1225 && x <= 1345 && y >= 780 && y <= 796) {
-						if (!(gs.getSubState().equals("buildRoad"))) {
-							gs.setSubState("buildRoad");
-							lines.add(gs.getCPlayer() + " selected to build Road.");
-						} else {
-							gs.setSubState("buildmenu");
-							System.out.println("hi");
-						}
-						repaint();
-					}
+					
 				}
 			}
 		}
